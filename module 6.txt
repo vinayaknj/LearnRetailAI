@@ -1,0 +1,889 @@
+Module 6: AI Pods Applied to Retail Domain Problems
+Purpose
+
+Modules 1–5 built your retail domain expertise.
+
+This module focuses on applying AI Pods (Multi-Agent Systems) to solve real retail operational problems safely and measurably.
+
+The goal is not to build generic chatbots.
+
+The goal is to build AI systems that:
+
+Understand retail context
+Use retail taxonomies
+Follow operational runbooks
+Respect approval boundaries
+Improve KPIs
+Reduce operational workload
+
+By the end of this module, you should be able to design domain-aware AI systems that augment retail operations without introducing unnecessary risk.
+
+Learning Outcomes
+
+By the end of this module, learners should be able to:
+
+✅ Identify high-value retail AI opportunities
+
+✅ Design domain-specific AI agents
+
+✅ Define safe and unsafe autonomous actions
+
+✅ Create multi-agent workflows
+
+✅ Measure AI effectiveness using retail KPIs
+
+✅ Build AI pods for operational support
+
+✅ Evaluate AI recommendations against domain rules
+
+✅ Implement approval-gated automation
+
+Chapter 1: Why Retail AI Needs Domain Knowledge
+The Problem with Generic AI
+
+Generic LLMs can answer questions.
+
+But retail operations require:
+
+Plain Text
+Context
+ 
+Policies
+ 
+Runbooks
+ 
+Business Rules
+ 
+Operational Constraints
+ 
+Approvals
+
+Example:
+
+Store Ticket:
+
+Plain Text
+Store 231 can't complete card transactions.
+
+Generic AI:
+
+Plain Text
+Check network connectivity.
+
+Retail-Aware AI:
+
+Plain Text
+Category:
+Payment Incident
+ 
+Severity:
+Sev 2
+ 
+Potential Causes:
+Gateway timeout
+PIN pad outage
+Payment router failure
+ 
+Runbook:
+PAY-002
+ 
+Notify:
+Payments Team
+ 
+Business Impact:
+Checkout interruption
+Revenue at risk
+
+Retail knowledge dramatically increases usefulness.
+
+Chapter 2: Identifying High-Value AI Opportunities
+
+Not all retail problems should be solved using AI.
+
+Good AI Use Cases
+Incident Classification
+
+Input:
+
+Plain Text
+Store ticket
+
+Output:
+
+Plain Text
+Category
+Severity
+Ownership
+Evidence Correlation
+
+Input:
+
+Plain Text
+Logs
+Metrics
+Tickets
+Alerts
+
+Output:
+
+Plain Text
+Probable related signals
+RCA Drafting
+
+Input:
+
+Plain Text
+Timeline
+Alerts
+Logs
+Changes
+
+Output:
+
+Plain Text
+Draft RCA
+Runbook Recommendation
+
+Input:
+
+Plain Text
+Incident
+
+Output:
+
+Plain Text
+Suggested recovery actions
+Weak AI Use Cases
+
+Examples:
+
+Plain Text
+Automatically adjusting inventory
+ 
+Automatically refunding customers
+ 
+Automatically modifying prices
+ 
+Automatically updating tax rules
+
+These actions carry significant business risk.
+
+Chapter 3: AI Pod Architecture
+What is an AI Pod?
+
+An AI pod is a group of specialized agents collaborating toward a goal.
+
+Instead of:
+
+Plain Text
+One giant chatbot
+
+Use:
+
+Plain Text
+Specialized agents
+
+Benefits:
+
+Plain Text
+Accuracy
+ 
+Auditability
+ 
+Maintainability
+ 
+Risk Reduction
+Reference Architecture
+Plain Text
+Ticket
+↓
+ 
+Classifier Agent
+↓
+ 
+Evidence Agent
+↓
+ 
+RCA Agent
+↓
+ 
+Action Agent
+↓
+ 
+Human Approval
+↓
+ 
+Execution
+Agent Responsibilities
+Classifier Agent
+
+Determines:
+
+Plain Text
+Incident type
+ 
+Severity
+ 
+Ownership
+Evidence Agent
+
+Collects:
+
+Plain Text
+Alerts
+ 
+Logs
+ 
+Metrics
+ 
+Recent Deployments
+ 
+Past Incidents
+RCA Agent
+
+Explains:
+
+Plain Text
+What happened
+ 
+Most likely cause
+ 
+Business impact
+Action Agent
+
+Suggests:
+
+Plain Text
+Recovery actions
+ 
+Escalations
+ 
+Mitigations
+
+Never executes high-risk actions directly.
+
+Chapter 4: Agent 1 - Incident Classifier
+Objective
+
+Convert unstructured reports into structured incidents.
+
+Input Example
+Plain Text
+Store 145 cannot process Visa cards.
+Customers receiving timeout errors.
+Output
+JSON
+{
+"category": "Payment",
+"severity": "Sev 2",
+"owner": "Payments Team",
+"confidence": 0.94
+}
+Classification Dimensions
+Domain
+Plain Text
+POS
+ 
+Pricing
+ 
+Inventory
+ 
+Payments
+ 
+Infrastructure
+ 
+Fulfillment
+Severity
+Plain Text
+Sev 1
+ 
+Sev 2
+ 
+Sev 3
+ 
+Sev 4
+Scope
+Plain Text
+Terminal
+ 
+Store
+ 
+Region
+ 
+Enterprise
+Chapter 5: Agent 2 - Evidence Correlator
+Objective
+
+Gather everything relevant before humans investigate.
+
+Evidence Sources
+Monitoring
+Plain Text
+CPU
+ 
+Memory
+Network
+Latency
+Logs
+Plain Text
+POS
+ 
+Payments
+ 
+Inventory
+ 
+Service Logs
+Change Events
+Plain Text
+Deployments
+ 
+Config Changes
+ 
+Feature Flags
+Historical Incidents
+Plain Text
+Known failures
+ 
+Prior RCAs
+Correlation Example
+
+Incident:
+
+Plain Text
+Promotion not applied.
+
+Agent discovers:
+
+Plain Text
+Deployment 15 min earlier.
+ 
+Promotion service errors increasing.
+ 
+Similar outage occurred 3 months ago.
+
+This significantly shortens MTTR.
+
+Chapter 6: Agent 3 - RCA Drafter
+Objective
+
+Produce high-quality RCA drafts automatically.
+
+Input
+Plain Text
+Alerts
+ 
+Monitoring
+ 
+Logs
+ 
+Timeline
+ 
+Runbook data
+Output Template
+Executive Summary
+Plain Text
+Promotion service outage caused
+discount calculation failures
+across 42 stores.
+Timeline
+Plain Text
+10:03 Alert triggered
+ 
+10:05 L2 engaged
+ 
+10:12 Service restarted
+ 
+10:19 Recovery confirmed
+Impact
+Plain Text
+42 stores
+ 
+8,500 affected transactions
+ 
+Estimated revenue impact:
+$35,000
+Root Cause
+Plain Text
+Memory leak after deployment.
+Actions
+Plain Text
+Rollback release
+ 
+Add memory alerts
+ 
+Update runbook
+Chapter 7: Agent 4 - Action Recommender
+Objective
+
+Recommend actions.
+
+Not execute them.
+
+Example
+
+Incident:
+
+Plain Text
+Payment gateway latency spike.
+
+Recommendations:
+
+Plain Text
+Verify provider health
+ 
+Enable secondary route
+ 
+Notify payment vendor
+ 
+Escalate Sev 2
+Approval Gating
+
+All recommendations pass through:
+
+Plain Text
+L2
+ 
+L3
+ 
+Manager
+ 
+Incident Commander
+
+depending on risk.
+
+Safety Principle
+
+AI recommends.
+
+Humans approve.
+
+Chapter 8: Domain-Constrained AI
+Why Constraints Matter
+
+Retail AI should not invent answers.
+
+Unsafe Response
+Plain Text
+Try deleting inventory records.
+Safe Response
+Plain Text
+Inventory drift suspected.
+ 
+Relevant runbook:
+INV-004
+ 
+Recommended investigation:
+Validate transaction uploads.
+Sources AI May Use
+Plain Text
+Runbooks
+ 
+Incident Taxonomy
+ 
+Knowledge Base
+ 
+Historical RCAs
+ 
+Operational Metrics
+Sources AI Should Not Invent
+Plain Text
+Store Policies
+ 
+Compliance Requirements
+ 
+Payment Procedures
+Chapter 9: Human Approval Boundaries
+Low-Risk Actions
+
+Possible automation:
+
+Plain Text
+Create ticket
+ 
+Collect logs
+ 
+Tag severity
+ 
+Recommend owner
+Medium-Risk Actions
+
+Require review:
+
+Plain Text
+Restart service
+ 
+Open escalation
+ 
+Pause deployment
+High-Risk Actions
+
+Require explicit approval:
+
+Plain Text
+Price changes
+ 
+Inventory corrections
+ 
+Refunds
+ 
+Tender changes
+ 
+Production database modifications
+Autonomous Action Matrix
+Plain Text
+Knowledge Retrieval
+✅ Auto
+ 
+Ticket Classification
+✅ Auto
+ 
+Log Collection
+✅ Auto
+ 
+Service Restart
+⚠ Approval
+ 
+Inventory Update
+❌ Manual Approval
+ 
+Price Change
+❌ Manual Approval
+Chapter 10: Retail AI Metrics
+
+AI must be measured.
+
+Classification Accuracy
+
+Formula:
+
+Plain Text
+Correct Predictions
+-------------------
+Total Predictions
+
+Target:
+
+Plain Text
+90%+
+Recommendation Acceptance Rate
+
+Measures:
+
+Plain Text
+Human approvals
+
+Target:
+
+Plain Text
+80%+
+Triage Time Reduction
+
+Measures:
+
+Plain Text
+Manual vs AI-assisted triage
+
+Target:
+
+Plain Text
+30% improvement
+Hallucination Rate
+
+Measures:
+
+Plain Text
+Ungrounded outputs
+
+Target:
+
+Plain Text
+<5%
+MTTR Improvement
+
+Measures faster incident recovery.
+
+Chapter 11: Retail Knowledge Graph
+Why Build One?
+
+Retail operations involve relationships.
+
+Example:
+
+Plain Text
+Store
+ 
+Terminal
+ 
+Service
+ 
+Application
+ 
+Promotion
+ 
+Vendor
+ 
+Incident
+
+Understanding relationships enables better reasoning.
+
+Example Relationship
+Plain Text
+Promotion Failure
+↓
+Promotion Service
+↓
+Pricing Platform
+↓
+Deployment
+
+AI can identify links humans miss.
+
+Chapter 12: AI Evaluation Framework
+
+Before production rollout:
+
+Accuracy
+
+Can it classify correctly?
+
+Consistency
+
+Does it provide repeatable outputs?
+
+Explainability
+
+Can it explain recommendations?
+
+Safety
+
+Can it avoid dangerous actions?
+
+Business Value
+
+Does it improve KPIs?
+
+Practical Lab: Build a Retail AI Pod
+Agent 1
+
+Incident Classifier
+
+Inputs:
+
+Plain Text
+Store tickets
+
+Outputs:
+
+Plain Text
+Category
+Severity
+Ownership
+Agent 2
+
+Evidence Collector
+
+Inputs:
+
+Plain Text
+Logs
+ 
+Monitoring
+ 
+Alerts
+
+Outputs:
+
+Plain Text
+Correlated evidence
+Agent 3
+
+RCA Generator
+
+Outputs:
+
+Plain Text
+Summary
+ 
+Timeline
+ 
+Impact
+ 
+Root Cause
+Agent 4
+
+Action Recommender
+
+Outputs:
+
+Plain Text
+Recovery options
+ 
+Runbooks
+ 
+Approvals required
+Example End-to-End Flow
+
+Input Ticket:
+
+Plain Text
+Stores reporting duplicate card charges.
+
+Classifier:
+
+Plain Text
+Payment Incident
+Sev 1
+
+Evidence Agent:
+
+Plain Text
+Gateway timeout increase.
+ 
+Retry rate spike.
+ 
+Recent retry configuration deployment.
+
+RCA Agent:
+
+Plain Text
+Duplicate authorization requests
+caused by retry logic bug.
+
+Action Agent:
+
+Plain Text
+Disable retry feature.
+ 
+Escalate payments team.
+ 
+Begin customer impact review.
+
+Human Approval:
+
+Plain Text
+Approved
+
+Recovery Executed.
+
+Retail AI Use Cases Beyond Support
+Inventory Intelligence Agent
+
+Predicts:
+
+Plain Text
+Stock-outs
+ 
+Shrinkage
+ 
+Demand spikes
+Pricing Intelligence Agent
+
+Monitors:
+
+Plain Text
+Price mismatches
+ 
+Promotion conflicts
+Fulfillment Agent
+
+Optimizes:
+
+Plain Text
+BOPIS
+ 
+Ship-from-store
+ 
+Transfers
+Payment Agent
+
+Detects:
+
+Plain Text
+Fraud
+ 
+Settlement anomalies
+ 
+Decline spikes
+Knowledge Checklist
+
+A learner should be able to:
+
+✅ Explain why retail AI must be domain-aware
+
+✅ Identify high-value retail AI opportunities
+
+✅ Design a multi-agent retail AI system
+
+✅ Build classifier, correlator, RCA, and recommendation agents
+
+✅ Define approval boundaries
+
+✅ Measure AI effectiveness
+
+✅ Prevent hallucinations through domain constraints
+
+✅ Evaluate AI systems using operational KPIs
+
+✅ Design safe autonomous retail workflows
+
+Deliverables
+ai/domain-first-agent-design.md
+
+Include:
+
+Agent architecture
+Agent responsibilities
+Data sources
+Approval flows
+Safety controls
+Evaluation strategy
+ai/retail-agent-eval-scorecard.md
+
+Include:
+
+Accuracy metrics
+Acceptance rate
+Hallucination rate
+MTTR improvement
+Business impact
+Risk assessment
+Capstone: Retail Domain Intelligence Platform
+
+Combine everything from Modules 1–6:
+
+Plain Text
+Retail Systems Map
++
+Transaction Intelligence
++
+Inventory Intelligence
++
+Payment Intelligence
++
+Incident Taxonomy
++
+Runbooks
++
+RCA Framework
++
+AI Pod
+Success Criteria
+≥ 90% incident classification accuracy
+≥ 30% faster triage
+≥ 80% recommendation acceptance rate
+≤ 5% hallucination rate
+Measurable reduction in MTTR
+Final Role Positioning Statement
+
+"I specialize in retail domain intelligence and operational reliability. I use deep knowledge of POS, inventory, payments, fulfillment, and support workflows to design AI pod architectures that safely automate incident triage, evidence correlation, RCA generation, and recovery recommendations."
+
+At this point, you have a complete Retail Domain Specialist (AI Era) curriculum covering:
+
+Retail Operating Model
+Transactions & Data Semantics
+Inventory & Fulfillment
+Payments, Compliance & Risk
+Retail SRE & Support Operations
+AI Pods for Retail Operations
+
+This is sufficient to position yourself as a Retail Platform Engineer / Retail Domain Intelligence Engineer / Retail AI Solutions Architect rather than a generic software developer.

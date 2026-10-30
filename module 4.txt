@@ -1,0 +1,891 @@
+Module 4: Payments, Compliance, and Risk
+Purpose
+
+A retail transaction is not complete when the customer leaves the store.
+
+The retailer must:
+
+Successfully authorize payment
+Capture funds
+Settle with financial institutions
+Reconcile transactions
+Detect fraud
+Protect sensitive customer data
+Meet regulatory and compliance requirements
+
+A store may survive inventory issues for days.
+
+A widespread payment outage can immediately stop revenue generation.
+
+This module provides the domain knowledge needed to understand payment systems, payment failures, compliance requirements, risk management, fraud detection, and operational response.
+
+Learning Outcomes
+
+By the end of this module, learners should be able to:
+
+✅ Explain end-to-end retail payment processing
+
+✅ Distinguish authorization, capture, settlement, and reconciliation
+
+✅ Understand common payment failure scenarios
+
+✅ Explain PCI compliance boundaries
+
+✅ Identify fraud indicators
+
+✅ Classify payment incidents by severity
+
+✅ Create payment response playbooks
+
+✅ Design AI agents for payment intelligence and incident triage
+
+Chapter 1: Payment Ecosystem Fundamentals
+Why Payments Matter
+
+Every retail transaction ultimately becomes a financial transaction.
+
+Example:
+
+Plain Text
+Customer Buys Product
+↓
+Card Authorization
+↓
+Approved Sale
+↓
+Settlement
+↓
+Money Arrives To Retailer
+
+A successful sale only becomes revenue after funds are successfully settled.
+
+Retail Payment Participants
+Customer
+
+Initiates payment.
+
+Examples:
+
+Plain Text
+Cash
+Credit Card
+Debit Card
+Gift Card
+Mobile Wallet
+Merchant
+
+Retailer accepting payment.
+
+Examples:
+
+Plain Text
+HEB
+Target
+Costco
+Walmart
+Payment Gateway
+
+Routes payment requests.
+
+Responsibilities:
+
+Plain Text
+Encryption
+Routing
+Security
+Response Handling
+Card Network
+
+Issues payment routing standards.
+
+Examples:
+
+Plain Text
+Visa
+Mastercard
+American Express
+Discover
+Issuer Bank
+
+Customer's bank.
+
+Responsibilities:
+
+Plain Text
+Verify Account
+Verify Funds
+Approve Or Decline
+Acquirer Bank
+
+Retailer's bank.
+
+Receives funds after settlement.
+
+Payment Processing Overview
+Plain Text
+Customer
+↓
+POS
+↓
+Payment Gateway
+↓
+Card Network
+↓
+Issuer Bank
+↓
+Approval/Decline
+↓
+POS
+Chapter 2: Authorization
+What is Authorization?
+
+Authorization asks:
+
+Plain Text
+Is This Payment Allowed?
+
+The issuer validates:
+
+Plain Text
+Card Validity
+Available Funds
+Fraud Checks
+Account Status
+Authorization Flow
+Plain Text
+Customer Taps Card
+↓
+POS Sends Request
+↓
+Gateway Processes
+↓
+Issuer Bank Evaluates
+↓
+Response Returned
+Possible Responses
+Approved
+Plain Text
+Customer May Continue
+Declined
+
+Examples:
+
+Plain Text
+Insufficient Funds
+Expired Card
+Blocked Card
+Fraud Suspicion
+Timeout
+
+Issuer does not respond in time.
+
+Risk:
+
+Plain Text
+Customer Retries
+Possible Duplicate Charges
+Key Authorization Metrics
+Plain Text
+Authorization Success Rate
+ 
+Average Response Time
+ 
+Decline Rate
+ 
+Timeout Rate
+Chapter 3: Capture
+What is Capture?
+
+Authorization reserves funds.
+
+Capture requests funds transfer.
+
+Important distinction:
+
+Plain Text
+Authorization ≠ Payment Received
+Example
+
+Customer spends:
+
+Plain Text
+$100
+
+Authorization:
+
+Plain Text
+Funds Reserved
+
+Capture:
+
+Plain Text
+Funds Requested
+
+Settlement:
+
+Plain Text
+Funds Delivered
+Capture Models
+Immediate Capture
+
+Common in retail.
+
+Plain Text
+Sale
+↓
+Capture
+Delayed Capture
+
+Common in:
+
+Plain Text
+Hotels
+ 
+Travel
+ 
+E-Commerce
+
+Products may ship later.
+
+Chapter 4: Settlement
+What is Settlement?
+
+Settlement moves money between institutions.
+
+Plain Text
+Customer Bank
+↓
+Card Network
+↓
+Acquirer
+↓
+Retailer Account
+Settlement Timeline
+
+Example:
+
+Plain Text
+Day 1
+Sale Occurs
+ 
+Day 2
+Settlement Batch Sent
+ 
+Day 3
+Funds Received
+Settlement Risks
+Missing Settlement
+
+Authorization approved.
+
+Settlement fails.
+
+Impact:
+
+Plain Text
+Customer Charged
+ 
+Retailer Unpaid
+Duplicate Settlement
+
+Transaction submitted twice.
+
+Impact:
+
+Plain Text
+Customer Complaints
+ 
+Chargebacks
+ 
+Refund Work
+Chapter 5: Payment Reconciliation
+Why Reconciliation Exists
+
+Retail systems and payment systems do not always agree.
+
+Reconciliation verifies consistency.
+
+Example
+
+POS Reports:
+
+Plain Text
+100 Transactions
+$10,000 Sales
+
+Gateway Reports:
+
+Plain Text
+98 Transactions
+$9,800
+
+Difference:
+
+Plain Text
+$200 Variance
+
+Investigation required.
+
+Reconciliation Sources
+Plain Text
+POS
+ 
+Payment Gateway
+ 
+Settlement Files
+ 
+Bank Reports
+ 
+ERP
+Reconciliation Process
+Plain Text
+Collect Data
+↓
+Compare Records
+↓
+Find Variance
+↓
+Root Cause Analysis
+↓
+Adjust Or Correct
+Common Variances
+Plain Text
+Duplicate Transaction
+ 
+Missing Capture
+ 
+Settlement Failure
+ 
+Offline Upload Delay
+ 
+Batch Failure
+Chapter 6: Payment Failure Taxonomy
+
+Payment-related incidents are among the highest-priority retail events.
+
+Category 1: Authorization Failures
+
+Symptoms:
+
+Plain Text
+High Decline Rate
+ 
+Payment Unavailable
+
+Root Causes:
+
+Plain Text
+Issuer Outage
+ 
+Gateway Issue
+ 
+Network Connectivity
+Category 2: Transaction Timeouts
+
+Symptoms:
+
+Plain Text
+Long Wait Times
+Repeated Tries
+
+Impact:
+
+Plain Text
+Abandoned Sales
+Duplicate Payments
+Category 3: Duplicate Charges
+
+Symptoms:
+
+Plain Text
+Multiple Authorizations
+
+Business Impact:
+
+Plain Text
+Customer Complaints
+ 
+Chargebacks
+ 
+Brand Damage
+Category 4: Settlement Failure
+
+Symptoms:
+
+Plain Text
+Completed Sales
+Missing Deposits
+
+Impact:
+
+Plain Text
+Revenue Recognition Problems
+Manual Investigation Required
+Category 5: Gift Card Failures
+
+Symptoms:
+
+Plain Text
+Incorrect Balance
+ 
+Rejected Transactions
+
+Impact:
+
+Plain Text
+Customer Escalations
+Store Delays
+Chapter 7: PCI Compliance Fundamentals
+What is PCI?
+
+PCI DSS:
+
+Plain Text
+Payment Card Industry Data Security Standard
+
+Industry framework for protecting cardholder data.
+
+Why PCI Matters
+
+Failure can result in:
+
+Plain Text
+Financial Penalties
+ 
+Legal Risk
+ 
+Reputation Damage
+ 
+Security Breaches
+Sensitive Information
+
+Examples:
+
+Plain Text
+Card Number (PAN)
+ 
+CVV
+ 
+Track Data
+ 
+PIN Data
+
+Must be protected.
+
+PCI Boundary
+
+Systems within PCI scope:
+
+Plain Text
+POS
+ 
+PIN Pads
+ 
+Payment Applications
+ 
+Payment Networks
+PCI Objectives
+Plain Text
+Protect Cardholder Data
+ 
+Encrypt Sensitive Information
+ 
+Limit Access
+ 
+Maintain Audit Logs
+ 
+Monitor Security Events
+Chapter 8: Fraud in Retail Payments
+Why Fraud Matters
+
+Fraud directly impacts:
+
+Plain Text
+Revenue
+ 
+Customer Trust
+ 
+Operational Cost
+ 
+Legal Exposure
+Common Fraud Types
+Stolen Card Usage
+
+Criminal uses stolen card credentials.
+
+Friendly Fraud
+
+Customer claims:
+
+Plain Text
+"I Didn't Make This Purchase"
+
+Despite making purchase.
+
+Gift Card Fraud
+
+Examples:
+
+Plain Text
+Balance Theft
+ 
+Re-Encoded Cards
+Refund Fraud
+
+Examples:
+
+Plain Text
+Fake Returns
+ 
+Receipt Manipulation
+Employee Fraud
+
+Examples:
+
+Plain Text
+Fake Refunds
+ 
+Fake Void Transactions
+Fraud Indicators
+Unusual Transaction Velocity
+
+Example:
+
+Plain Text
+20 High-Value Purchases
+In 5 Minutes
+Excessive Refund Activity
+
+Pattern:
+
+Plain Text
+Employee Processes
+Large Numbers Of Refunds
+High Decline Followed By Approval
+
+Possible indicator:
+
+Plain Text
+Card Testing
+Chapter 9: Severity Classification
+
+Payment incidents require prioritization.
+
+Severity 1 (Critical)
+
+Examples:
+
+Plain Text
+All Stores Cannot Process Payments
+ 
+Major Gateway Outage
+ 
+Nationwide Failure
+
+Impact:
+
+Plain Text
+Immediate Revenue Loss
+
+Response:
+
+Plain Text
+War Room
+ 
+Executive Escalation
+Severity 2 (High)
+
+Examples:
+
+Plain Text
+Regional Outage
+ 
+Major Tender Type Failure
+Severity 3 (Medium)
+
+Examples:
+
+Plain Text
+Store-Specific Issue
+ 
+Intermittent Failures
+Severity 4 (Low)
+
+Examples:
+
+Plain Text
+Minor Configuration Issue
+ 
+Single Terminal Issue
+Chapter 10: Incident Response Playbooks
+Payment Gateway Outage
+Detection
+Plain Text
+Authorization Failures Spike
+Immediate Actions
+Plain Text
+Verify Gateway Health
+ 
+Validate Network
+ 
+Review Monitoring
+ 
+Contact Vendor
+Recovery Actions
+Plain Text
+Failover Gateway
+ 
+Enable Backup Routing
+ 
+Communicate To Stores
+Duplicate Charge Playbook
+Detection
+
+Customer complaints increase.
+
+Investigation
+
+Check:
+
+Plain Text
+Authorization Logs
+ 
+Gateway Logs
+ 
+Retry Logic
+Resolution
+Plain Text
+Reverse Duplicate Charge
+ 
+Issue Communication
+ 
+Fix Root Cause
+Chapter 11: Retail Payment KPIs
+Authorization Rate
+Plain Text
+Approved Transactions
+---------------------
+Authorization Attempts
+Settlement Success Rate
+Plain Text
+Settled Transactions
+--------------------
+Captured Transactions
+Chargeback Rate
+
+Measures disputed payments.
+
+Lower is better.
+
+Payment Latency
+
+Measures response time.
+
+High latency increases checkout friction.
+
+Tender Mix
+
+Tracks payment types:
+
+Plain Text
+Cash
+ 
+Debit
+ 
+Credit
+ 
+Mobile Wallet
+ 
+Gift Card
+
+Used for business planning.
+
+Chapter 12: AI Applications in Payments and Risk
+Payment Health Agent
+
+Monitors:
+
+Plain Text
+Authorization Rates
+ 
+Declines
+ 
+Timeouts
+ 
+Latency
+
+Detects:
+
+Plain Text
+Emerging Outages
+Fraud Detection Agent
+
+Analyzes:
+
+Plain Text
+Transaction Patterns
+ 
+Customer Behavior
+ 
+Refund Activity
+
+Flags:
+
+Plain Text
+Suspicious Activity
+Reconciliation Agent
+
+Compares:
+
+Plain Text
+POS
+ 
+Gateway
+ 
+Bank
+ 
+ERP
+
+Automatically identifies mismatches.
+
+Payment RCA Agent
+
+Inputs:
+
+Plain Text
+Gateway Logs
+ 
+POS Logs
+ 
+Store Alerts
+ 
+Tickets
+
+Outputs:
+
+Plain Text
+Probable Root Cause
+ 
+Impact Assessment
+ 
+Recommended Actions
+Real-World Payment Failure Scenarios
+Scenario 1
+Plain Text
+Authorization Approved
+Settlement Missing
+
+Impact:
+
+Plain Text
+Revenue Not Received
+Scenario 2
+Plain Text
+Customer Charged Twice
+
+Cause:
+
+Plain Text
+Timeout + Retry Logic
+Scenario 3
+Plain Text
+Gift Card Balance Incorrect
+
+Cause:
+
+Plain Text
+Synchronization Failure
+Scenario 4
+Plain Text
+Intermittent Declines
+
+Cause:
+
+Plain Text
+Gateway Latency
+Scenario 5
+Plain Text
+All Mobile Wallet Payments Fail
+
+Cause:
+
+Plain Text
+Tokenization Service Outage
+Top 20 Payment Failure Patterns Every Retail Specialist Should Know
+Authorization timeout
+Issuer decline spike
+Gateway outage
+Network connectivity loss
+Duplicate authorization
+Duplicate capture
+Missing settlement
+Partial approval failure
+Gift card synchronization failure
+Tokenization issue
+PIN pad communication failure
+Acquirer outage
+Settlement batch failure
+Offline payment backlog
+Payment reversal failure
+Refund processing failure
+Reconciliation mismatch
+Chargeback volume spike
+Fraud rule misconfiguration
+PCI compliance violation
+Knowledge Checklist
+
+A learner should be able to explain without notes:
+
+✅ Authorization vs Capture vs Settlement
+
+✅ Payment ecosystem participants
+
+✅ Reconciliation process
+
+✅ Common payment failures
+
+✅ PCI scope and sensitive data
+
+✅ Retail fraud indicators
+
+✅ Incident severity classification
+
+✅ Payment KPIs and business impact
+
+✅ Payment response playbooks
+
+✅ AI applications in payment operations
+
+Deliverables
+domain/payment-failure-taxonomy.md
+
+Include:
+
+Failure categories
+Incident examples
+Root causes
+Detection signals
+Recovery workflows
+Severity mapping
+domain/incident-severity-matrix.md
+
+Include:
+
+Severity definitions
+Escalation paths
+Communication templates
+Response expectations
+Business impact guidelines
+Module 4 Completion Criteria
+
+The learner should be able to:
+
+Trace a payment from tap/swipe to settlement
+Diagnose common payment incidents
+Explain PCI boundaries
+Detect fraud signals and risks
+Build incident response playbooks
+Translate payment outages into business impact
+Design AI agents that safely assist payment operations
+
+This module provides the financial and risk foundation needed before Module 5: Retail SRE and Support Operations, where you'll learn incident management, operational excellence, runbooks, RCA methodologies, support workflows, and retail production support at scale.

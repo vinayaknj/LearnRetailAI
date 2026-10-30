@@ -1,0 +1,119 @@
+{
+  "id": "m5",
+  "title": "Retail SRE and Support Operations",
+  "weeks": "Weeks 9-10",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "<h3>Purpose</h3><p>Retail systems create value only when they are available, reliable, and recoverable.</p><p>Even a well-designed platform fails the business if checkout stops, payment success drops, inventory updates stall, or escalations are delayed.</p><h3>Learning Outcomes</h3><ul class=\"clean\"><li>Classify retail incidents consistently</li><li>Understand L1/L2/L3 support responsibilities</li><li>Track MTTA, MTTR, escalation rate, and repeat incident rate</li><li>Design triage and escalation workflows</li><li>Create production-grade runbooks</li><li>Perform high-quality RCA</li><li>Translate technical failures into business impact language</li><li>Identify where AI agents improve support operations</li></ul>",
+      "checkpoint": {
+        "prompt": "Why is reliability urgent in retail?",
+        "answer": "Because outages convert to lost revenue and customer frustration immediately."
+      }
+    },
+    {
+      "title": "Chapter 1: Why Retail Reliability Matters",
+      "content": "<pre class=\"flow-block\">POS Outage -> Customers Cannot Checkout -> Revenue Stops -> Abandoned Purchases -> Customer Frustration</pre><p>A one-hour failure across hundreds of stores can create major revenue and reputation damage.</p><p>Operational excellence is a business capability, not just an IT function.</p>",
+      "checkpoint": {
+        "prompt": "What is the first business loss from checkout outage?",
+        "answer": "Immediate transaction loss and conversion collapse."
+      }
+    },
+    {
+      "title": "Chapter 2: Retail Operations Support Model",
+      "content": "<pre class=\"flow-block\">Store Associate -> L1 Support -> L2 Support -> L3 Engineering -> Vendor/Product Team</pre><table class=\"content-table\"><tr><th>Layer</th><th>Primary Focus</th><th>Typical Actions</th></tr><tr><td>Store</td><td>Detect/report issues</td><td>Capture symptoms and timestamps</td></tr><tr><td>L1</td><td>First technical response</td><td>Ticketing, quick checks, routing</td></tr><tr><td>L2</td><td>Domain diagnosis</td><td>Cross-system investigation</td></tr><tr><td>L3</td><td>Engineering fix</td><td>Code/config patch and release</td></tr><tr><td>Vendor</td><td>External dependency recovery</td><td>Processor/cloud/POS partner escalation</td></tr></table>",
+      "checkpoint": {
+        "prompt": "What is L2's key differentiator vs L1?",
+        "answer": "L2 performs domain-level diagnosis and cross-system analysis, not just first-response checks."
+      }
+    },
+    {
+      "title": "Chapter 3: Retail Incident Taxonomy",
+      "content": "<p>Taxonomy creates consistent classification, routing, and reporting.</p><table class=\"content-table\"><tr><th>Category</th><th>Examples</th><th>Business Effect</th></tr><tr><td>POS</td><td>Freeze, login failure, upload failure</td><td>Checkout delays and lost sales</td></tr><tr><td>Pricing/Promo</td><td>Wrong price, discount missing</td><td>Complaints and revenue leakage</td></tr><tr><td>Inventory</td><td>Negative stock, drift, transfer failure</td><td>Stock-outs and fulfillment failures</td></tr><tr><td>Payments</td><td>Declines, gateway timeout, settlement errors</td><td>Failed tenders and cashflow risk</td></tr><tr><td>Infrastructure</td><td>Network outage, server/storage faults</td><td>Multi-system degradation</td></tr></table>",
+      "checkpoint": {
+        "prompt": "Why does taxonomy matter operationally?",
+        "answer": "It improves triage speed, ownership accuracy, and incident analytics quality."
+      }
+    },
+    {
+      "title": "Chapter 4: Incident Severity Framework",
+      "content": "<p>Severity determines response urgency, escalation path, and communication cadence.</p><table class=\"content-table\"><tr><th>Severity</th><th>Typical Scope</th><th>Response Pattern</th></tr><tr><td>SEV1</td><td>Chain-wide critical outage</td><td>Immediate war room and executive visibility</td></tr><tr><td>SEV2</td><td>Regional or major function loss</td><td>Rapid escalation and focused command</td></tr><tr><td>SEV3</td><td>Single-store or intermittent issue</td><td>Standard response with tighter monitoring</td></tr><tr><td>SEV4</td><td>Minor/non-blocking defect</td><td>Planned fix lifecycle</td></tr></table><pre class=\"flow-block\">Revenue Impact + Large Scope -> SEV1\nRevenue Impact + Limited Scope -> SEV2\nMinor Operational Impact -> SEV3\nNo Operational Impact -> SEV4</pre>",
+      "checkpoint": {
+        "prompt": "Best quick severity indicator?",
+        "answer": "Revenue-at-risk combined with blast radius."
+      }
+    },
+    {
+      "title": "Chapter 5: Operational KPIs",
+      "content": "<h3>Core Metrics</h3><ul class=\"clean\"><li>MTTA: Mean Time To Acknowledge</li><li>MTTR: Mean Time To Resolve</li><li>First-Time Resolution Rate</li><li>Escalation Rate</li><li>Repeat Incident Rate</li></ul><pre class=\"flow-block\">MTTA = Total Acknowledgement Time / Incident Count\nMTTR = Total Resolution Time / Resolved Incidents</pre><p>A high escalation rate can indicate weak runbooks, skill gaps, or poor incident routing.</p>",
+      "checkpoint": {
+        "prompt": "Which KPI shows recurring instability?",
+        "answer": "Repeat incident rate."
+      }
+    },
+    {
+      "title": "Chapter 6: Incident Lifecycle",
+      "content": "<pre class=\"flow-block\">Detect -> Classify -> Assign -> Investigate -> Mitigate -> Resolve -> RCA -> Prevention</pre><p>Detection sources include monitoring, store calls, automated alerts, and ticket signals.</p><p>Mitigation restores service quickly; resolution removes the immediate defect; prevention reduces recurrence probability.</p>",
+      "checkpoint": {
+        "prompt": "Mitigation vs resolution?",
+        "answer": "Mitigation restores service fast; resolution fixes the underlying issue state."
+      }
+    },
+    {
+      "title": "Chapter 7: Retail Triage Process",
+      "content": "<h3>Triage Goal</h3><p>Get the right issue to the right team quickly.</p><h3>Triage Dimensions</h3><ul class=\"clean\"><li>Scope: one terminal, one store, one region, or entire chain</li><li>Timeline: start time and change correlation (release/config/network)</li><li>Impact: revenue, customers, inventory, payment success</li></ul><p>Example: 'Promotion not applied' is usually routed to pricing/promo ownership after validating eligibility and activation windows.</p>",
+      "checkpoint": {
+        "prompt": "First three triage questions?",
+        "answer": "What is scope, when did it start, and what business function is impacted."
+      }
+    },
+    {
+      "title": "Chapter 8: Escalation Framework",
+      "content": "<p>Escalation exists because first responders cannot resolve every failure.</p><table class=\"content-table\"><tr><th>Escalation Type</th><th>Use Case</th></tr><tr><td>Functional</td><td>Knowledge or domain depth needed (L1 -> L2/L3)</td></tr><tr><td>Hierarchical</td><td>Business impact rising; leadership decisions required</td></tr><tr><td>Vendor</td><td>External dependencies failing (processor/cloud/POS vendor)</td></tr></table><p>Common triggers: severe revenue risk, security implications, SLA breach risk, and multi-region impact.</p>",
+      "checkpoint": {
+        "prompt": "When escalate hierarchically?",
+        "answer": "When business impact is widening and leadership-level decisions are needed."
+      }
+    },
+    {
+      "title": "Chapter 9: Retail Runbooks",
+      "content": "<p>A runbook is a documented recovery procedure used under pressure.</p><h3>POS Launch Failure Example</h3><ul class=\"clean\"><li>Checks: service status, network reachability, disk health</li><li>Actions: restart POS, restart middleware, collect logs</li><li>Escalation: L2 POS team with evidence package</li></ul><h3>Good Runbook Qualities</h3><ul class=\"clean\"><li>Step-by-step instructions</li><li>Clear ownership per step</li><li>Validation criteria for successful recovery</li><li>Rollback/fallback instructions</li></ul>",
+      "checkpoint": {
+        "prompt": "What makes runbooks production-grade?",
+        "answer": "Clarity, ownership, verification steps, and stress-safe execution."
+      }
+    },
+    {
+      "title": "Chapter 10: Root Cause Analysis (RCA)",
+      "content": "<p>RCA prevents recurrence by explaining why an incident happened.</p><p>Poor RCA: 'Server restarted, issue fixed.'</p><p>Strong RCA: 'Deployment changed memory limits, service crashed, requests failed, rollback restored service.'</p><h3>Five Whys</h3><p>Use iterative why-questions to reach process-level and system-level causes.</p><h3>RCA Template</h3><ul class=\"clean\"><li>Incident summary</li><li>Timeline</li><li>Impact (stores, transactions, revenue)</li><li>Technical root cause</li><li>Corrective and preventive actions</li></ul>",
+      "checkpoint": {
+        "prompt": "Main objective of RCA?",
+        "answer": "Reduce recurrence through verified root cause and preventive controls."
+      }
+    },
+    {
+      "title": "Chapter 11: Operational Readiness",
+      "content": "<p>Before releases or major changes, verify readiness gates.</p><ul class=\"clean\"><li>Monitoring ready with meaningful metrics</li><li>Alerting ready with actionable thresholds</li><li>Runbook ready and tested</li><li>Rollback path validated</li><li>On-call ownership and escalation path defined</li></ul><p>Readiness gaps directly increase MTTA and MTTR during incidents.</p>",
+      "checkpoint": {
+        "prompt": "Most important pre-release question?",
+        "answer": "Can we detect, diagnose, and recover quickly if this change fails?"
+      }
+    },
+    {
+      "title": "Chapter 12: Business Impact Translation",
+      "content": "<p>Operational leaders must describe incidents in business language.</p><table class=\"content-table\"><tr><th>Technical Statement</th><th>Business Translation</th></tr><tr><td>Payment API timeout</td><td>15% payment failure across 200 stores; checkout delays rising</td></tr><tr><td>Inventory sync backlog</td><td>Inventory accuracy degrading; stock-out and BOPIS failure risk increasing</td></tr></table><p>This translation improves decision speed and stakeholder trust.</p>",
+      "checkpoint": {
+        "prompt": "Why translate technical to business terms?",
+        "answer": "So decision-makers can prioritize response by customer and revenue impact."
+      }
+    },
+    {
+      "title": "Chapter 13: AI Applications in Retail Operations",
+      "content": "<h3>High-Value Agents</h3><ul class=\"clean\"><li>Incident Classification Agent: category, severity, owner suggestion</li><li>Correlation Agent: links alerts, logs, metrics, and tickets</li><li>RCA Draft Agent: assembles evidence timeline and probable causes</li><li>Action Recommendation Agent: proposes runbook steps and escalation path</li></ul><p>Keep human approval for high-risk actions.</p><h3>Top Incident Scenarios</h3><p>POS launch failure, payment outage, promotion errors, pricing mismatch, upload backlog, inventory sync failure, BOPIS unavailable, loyalty outage, store network outage, settlement mismatch, and config rollout failures.</p><h3>Deliverables</h3><p><strong>ops/retail-incident-taxonomy.md</strong> and <strong>ops/retail-rca-template.md</strong> with ownership, severity rules, and preventive controls.</p>",
+      "checkpoint": {
+        "prompt": "First AI capability to deploy in ops?",
+        "answer": "Incident classification and routing with confidence scoring."
+      }
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter Lesson</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Serif:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=8" />
+    <script src="theme.js?v=1"></script>
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" id="lessonModuleWeeks"></p>
+        <h1 id="lessonModuleTitle">Lesson</h1>
+      </div>
+      <div class="lesson-actions">
+        <a href="modules.html" class="btn ghost">Modules</a>
+        <a href="index.html" class="btn ghost">Home</a>
+      </div>
+    </header>
+
+    <div class="lesson-progress"><div class="bar"><i id="lessonBar" style="width: 0%"></i></div></div>
+
+    <main class="lesson-page-layout">
+      <aside class="chapter-sidebar" id="chapterSidebar" aria-label="Chapters in this module"></aside>
+
+      <section class="chapter-content" id="lessonContent"></section>
+
+      <aside class="tools-panel">
+        <h2>Chapter Tools</h2>
+        <div class="tool-card">
+          <h3>Chapter Flashcards</h3>
+          <div id="inlineFlashcard" class="inline-flashcard">
+            <small id="inlineFlashcardMeta"></small>
+            <div id="inlineFlashcardCard" class="inline-flip-card" role="button" tabindex="0" aria-label="Flip flashcard">
+              <div class="inline-flip-inner">
+                <div class="inline-flip-face inline-flip-front">
+                  <p id="inlineFlashcardFront"></p>
+                </div>
+                <div class="inline-flip-face inline-flip-back">
+                  <p id="inlineFlashcardBack"></p>
+                </div>
+              </div>
+            </div>
+            <p class="inline-flip-hint">Tap card or Flip button</p>
+            <div class="grade-row">
+              <button id="inlineCardPrev" class="btn ghost">Prev</button>
+              <button id="inlineCardFlip" class="btn">Flip</button>
+              <button id="inlineCardNext" class="btn ghost">Next</button>
+            </div>
+            <p id="inlineFlashcardCount" class="sidebar-meta"></p>
+          </div>
+        </div>
+        <div class="tool-card">
+          <h3>Quick Quiz</h3>
+          <p>Use this module's quick quiz chapter for formal self-check.</p>
+          <a id="practiceChapterQuiz" class="deck-link" href="lesson.html">Go to module quick quiz chapter &rarr;</a>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="lesson-nav-footer">
+      <button id="prevBtn" class="btn ghost">Previous</button>
+      <button id="markDoneBtn" class="btn ghost">Mark Complete</button>
+      <button id="nextBtn" class="btn ghost">Next</button>
+      <button id="markNextBtn" class="btn">Complete &amp; Next</button>
+    </footer>
+
+    <script src="course-data.js?v=3"></script>
+    <script src="lesson.js?v=10"></script>
+  </body>
+</html>

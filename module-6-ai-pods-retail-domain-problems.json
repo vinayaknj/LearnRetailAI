@@ -1,0 +1,483 @@
+{
+  "id": "m6",
+  "title": "AI Pods Applied to Retail Domain Problems",
+  "weeks": "Weeks 11-12",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "<h3>Purpose</h3>\n<p>This module teaches how to apply AI pods to retail operations safely, with measurable business impact.</p>\n<p>Goal: design domain-aware AI systems for incident handling, not generic chat assistants.</p>\n\n<h3>Learning Outcomes</h3>\n<ul class=\"clean check\">\n  <li>Identify high-value retail AI opportunities</li>\n  <li>Design multi-agent workflows with clear contracts</li>\n  <li>Define safe vs approval-required actions</li>\n  <li>Measure AI impact using operational KPIs</li>\n  <li>Implement policy-constrained automation</li>\n</ul>\n\n<h3>Developer Lens</h3>\n<ul class=\"clean\">\n  <li>Model each agent as a bounded service with typed inputs and outputs.</li>\n  <li>Attach evidence and confidence to every recommendation.</li>\n  <li>Keep humans in control of medium/high-risk actions.</li>\n</ul>\n\n<h3>Scope Boundaries</h3>\n<ul class=\"clean\">\n  <li>In scope: incident triage, diagnosis acceleration, recommendation safety, and KPI-linked recovery tracking.</li>\n  <li>Out of scope: autonomous financial decisions, customer policy exceptions, and non-audited production mutations.</li>\n  <li>Success means reducing operational pain without increasing policy or compliance risk.</li>\n</ul>\n\n<h3>What You Will Build By End Of Module</h3>\n<ul class=\"clean\">\n  <li>A domain ontology for retail incidents and ownership paths.</li>\n  <li>A 4-agent pod contract set with typed interfaces and confidence semantics.</li>\n  <li>An approval boundary design that separates safe automation from controlled intervention.</li>\n  <li>An evaluation scorecard proving measurable business and reliability impact.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What makes this module different from generic AI training?",
+        "answer": "It targets retail operations with domain constraints, safety gates, and KPI-linked outcomes."
+      },
+      "flashcards": [
+        {
+          "front": "What is explicitly out of scope in this module?",
+          "back": "Autonomous financial decisions, customer policy exceptions, and non-audited production mutations are out of scope."
+        },
+        {
+          "front": "What defines success for retail AI pods in this module?",
+          "back": "Reducing operational pain while preserving policy and compliance safety."
+        },
+        {
+          "front": "What artifact links AI behavior to measurable value?",
+          "back": "An evaluation scorecard tied to reliability and business KPIs."
+        },
+        {
+          "front": "What core system design output is expected by module end?",
+          "back": "A typed 4-agent contract set with confidence semantics and approval boundaries."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 1: Why Retail AI Needs Domain Knowledge",
+      "content": "<h3>Why Generic AI Fails In Retail Ops</h3>\n<p>Retail incidents depend on domain rules: severity policies, runbooks, compliance boundaries, and financial risk thresholds.</p>\n\n<h3>Domain-First Principle</h3>\n<ul class=\"clean\">\n  <li>Use retail taxonomies for classification and routing.</li>\n  <li>Use approved runbooks and policy constraints for recommendations.</li>\n  <li>Use trusted operational data sources for evidence.</li>\n</ul>\n\n<h3>If Domain Context Is Missing</h3>\n<ul class=\"clean\">\n  <li>Wrong severity and wrong owner assignment</li>\n  <li>Unsafe suggestions during payment/inventory incidents</li>\n  <li>Ungrounded RCA claims without evidence</li>\n</ul>\n\n<h3>Retail-Specific Failure Modes</h3>\n<table class=\"content-table\">\n  <tr><th>Failure</th><th>Why It Happens</th><th>Consequence</th></tr>\n  <tr><td>Wrong incident domain</td><td>Generic taxonomy ignores retail systems</td><td>Escalation delay and longer MTTR</td></tr>\n  <tr><td>Unsafe recommendation</td><td>No policy context in prompt/tooling</td><td>Financial or compliance exposure</td></tr>\n  <tr><td>False RCA confidence</td><td>No evidence hierarchy</td><td>Recurring incidents and bad fixes</td></tr>\n</table>\n\n<h3>Domain Artifacts AI Must Know</h3>\n<ul class=\"clean\">\n  <li>Severity matrix linked to customer/payment/inventory impact.</li>\n  <li>Runbooks with preconditions, rollback paths, and ownership metadata.</li>\n  <li>Exception policies for refund, fraud, tax, and settlement workflows.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "Why does retail context matter for AI support?",
+        "answer": "Because incident routing, severity, and mitigations depend on domain-specific rules and constraints."
+      },
+      "flashcards": [
+        {
+          "front": "Why does generic AI misroute retail incidents?",
+          "back": "It lacks retail-specific taxonomies and ownership mappings needed for correct routing."
+        },
+        {
+          "front": "What is the operational consequence of false RCA confidence?",
+          "back": "Teams apply bad fixes, incidents recur, and MTTR worsens."
+        },
+        {
+          "front": "Which domain artifacts must be available before trusting AI recommendations?",
+          "back": "Severity matrix, runbooks with rollback, and exception/compliance policies."
+        },
+        {
+          "front": "What is the biggest safety risk when policy context is missing?",
+          "back": "AI can suggest actions that violate compliance or create financial exposure."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 2: Identifying High-Value AI Opportunities",
+      "content": "<h3>Opportunity Selection</h3>\n<table class=\"content-table\">\n  <tr><th>Use Case</th><th>Impact</th><th>Risk</th><th>Priority</th></tr>\n  <tr><td>Incident classification</td><td>High</td><td>Low-Med</td><td>Start first</td></tr>\n  <tr><td>Evidence correlation</td><td>High</td><td>Low-Med</td><td>Start first</td></tr>\n  <tr><td>RCA drafting</td><td>Med-High</td><td>Med</td><td>Phase 2</td></tr>\n  <tr><td>Auto-mitigation execution</td><td>Very High</td><td>High</td><td>Only with approvals</td></tr>\n</table>\n\n<h3>Selection Filters</h3>\n<ul class=\"clean\">\n  <li>High-frequency operational pain</li>\n  <li>Reliable data sources available</li>\n  <li>Output can be reviewed and audited</li>\n</ul>\n\n<h3>Prioritization Formula</h3>\n<p>Use a weighted score: valueScore = (frequency x businessImpact x diagnosability) - (risk x changeCost).</p>\n<ul class=\"clean\">\n  <li>Frequency: weekly count of incidents of same pattern.</li>\n  <li>Business impact: revenue risk, customer experience impact, and SLA penalties.</li>\n  <li>Diagnosability: ability to gather enough evidence to make reliable suggestions.</li>\n  <li>Risk: chance of unsafe action or policy breach if recommendation is wrong.</li>\n</ul>\n\n<h3>Pilot Candidate Checklist</h3>\n<ul class=\"clean check\">\n  <li>Has repeatable signals in logs/metrics/events</li>\n  <li>Has a human-verifiable outcome in under 30 minutes</li>\n  <li>Can be constrained to read-only first phase</li>\n  <li>Has clear owner team for acceptance review</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Chapter 2: Identifying High-Value AI Opportunities?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "What is the opportunity scoring formula used in this chapter?",
+          "back": "valueScore = (frequency x businessImpact x diagnosability) - (risk x changeCost)."
+        },
+        {
+          "front": "Why is diagnosability part of opportunity selection?",
+          "back": "Without enough reliable evidence, recommendations cannot be safely trusted."
+        },
+        {
+          "front": "What makes a pilot candidate operationally safe to start with?",
+          "back": "Read-only first phase, repeatable signals, and a human-verifiable outcome."
+        },
+        {
+          "front": "Which two use cases are recommended as first-wave candidates?",
+          "back": "Incident classification and evidence correlation."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 3: AI Pod Architecture",
+      "content": "<h3>Reference Pod Flow</h3>\n<ol class=\"flow-steps\">\n  <li>Incident intake</li>\n  <li>Classifier agent</li>\n  <li>Evidence correlator</li>\n  <li>RCA drafter</li>\n  <li>Action recommender</li>\n  <li>Human approval</li>\n  <li>Controlled execution</li>\n</ol>\n\n<h3>Contract Rules</h3>\n<ul class=\"clean\">\n  <li>Typed input/output schema per agent</li>\n  <li>Confidence and evidence links required</li>\n  <li>Policy gate before any side-effecting action</li>\n</ul>\n\n<h3>Control Plane</h3>\n<ul class=\"clean\">\n  <li>Traceable run ID across all agent steps</li>\n  <li>Audit log for prompts, tools, and decisions</li>\n  <li>Rollback-safe execution adapters</li>\n</ul>\n\n<h3>Data Plane vs Control Plane</h3>\n<table class=\"content-table\">\n  <tr><th>Layer</th><th>Responsibilities</th></tr>\n  <tr><td>Data Plane</td><td>Ticket intake, telemetry retrieval, runbook lookup, recommendation payload delivery</td></tr>\n  <tr><td>Control Plane</td><td>Policy checks, confidence thresholds, human approvals, audit logging, idempotency</td></tr>\n</table>\n\n<h3>Production-Grade Handoff Requirements</h3>\n<ul class=\"clean\">\n  <li>Each handoff includes correlationId, incidentId, actor, confidence, and source references.</li>\n  <li>Any missing required field downgrades confidence and blocks autonomous execution.</li>\n  <li>Every action output must include validation and rollback hooks.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "Why split work across agents?",
+        "answer": "It improves precision, transparency, and risk control by separating responsibilities."
+      },
+      "flashcards": [
+        {
+          "front": "What is the main separation between data plane and control plane?",
+          "back": "Data plane handles retrieval and payload flow; control plane enforces policy, approvals, and auditability."
+        },
+        {
+          "front": "Which handoff fields are mandatory between agents?",
+          "back": "correlationId, incidentId, actor, confidence, and source references."
+        },
+        {
+          "front": "What should happen if a handoff misses required fields?",
+          "back": "Confidence is downgraded and autonomous execution is blocked."
+        },
+        {
+          "front": "Why is idempotency a control-plane concern?",
+          "back": "It prevents duplicate or repeated side-effecting actions during retries."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 4: Agent 1 - Incident Classifier",
+      "content": "<h3>Objective</h3>\n<p>Convert unstructured incident reports into structured routing decisions.</p>\n\n<h3>Input and Output Contract</h3>\n<table class=\"content-table\">\n  <tr><th>Input</th><th>Output</th></tr>\n  <tr><td>Ticket text, alerts, service tags</td><td>Domain category, severity suggestion, owner team, confidence</td></tr>\n</table>\n\n<h3>Classification Dimensions</h3>\n<ul class=\"clean\">\n  <li>Domain: payments, POS, inventory, promotions, fulfillment, infrastructure</li>\n  <li>Severity: SEV1 to SEV4</li>\n  <li>Scope: terminal, store, region, enterprise</li>\n</ul>\n\n<h3>Quality Metrics</h3>\n<ul class=\"clean\">\n  <li>Top-1 precision by incident domain</li>\n  <li>Severity agreement with human responders</li>\n  <li>Misroute-rate reduction</li>\n</ul>\n\n<h3>Feature Set Design</h3>\n<ul class=\"clean\">\n  <li>Text features from ticket summaries and operator notes.</li>\n  <li>System context features: service tags, deployment ring, store region, channel impact.</li>\n  <li>Temporal features: incident burst behavior and recency of similar outages.</li>\n</ul>\n\n<h3>Classifier Guardrails</h3>\n<ul class=\"clean\">\n  <li>Reject low-signal classifications and route to assisted triage queue.</li>\n  <li>Block SEV1 auto-escalation if confidence is below configured threshold.</li>\n  <li>Require explanation fields for owner assignment to avoid opaque routing.</li>\n</ul>\n\n<h3>Calibration Practices</h3>\n<p>Track confidence calibration weekly; ensure that 80 percent confidence buckets are actually close to 80 percent correct in real incidents.</p>",
+      "checkpoint": {
+        "prompt": "Classifier output must include which four fields?",
+        "answer": "Category, severity, ownership suggestion, and confidence."
+      },
+      "flashcards": [
+        {
+          "front": "What output fields make classifier decisions operationally actionable?",
+          "back": "Domain category, severity suggestion, owner team, and confidence with rationale."
+        },
+        {
+          "front": "Why should low-signal classification be rejected instead of forced?",
+          "back": "Forced guesses increase misrouting and can trigger incorrect escalation behavior."
+        },
+        {
+          "front": "What does confidence calibration verify in production?",
+          "back": "That predicted confidence levels reflect real-world correctness rates."
+        },
+        {
+          "front": "Name one non-text feature useful for retail incident classification.",
+          "back": "Service tags, deployment ring, store region, channel impact, or temporal burst behavior."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 5: Agent 2 - Evidence Correlator",
+      "content": "<h3>Objective</h3>\n<p>Assemble the smallest useful evidence set for fast diagnosis.</p>\n\n<h3>Evidence Sources</h3>\n<ul class=\"clean\">\n  <li>Metrics: latency, error rate, resource signals</li>\n  <li>Logs: service and integration traces</li>\n  <li>Change events: deployments, config, feature flags</li>\n  <li>Historical incidents and RCA artifacts</li>\n</ul>\n\n<h3>Output Requirements</h3>\n<ul class=\"clean\">\n  <li>Ranked evidence clusters with confidence</li>\n  <li>Timeline normalized by timezone</li>\n  <li>No claim without source linkage</li>\n</ul>\n\n<h3>Correlation Strategy</h3>\n<ul class=\"clean\">\n  <li>Start from impact signal (checkout failures, auth declines, stock mismatch spikes).</li>\n  <li>Backtrace to service dependencies and recent change windows.</li>\n  <li>Group supporting and contradicting evidence separately.</li>\n</ul>\n\n<h3>Evidence Ranking Heuristics</h3>\n<table class=\"content-table\">\n  <tr><th>Signal Type</th><th>Weight</th><th>Reason</th></tr>\n  <tr><td>Direct error spike at impacted endpoint</td><td>High</td><td>Strong temporal and causal alignment</td></tr>\n  <tr><td>Related service latency increase</td><td>Medium</td><td>May be secondary effect</td></tr>\n  <tr><td>Anecdotal operator comment</td><td>Low</td><td>Useful but not sufficient alone</td></tr>\n</table>\n\n<h3>Anti-Pattern To Avoid</h3>\n<p>Do not present a single-signal story as root cause certainty; always include contradictory evidence checks.</p>",
+      "checkpoint": {
+        "prompt": "Why include change events in correlation?",
+        "answer": "Recent changes are high-probability causes for new production regressions."
+      },
+      "flashcards": [
+        {
+          "front": "What is the first step in evidence correlation for retail incidents?",
+          "back": "Start from impact signals such as checkout failure spikes or auth decline surges."
+        },
+        {
+          "front": "Why separate supporting and contradicting evidence?",
+          "back": "It prevents single-story bias and improves RCA reliability."
+        },
+        {
+          "front": "Which evidence type usually gets the highest weight?",
+          "back": "A direct error spike at the impacted endpoint with temporal alignment."
+        },
+        {
+          "front": "What is an anti-pattern in correlation output?",
+          "back": "Presenting root-cause certainty from one weak signal without contradiction checks."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 6: Agent 3 - RCA Drafter",
+      "content": "<h3>Objective</h3>\n<p>Draft a high-quality RCA using evidence assembled by prior agents.</p>\n\n<h3>RCA Structure</h3>\n<ul class=\"clean\">\n  <li>Incident summary and impact</li>\n  <li>Timeline of key events</li>\n  <li>Most likely root cause with evidence</li>\n  <li>Contributing factors and uncertainty areas</li>\n  <li>Corrective and preventive actions</li>\n</ul>\n\n<h3>Safety Constraints</h3>\n<ul class=\"clean\">\n  <li>Clearly separate facts and hypotheses</li>\n  <li>List missing evidence before conclusion</li>\n  <li>No high-risk recommendations without approval path</li>\n</ul>\n\n<h3>RCA Quality Standards</h3>\n<ul class=\"clean\">\n  <li>Root cause statement must be falsifiable and testable.</li>\n  <li>Timeline entries must include source references and timestamps.</li>\n  <li>Corrective actions must map to owner, due date, and verification metric.</li>\n</ul>\n\n<h3>Narrative Discipline</h3>\n<ul class=\"clean\">\n  <li>Facts: observed events with evidence.</li>\n  <li>Inference: reasoned hypotheses with confidence level.</li>\n  <li>Decision: chosen action with explicit tradeoff.</li>\n</ul>\n\n<h3>Post-Incident Learning Loop</h3>\n<p>Feed accepted RCA outcomes back into retrieval corpus so similar incidents become faster and more consistent to resolve.</p>",
+      "checkpoint": {
+        "prompt": "What is the key benefit of RCA drafting AI?",
+        "answer": "Faster, more consistent post-incident analysis with structured evidence."
+      },
+      "flashcards": [
+        {
+          "front": "What makes a root-cause statement high quality?",
+          "back": "It is falsifiable, testable, and backed by explicit evidence references."
+        },
+        {
+          "front": "How should RCA narrative be structured for clarity?",
+          "back": "Separate facts, inferences with confidence, and final decisions with tradeoffs."
+        },
+        {
+          "front": "What metadata should corrective actions include?",
+          "back": "Owner, due date, and verification metric."
+        },
+        {
+          "front": "Why feed accepted RCA outcomes back into retrieval?",
+          "back": "It improves future incident diagnosis speed and consistency."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 7: Agent 4 - Action Recommender",
+      "content": "<h3>Objective</h3>\n<p>Recommend mitigation actions ordered by safety and expected impact.</p>\n\n<h3>Recommendation Policy</h3>\n<ul class=\"clean\">\n  <li>Rank by reversibility, blast radius, and confidence</li>\n  <li>Mark action as auto-eligible or approval-required</li>\n  <li>Attach verification checks and rollback branch</li>\n</ul>\n\n<h3>Decision Output Contract</h3>\n<ul class=\"clean\">\n  <li>actionId, rationale, confidence, riskLevel, approvalNeeded</li>\n  <li>expectedKPIChange, verificationWindow, rollbackPlan</li>\n</ul>\n\n<h3>Action Taxonomy</h3>\n<ul class=\"clean\">\n  <li>Containment: stop ongoing harm quickly with reversible steps.</li>\n  <li>Stabilization: improve reliability while maintaining service continuity.</li>\n  <li>Remediation: remove root-cause condition through durable fixes.</li>\n</ul>\n\n<h3>Execution Safety Contract</h3>\n<ul class=\"clean\">\n  <li>Pre-checks: dependency health, maintenance window, approval token validity.</li>\n  <li>During checks: KPI guardrails and abort threshold triggers.</li>\n  <li>Post-checks: outcome verification and rollback decision gate.</li>\n</ul>\n\n<h3>Risk Scoring Inputs</h3>\n<p>Use blast radius, reversibility, customer-impact likelihood, and policy sensitivity to compute action risk tier.</p>",
+      "checkpoint": {
+        "prompt": "Core safety principle for action agent?",
+        "answer": "AI recommends; humans approve risk-bearing actions."
+      },
+      "flashcards": [
+        {
+          "front": "How are containment, stabilization, and remediation different?",
+          "back": "Containment stops immediate harm, stabilization improves short-term reliability, remediation removes root causes."
+        },
+        {
+          "front": "What checks are required before releasing a risky action?",
+          "back": "Dependency health, maintenance window validity, and approval token checks."
+        },
+        {
+          "front": "Which factors define action risk tier?",
+          "back": "Blast radius, reversibility, customer-impact likelihood, and policy sensitivity."
+        },
+        {
+          "front": "Why must every recommendation include rollback logic?",
+          "back": "Because mitigations can fail and safe recovery must be preplanned."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 8: Domain-Constrained AI",
+      "content": "<h3>Constraint Layers</h3>\n<ul class=\"clean\">\n  <li>Schema constraints for valid output structures</li>\n  <li>Policy constraints for prohibited actions</li>\n  <li>Knowledge constraints to trusted operational sources</li>\n</ul>\n\n<h3>Hallucination Controls</h3>\n<ul class=\"clean\">\n  <li>Evidence citation required per claim</li>\n  <li>Confidence threshold routes to human review</li>\n  <li>Prompt guardrails for unsupported operations</li>\n</ul>\n\n<h3>Constraint Enforcement Stack</h3>\n<ol class=\"flow-steps\">\n  <li>Prompt constraints define allowed intent and output schema.</li>\n  <li>Retriever constraints limit evidence to trusted sources and freshness windows.</li>\n  <li>Policy engine validates action eligibility before recommendation release.</li>\n  <li>Execution gateway enforces approvals and run-time safety checks.</li>\n</ol>\n\n<h3>Drift Detection Signals</h3>\n<ul class=\"clean\">\n  <li>Growing disagreement between AI suggestions and human decisions</li>\n  <li>Increasing citation gaps in recommendations</li>\n  <li>Rising fallback-to-manual rates for previously stable classes</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "How do you reduce hallucination risk?",
+        "answer": "Constrain retrieval to approved sources and require evidence-backed recommendations."
+      },
+      "flashcards": [
+        {
+          "front": "What are the four layers in the constraint enforcement stack?",
+          "back": "Prompt constraints, retriever constraints, policy validation, and execution gateway controls."
+        },
+        {
+          "front": "Why are retriever constraints critical for safety?",
+          "back": "They limit evidence to trusted and current sources, reducing hallucination risk."
+        },
+        {
+          "front": "What drift signal indicates degrading trust?",
+          "back": "Growing disagreement between AI suggestions and human decisions."
+        },
+        {
+          "front": "What should happen when citation gaps increase?",
+          "back": "Escalate review and tighten release thresholds before scaling usage."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 9: Human Approval Boundaries",
+      "content": "<h3>Approval Matrix</h3>\n<table class=\"content-table\">\n  <tr><th>Action Type</th><th>Approval Requirement</th></tr>\n  <tr><td>Ticket tagging and categorization</td><td>Auto allowed</td></tr>\n  <tr><td>Alert threshold or suppression changes</td><td>Engineer approval</td></tr>\n  <tr><td>Payment/inventory production changes</td><td>Senior approval</td></tr>\n  <tr><td>Customer-impacting reversals/refunds</td><td>Business + engineering approval</td></tr>\n</table>\n\n<h3>Policy Rule</h3>\n<p>Greater financial/compliance risk requires stricter approval and audit requirements.</p>\n\n<h3>Approval Workflow Design</h3>\n<ul class=\"clean\">\n  <li>Single-step approval for medium-risk reversible actions.</li>\n  <li>Dual approval for high-risk customer-financial actions.</li>\n  <li>Emergency path with mandatory retrospective review for SEV1 mitigation.</li>\n</ul>\n\n<h3>Approver Responsibilities</h3>\n<ul class=\"clean\">\n  <li>Verify evidence sufficiency and confidence rationale.</li>\n  <li>Check policy and compliance preconditions.</li>\n  <li>Ensure rollback feasibility before action release.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "Which actions must never be fully autonomous at launch?",
+        "answer": "High-risk financial, inventory, and production data mutation actions."
+      },
+      "flashcards": [
+        {
+          "front": "When is dual approval required in this model?",
+          "back": "For high-risk customer-financial actions with significant policy/compliance exposure."
+        },
+        {
+          "front": "What must an approver validate before action release?",
+          "back": "Evidence sufficiency, policy preconditions, and rollback feasibility."
+        },
+        {
+          "front": "Why keep an emergency approval path for SEV1?",
+          "back": "To reduce harm quickly while enforcing mandatory retrospective governance."
+        },
+        {
+          "front": "What drives stricter approval requirements?",
+          "back": "Higher financial impact and compliance risk."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 10: Retail AI Metrics",
+      "content": "<h3>AI Operations Scorecard</h3>\n<ul class=\"clean\">\n  <li>Classification precision/recall by incident domain</li>\n  <li>Triage-time reduction vs baseline</li>\n  <li>Recommendation acceptance and rollback rates</li>\n  <li>Hallucination incidence and severity</li>\n  <li>Net MTTR improvement by incident class</li>\n</ul>\n\n<h3>Interpretation Guidance</h3>\n<ul class=\"clean\">\n  <li>High confidence + low acceptance implies trust/explainability gap.</li>\n  <li>High acceptance + low KPI movement implies low-action value.</li>\n</ul>\n\n<h3>Operational Metric Layers</h3>\n<table class=\"content-table\">\n  <tr><th>Layer</th><th>Metrics</th><th>Goal</th></tr>\n  <tr><td>Model Quality</td><td>Precision, recall, calibration, citation coverage</td><td>Trustworthy recommendations</td></tr>\n  <tr><td>Workflow Quality</td><td>Triage time, approval latency, rework rate</td><td>Faster safe decisions</td></tr>\n  <tr><td>Business Outcome</td><td>MTTR, incident recurrence, revenue protection</td><td>Real operational impact</td></tr>\n</table>\n\n<h3>Threshold Governance</h3>\n<ul class=\"clean\">\n  <li>Set minimum acceptance quality gates per incident domain.</li>\n  <li>Freeze expansion when hallucination severity crosses threshold.</li>\n  <li>Require corrective action plans for two-week performance regressions.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What metric prevents over-trusting AI outputs?",
+        "answer": "Hallucination rate, reviewed alongside acceptance and incident outcomes."
+      },
+      "flashcards": [
+        {
+          "front": "Why track metrics across model, workflow, and business layers?",
+          "back": "Because model quality alone does not prove operational value or safe execution."
+        },
+        {
+          "front": "What does high acceptance but low KPI movement imply?",
+          "back": "Actions may be easy to approve but not materially effective."
+        },
+        {
+          "front": "When should expansion be frozen?",
+          "back": "When hallucination severity crosses the defined governance threshold."
+        },
+        {
+          "front": "What metric best reflects resilience gains?",
+          "back": "MTTR improvement plus reduced incident recurrence in critical classes."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 11: Retail Knowledge Graph",
+      "content": "<h3>Entity Model</h3>\n<ul class=\"clean\">\n  <li>Nodes: services, incidents, runbooks, alerts, KPIs, stores, dependencies</li>\n  <li>Edges: causes, impacts, owned-by, mitigates, escalates-to</li>\n</ul>\n\n<h3>Practical Value</h3>\n<ul class=\"clean\">\n  <li>Better contextual retrieval for RCA and recommendations</li>\n  <li>Reduced prompt noise through relationship-driven lookup</li>\n  <li>Impact propagation reasoning across dependent systems</li>\n</ul>\n\n<h3>Graph Population Strategy</h3>\n<ul class=\"clean\">\n  <li>Bootstrap from service catalog, runbooks, and incident history.</li>\n  <li>Continuously update edges from postmortem outcomes and approved mitigations.</li>\n  <li>Version graph changes to maintain auditability and rollback.</li>\n</ul>\n\n<h3>Query Patterns Used By Agents</h3>\n<ul class=\"clean\">\n  <li>Given incident class, retrieve likely impacted dependencies and owners.</li>\n  <li>Given failing service, retrieve historically effective mitigations.</li>\n  <li>Given proposed action, retrieve policy constraints and required approvals.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "Why include relationships, not just logs?",
+        "answer": "Because cross-entity links expose hidden dependencies and probable root-cause paths."
+      },
+      "flashcards": [
+        {
+          "front": "Why version knowledge-graph changes?",
+          "back": "To maintain auditability and allow rollback when relationship updates are incorrect."
+        },
+        {
+          "front": "How does the graph improve RCA quality?",
+          "back": "It reveals dependency and ownership relationships that plain logs often miss."
+        },
+        {
+          "front": "What query supports safer action recommendation?",
+          "back": "Given a proposed action, retrieve policy constraints and required approvals."
+        },
+        {
+          "front": "What sources bootstrap graph population?",
+          "back": "Service catalog, runbooks, and historical incident/postmortem data."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 12: AI Evaluation Framework",
+      "content": "<h3>Evaluation Lifecycle</h3>\n<ol class=\"flow-steps\">\n  <li>Offline benchmark with labeled incidents</li>\n  <li>Shadow-mode validation in production streams</li>\n  <li>Limited rollout with approval gates</li>\n  <li>Continuous drift monitoring and retraining policy</li>\n</ol>\n\n<h3>Go/No-Go Criteria</h3>\n<ul class=\"clean\">\n  <li>Meets precision/recall and hallucination thresholds</li>\n  <li>No unresolved high-risk failure modes</li>\n  <li>Operational owner sign-off complete</li>\n</ul>\n\n<h3>Evaluation Dataset Design</h3>\n<ul class=\"clean\">\n  <li>Include balanced normal, edge, and adversarial retail incident scenarios.</li>\n  <li>Label expected classifications, evidence sufficiency, and safe action boundaries.</li>\n  <li>Refresh benchmark monthly to track drift and new failure modes.</li>\n</ul>\n\n<h3>Release Readiness Checklist</h3>\n<ul class=\"clean check\">\n  <li>Offline benchmark above minimum thresholds by domain</li>\n  <li>Shadow-mode error budget not exceeded</li>\n  <li>Policy violations at zero for gated actions</li>\n  <li>On-call and business stakeholders sign-off recorded</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Chapter 12: AI Evaluation Framework?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "Why must evaluation datasets include adversarial incidents?",
+          "back": "They expose failure modes that normal cases hide and stress safety boundaries."
+        },
+        {
+          "front": "What is the purpose of shadow-mode validation?",
+          "back": "To test production realism without allowing AI to execute risky actions."
+        },
+        {
+          "front": "What is a non-negotiable release gate for gated actions?",
+          "back": "Zero policy violations for approval-controlled action classes."
+        },
+        {
+          "front": "How often should benchmark labels be refreshed?",
+          "back": "At least monthly, to capture drift and emerging incident patterns."
+        }
+      ]
+    },
+    {
+      "title": "Practical Lab: Build a Retail AI Pod",
+      "content": "<h3>Lab Objectives</h3>\n<ul class=\"clean\">\n  <li>Define 4-agent pod contracts with typed schemas</li>\n  <li>Design approval boundaries by action risk</li>\n  <li>Evaluate one simulated incident end-to-end</li>\n</ul>\n\n<h3>Required Outputs</h3>\n<ul class=\"clean\">\n  <li>Pod flow diagram with handoff schemas</li>\n  <li>Approval matrix for action types</li>\n  <li>Evaluation report with KPI deltas</li>\n</ul>\n\n<h3>Pass Criteria</h3>\n<ul class=\"clean\">\n  <li>Every recommendation links to evidence</li>\n  <li>Unsafe actions are blocked without approval</li>\n  <li>Rollback path exists for every executed action</li>\n</ul>\n\n<h3>Suggested Build Sequence</h3>\n<ol class=\"flow-steps\">\n  <li>Define incident schema and domain taxonomy.</li>\n  <li>Implement classifier with confidence and owner rationale fields.</li>\n  <li>Implement correlator that outputs evidence bundles with timestamps.</li>\n  <li>Implement RCA and action recommendation with policy gates.</li>\n  <li>Run simulation, evaluate KPIs, and tune thresholds.</li>\n</ol>\n\n<h3>Expected Pitfalls</h3>\n<ul class=\"clean\">\n  <li>Overconfident recommendations with weak evidence links.</li>\n  <li>Missing rollback steps for medium-risk mitigations.</li>\n  <li>Inconsistent severity mapping across teams.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Practical Lab: Build a Retail AI Pod?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "What is the correct implementation order for the lab?",
+          "back": "Define schema and taxonomy, build classifier, build correlator, add RCA/action agents, then simulate and tune KPIs."
+        },
+        {
+          "front": "What is a common lab failure with major safety impact?",
+          "back": "Missing rollback steps for medium-risk mitigations."
+        },
+        {
+          "front": "Why is severity mapping consistency important in the lab?",
+          "back": "Inconsistent severity labels create misaligned approvals and delayed response."
+        },
+        {
+          "front": "What evidence must a successful lab output include?",
+          "back": "Policy-gated decisions, evidence-linked recommendations, and measured KPI deltas."
+        }
+      ]
+    },
+    {
+      "title": "Summary",
+      "content": "<h3>End-to-End Incident Example</h3>\n<ol class=\"flow-steps\">\n  <li>Classifier tags payment incident as SEV1</li>\n  <li>Correlator links timeout spike to recent retry config change</li>\n  <li>RCA drafter proposes likely duplicate-auth root cause</li>\n  <li>Action recommender suggests safe containment + escalation</li>\n  <li>Human approves and verifies KPI recovery</li>\n</ol>\n\n<h3>Developer Takeaways</h3>\n<ul class=\"clean\">\n  <li>Domain contracts and policy gates are core to safe AI operations.</li>\n  <li>Explainability and evidence are mandatory for trust.</li>\n  <li>Success is measured by operational outcomes, not chat quality.</li>\n</ul>\n\n<h3>Operating Model Summary</h3>\n<ul class=\"clean\">\n  <li>AI pods should accelerate analysis, not bypass governance.</li>\n  <li>Domain constraints and policy gates are equal in importance to model quality.</li>\n  <li>Sustainable value comes from measurable reliability and business outcomes.</li>\n</ul>\n\n<h3>Readiness Signals Before Scale-Up</h3>\n<ul class=\"clean\">\n  <li>Stable acceptance rates with low rollback frequency</li>\n  <li>Consistent MTTR improvements over multiple incident classes</li>\n  <li>No recurring high-severity policy exceptions</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Summary?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "What is the single most important operating principle from this module?",
+          "back": "AI accelerates incident response but must never bypass governance and approval boundaries."
+        },
+        {
+          "front": "Why are policy gates as important as model quality?",
+          "back": "High-quality outputs can still cause harm if execution controls are weak."
+        },
+        {
+          "front": "What readiness signal indicates sustainable scale-up?",
+          "back": "Stable acceptance with low rollback and persistent MTTR improvement across incident classes."
+        },
+        {
+          "front": "What indicates the rollout is still unsafe?",
+          "back": "Recurring high-severity policy exceptions or frequent action reversals."
+        }
+      ]
+    },
+    {
+      "title": "Knowledge Checklist and Deliverables",
+      "content": "<h3>Knowledge Checklist</h3>\n<ul class=\"clean check\">\n  <li>Explain why retail AI must be domain-aware</li>\n  <li>Design classifier, correlator, RCA, and recommendation agents</li>\n  <li>Define approval boundaries by risk class</li>\n  <li>Evaluate AI systems with operational KPI scorecards</li>\n</ul>\n\n<h3>Deliverables</h3>\n<ul class=\"clean\">\n  <li>ai/domain-first-agent-design.md</li>\n  <li>ai/retail-agent-eval-scorecard.md</li>\n</ul>\n\n<h3>Deliverable Quality Rubric</h3>\n<table class=\"content-table\">\n  <tr><th>Area</th><th>Strong</th><th>Weak</th></tr>\n  <tr><td>Architecture</td><td>Clear contracts and policy gates</td><td>Vague agent roles</td></tr>\n  <tr><td>Safety</td><td>Explicit approval + rollback logic</td><td>Unbounded autonomy</td></tr>\n  <tr><td>Evaluation</td><td>Outcome metrics with thresholds</td><td>Only generic model scores</td></tr>\n</table>\n\n<h3>Evidence Requirements For Submission</h3>\n<ul class=\"clean\">\n  <li>Attach one incident walkthrough showing end-to-end agent decisions.</li>\n  <li>Show at least one blocked action due to policy boundary.</li>\n  <li>Include before/after KPI snapshot for triage and recovery speed.</li>\n</ul>\n\n<h3>Reviewer Expectations</h3>\n<ul class=\"clean\">\n  <li>Architecture should be explicit, typed, and auditable.</li>\n  <li>Safety model should define who approves what and why.</li>\n  <li>Evaluation should prove operational benefit, not just model confidence.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Knowledge Checklist and Deliverables?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "What submission evidence proves policy-aware behavior?",
+          "back": "At least one blocked action due to policy boundary plus rationale and audit context."
+        },
+        {
+          "front": "What distinguishes a strong architecture deliverable?",
+          "back": "Typed contracts, explicit policy gates, and auditable handoff flows."
+        },
+        {
+          "front": "What makes evaluation evidence reviewer-ready?",
+          "back": "Before/after KPI snapshots tied to concrete incident workflows."
+        },
+        {
+          "front": "What is the most common weak deliverable pattern?",
+          "back": "Generic model claims without operational metrics, safety boundaries, or ownership paths."
+        }
+      ]
+    },
+    {
+      "title": "Capstone: Retail Domain Intelligence Platform",
+      "content": "<h3>Capstone Scope</h3>\n<p>Integrate transaction, inventory, payment, and operations intelligence into one domain-safe AI workflow.</p>\n\n<h3>Architecture Expectations</h3>\n<ul class=\"clean\">\n  <li>Cross-domain impact tracing from a single trigger</li>\n  <li>Policy-gated mitigation recommendation flow</li>\n  <li>Audit-ready evidence and decision logs</li>\n</ul>\n\n<h3>Validation Run</h3>\n<p>Simulate one SEV incident and demonstrate: classification, evidence correlation, RCA, recommended actions, approvals, and KPI recovery.</p>\n\n<h3>Capstone Architecture Components</h3>\n<ul class=\"clean\">\n  <li>Domain event bus for transaction, payment, inventory, and fulfillment signals.</li>\n  <li>Unified retrieval layer for runbooks, incidents, and policy artifacts.</li>\n  <li>Pod orchestration layer with approvals and execution controls.</li>\n  <li>Observability panel for trust, safety, and outcome metrics.</li>\n</ul>\n\n<h3>Capstone Evaluation Targets</h3>\n<ul class=\"clean\">\n  <li>Reduce triage-to-first-action time by at least 25 percent in simulated SEV events.</li>\n  <li>Maintain zero unauthorized high-risk action executions.</li>\n  <li>Demonstrate evidence coverage across all critical recommendations.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Capstone: Retail Domain Intelligence Platform?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "What core layers must exist in the capstone platform?",
+          "back": "Domain event bus, unified retrieval, orchestration with approvals, and trust/safety observability."
+        },
+        {
+          "front": "What capstone metric proves speed improvement?",
+          "back": "At least 25 percent reduction in triage-to-first-action time in SEV simulations."
+        },
+        {
+          "front": "What capstone metric proves safety control?",
+          "back": "Zero unauthorized high-risk action executions."
+        },
+        {
+          "front": "What capstone metric proves recommendation quality?",
+          "back": "High evidence coverage across critical recommendations."
+        }
+      ]
+    },
+    {
+      "title": "Final Role Positioning Statement",
+      "content": "<h3>Role Positioning</h3>\n<p>I design retail-domain intelligent systems that combine operational reliability, policy safety, and measurable AI-assisted incident response.</p>\n\n<h3>Role Readiness Evidence</h3>\n<ul class=\"clean\">\n  <li>Model retail flows using domain-correct events and states</li>\n  <li>Design recovery workflows tied to business KPIs</li>\n  <li>Implement AI pods with explicit approval boundaries</li>\n</ul>\n\n<h3>Portfolio Narrative Guidance</h3>\n<ul class=\"clean\">\n  <li>Frame your work as domain-safe AI system design, not prompt engineering only.</li>\n  <li>Show decisions in terms of risk management, ownership, and measurable outcomes.</li>\n  <li>Emphasize cross-functional alignment with SRE, product, and compliance stakeholders.</li>\n</ul>\n\n<h3>Interview-Ready Claims</h3>\n<ul class=\"clean\">\n  <li>I can design AI workflows that improve incident response while preserving control boundaries.</li>\n  <li>I can define evaluation gates linking model output quality to operational KPIs.</li>\n  <li>I can operationalize policy-aware automation in high-stakes retail systems.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the key takeaway from Final Role Positioning Statement?",
+        "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
+      },
+      "flashcards": [
+        {
+          "front": "How should this module be framed in interviews?",
+          "back": "As domain-safe AI systems engineering, not only prompt engineering."
+        },
+        {
+          "front": "What cross-functional alignment should your narrative demonstrate?",
+          "back": "Coordination with SRE, product, and compliance stakeholders on risk-aware operations."
+        },
+        {
+          "front": "What claim shows operational maturity with AI pods?",
+          "back": "Designing workflows that improve response speed while preserving control boundaries."
+        },
+        {
+          "front": "What claim links AI quality to business outcomes?",
+          "back": "Defining evaluation gates that connect output quality to reliability and KPI impact."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 13: Quick Quiz",
+      "content": "<h3>Quick Quiz</h3><p>Choose one answer for each question. The correct answer is marked with <strong>(Correct)</strong>.</p><div class=\"quiz-q\"><h4>Q1</h4><p>Primary benefit of multi-agent pod architecture is:</p><ul class=\"clean\"><li>A. Fewer controls</li><li class=\"correct\">B. Specialized, auditable workflows (Correct)</li><li>C. No need for runbooks</li><li>D. Eliminating human review</li></ul></div><div class=\"quiz-q\"><h4>Q2</h4><p>A high-value first AI use case is:</p><ul class=\"clean\"><li>A. Auto price changes</li><li class=\"correct\">B. Incident classification and evidence correlation (Correct)</li><li>C. Auto refunds</li><li>D. Auto inventory corrections</li></ul></div><div class=\"quiz-q\"><h4>Q3</h4><p>Which action should require explicit approval?</p><ul class=\"clean\"><li>A. Ticket tagging</li><li class=\"correct\">B. Production price/tender changes (Correct)</li><li>C. Log collection</li><li>D. Alert summarization</li></ul></div><div class=\"quiz-q\"><h4>Q4</h4><p>Hallucination control depends on:</p><ul class=\"clean\"><li>A. More random prompts</li><li class=\"correct\">B. Domain-constrained trusted sources (Correct)</li><li>C. Ignoring runbooks</li><li>D. Removing KPIs</li></ul></div><div class=\"quiz-q\"><h4>Q5</h4><p>A practical AI success KPI is:</p><ul class=\"clean\"><li>A. Color theme usage</li><li class=\"correct\">B. MTTR improvement with safe acceptance rates (Correct)</li><li>C. More dashboards</li><li>D. Fewer lessons</li></ul></div>",
+      "checkpoint": {
+        "prompt": "What is the first safety rule for AI pods in retail ops?",
+        "answer": "AI recommends; humans approve medium/high-risk actions affecting finance, inventory, or compliance."
+      }
+    }
+  ]
+}

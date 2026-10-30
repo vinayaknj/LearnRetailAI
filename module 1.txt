@@ -1,0 +1,561 @@
+Module 1: Retail Operating Model Fundamentals
+Learning Objective
+
+By the end of this module, learners should be able to:
+
+Explain how a retail business operates end-to-end
+Identify major retail systems and their responsibilities
+Understand how data flows through retail operations
+Describe store hierarchy and ownership structures
+Recognize POS dependencies and failure impact
+Chapter 1: What is Retail?
+Definition
+
+Retail is the business of selling products or services directly to consumers.
+
+Examples:
+
+Walmart
+Target
+Costco
+Kroger
+HEB
+Amazon Fresh
+
+A retail company performs much more than selling goods.
+
+It must:
+
+Source products
+Store inventory
+Transport products
+Sell to customers
+Collect payment
+Reconcile finances
+Chapter 2: Retail Value Chain
+End-to-End Retail Flow
+Plain Text
+Supplier
+↓
+Distribution Center
+↓
+Warehouse
+↓
+Store
+↓
+POS Checkout
+↓
+Payment Processor
+↓
+Settlement
+↓
+Finance Systems
+Detailed Explanation
+1. Supplier
+
+Manufactures products.
+
+Examples:
+
+Coca-Cola
+Nestlé
+PepsiCo
+
+Outputs:
+
+Product inventory
+Product master data
+2. Distribution Center (DC)
+
+Central hub for inventory.
+
+Responsibilities:
+
+Receive supplier shipments
+Aggregate inventory
+Route inventory to stores
+
+KPIs:
+
+Inventory turnover
+Order fulfillment rate
+3. Warehouse Operations
+
+Tracks:
+
+On-hand inventory
+Reserved inventory
+Damaged inventory
+
+Systems Used:
+
+WMS (Warehouse Management System)
+4. Store Operations
+
+Activities:
+
+Shelf stocking
+Product receiving
+Cycle counting
+Customer service
+
+Store Metrics:
+
+Sales per hour
+Stock availability
+Shrinkage
+5. Checkout
+
+Customer purchases items.
+
+Flow:
+
+Plain Text
+Scan Item
+↓
+Lookup Product
+↓
+Apply Price
+↓
+Apply Promotion
+↓
+Calculate Tax
+↓
+Payment
+↓
+Receipt
+
+Primary System:
+
+POS
+
+6. Settlement
+
+After payment:
+
+Plain Text
+Customer Card
+↓
+Payment Processor
+↓
+Bank
+↓
+Retailer Account
+
+Settlement may occur later than checkout.
+
+Important distinction:
+
+Sale completed ≠ Money settled
+
+Chapter 3: Retail Organization Hierarchy
+
+Most large retailers follow a hierarchy.
+
+Example
+Plain Text
+Retail Chain
+↓
+Region
+↓
+District / Cluster
+↓
+Store
+↓
+POS Terminal
+Retail Chain
+
+Entire business.
+
+Example:
+
+Plain Text
+HEB
+Region
+
+Geographical grouping.
+
+Example:
+
+Plain Text
+Texas South
+Texas Central
+Texas North
+Cluster / District
+
+A manager may oversee multiple stores.
+
+Example:
+
+Plain Text
+District 48
+Store
+
+Physical location.
+
+Example:
+
+Plain Text
+Store #245
+
+Store Attributes:
+
+Address
+Opening hours
+Store manager
+Inventory
+Terminal
+
+Point of sale workstation.
+
+Example:
+
+Plain Text
+POS 7
+POS 12
+POS 16
+
+Terminal Responsibilities:
+
+Scan items
+Process tenders
+Print receipts
+Chapter 4: Retail Systems Landscape
+
+Retail operations depend on multiple systems.
+
+Core System Map
+Plain Text
+ERP
+|
+|
+IMS -------- POS -------- CRM
+| | |
+| | |
+OMS ------- Loyalty ---- Payments
+POS (Point of Sale)
+
+Purpose:
+
+Execute retail transactions.
+
+Functions:
+
+Scan items
+Price calculation
+Tax calculation
+Discounts
+Tender processing
+
+Examples:
+
+NCR
+Toshiba
+Oracle XStore
+OMS (Order Management System)
+
+Purpose:
+
+Manage customer orders.
+
+Examples:
+
+Buy Online Pickup In Store (BOPIS)
+Curbside pickup
+Delivery orders
+IMS (Inventory Management System)
+
+Purpose:
+
+Track inventory quantity.
+
+Tracks:
+
+Available stock
+Reserved stock
+Damaged stock
+In-transit stock
+ERP (Enterprise Resource Planning)
+
+Purpose:
+
+Business accounting and finance.
+
+Examples:
+
+SAP
+Oracle ERP
+
+Responsible for:
+
+Financial posting
+Procurement
+Accounting
+CRM (Customer Relationship Management)
+
+Purpose:
+
+Manage customer relationships.
+
+Stores:
+
+Customer profiles
+Purchase history
+Marketing preferences
+Loyalty System
+
+Purpose:
+
+Reward repeat customers.
+
+Examples:
+
+Membership points
+Coupons
+Personalized offers
+Payment System
+
+Purpose:
+
+Process payments.
+
+Examples:
+
+Visa
+Mastercard
+Gift Cards
+Mobile Wallets
+Chapter 5: POS Dependencies
+
+Many developers think POS works alone.
+
+It does not.
+
+Upstream Dependencies
+
+Systems POS depends on.
+
+Plain Text
+Price Service
+Inventory Service
+Tax Service
+Promotion Service
+Product Catalog
+Loyalty Service
+Example
+
+Price Service Failure
+
+Impact:
+
+Plain Text
+Wrong Prices
+Customer Complaints
+Sales Loss
+Downstream Dependencies
+
+Systems depending on POS.
+
+Plain Text
+Reporting
+ERP
+Inventory Updates
+Settlement
+Analytics
+Fraud Detection
+Example
+
+POS Transaction Not Uploaded
+
+Impact:
+
+Plain Text
+Inventory Drift
+Incorrect Sales Reports
+Reconciliation Issues
+Chapter 6: Online vs Offline Retail
+Offline Retail
+
+Customer visits store.
+
+Flow:
+
+Plain Text
+Customer → Store → POS
+
+Characteristics:
+
+Immediate fulfillment
+Store inventory
+Cash payments possible
+Online Retail
+
+Customer orders digitally.
+
+Flow:
+
+Plain Text
+Website
+↓
+OMS
+↓
+Warehouse
+↓
+Shipping
+↓
+Customer
+
+Characteristics:
+
+Delivery delay
+Fulfillment complexity
+Shipping costs
+Omnichannel Retail
+
+Combines online and physical operations.
+
+Examples:
+
+BOPIS
+Plain Text
+Buy Online
+Pick Up In Store
+Ship From Store
+Plain Text
+Store inventory used
+to satisfy online order
+Return To Store
+Plain Text
+Online purchase
+returned physically
+Chapter 7: Business KPIs
+
+Every retail system ultimately affects KPIs.
+
+Revenue
+
+Formula:
+
+Plain Text
+Revenue = Units Sold × Selling Price
+Average Basket Value
+Plain Text
+Total Sales / Number of Transactions
+Conversion Rate
+Plain Text
+Customers Purchasing
+---------------------
+Store Visitors
+Inventory Accuracy
+Plain Text
+System Inventory
+vs
+Physical Inventory
+Stock-Out Rate
+
+Measures unavailable products.
+
+High stock-outs cause:
+
+Lost sales
+Customer dissatisfaction
+Real-World Scenario
+Scenario
+
+A promotion is active.
+
+Customer buys:
+
+Plain Text
+2 x Shampoo
+
+Expected:
+
+Plain Text
+Buy One Get One Free
+
+But discount not applied.
+
+Question:
+
+Which system might be failing?
+
+Possible Answers:
+
+Promotion Service ✅
+POS Integration ✅
+Pricing Feed ✅
+
+Business Impact:
+
+Customer complaints
+Manual overrides
+Revenue reporting inconsistencies
+Quiz Questions
+Q1
+
+Which system is primarily responsible for inventory tracking?
+
+A. CRM
+ B. IMS ✅
+ C. ERP
+ D. POS
+
+Q2
+
+What is an upstream dependency of POS?
+
+A. ERP B. Analytics C. Pricing Service ✅ D. Reporting
+
+Q3
+
+Which system handles online order orchestration?
+
+A. OMS ✅ B. CRM C. POS D. ERP
+
+Q4
+
+What comes after authorization in a payment lifecycle?
+
+A. Inventory B. Settlement C. Capture ✅ D. Loyalty
+
+Practical Assignment 1
+
+Create:
+
+domain/retail-system-map.md
+
+Include:
+
+All systems
+Ownership
+Data flows
+Upstream dependencies
+Downstream dependencies
+Practical Assignment 2
+
+Create:
+
+domain/store-operating-model.md
+
+Include:
+
+Retail hierarchy
+Store roles
+Daily operations
+Opening procedures
+Closing procedures
+Incident ownership matrix
+Module 1 Completion Criteria
+
+A learner should be able to answer without notes:
+
+What are the major retail systems?
+How does inventory move from supplier to customer?
+What does POS depend on?
+Difference between OMS and IMS?
+Difference between online, offline, and omnichannel retail?
+Business impact of POS downtime?
+How does money move from customer card to retailer account?
+
+This amount of content is typically enough for Week 1-2 learning material in an app, and can be split into 10-12 lessons with quizzes and flashcards.

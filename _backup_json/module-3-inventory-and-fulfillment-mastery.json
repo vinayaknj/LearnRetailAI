@@ -1,0 +1,135 @@
+{
+  "id": "m3",
+  "title": "Inventory and Fulfillment Domain Mastery",
+  "weeks": "Weeks 5-6",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "\n          <h3>Purpose</h3>\n          <p>Inventory is the lifeblood of retail operations.</p>\n          <p>Customers buy products, but retailers manage inventory.</p>\n          <p>A retailer can survive a temporary POS issue. It cannot survive prolonged inventory inaccuracy.</p>\n          <p>Poor inventory management causes lost sales, stock-outs, excess inventory, shrinkage, customer dissatisfaction, forecasting errors, and financial losses.</p>\n          <p>This module teaches how inventory moves, changes, gets reconciled, and supports omnichannel retail operations.</p>\n          <h3>Learning Outcomes</h3>\n          <ul class=\"clean\">\n            <li>Explain inventory lifecycle</li>\n            <li>Differentiate inventory states</li>\n            <li>Understand replenishment models</li>\n            <li>Identify causes of stock drift</li>\n            <li>Explain receiving and transfer processes</li>\n            <li>Understand cycle counting and inventory accuracy</li>\n            <li>Describe omnichannel fulfillment workflows</li>\n            <li>Diagnose inventory-related production incidents</li>\n            <li>Design AI agents for inventory intelligence</li>\n          </ul>\n        ",
+      "checkpoint": {
+        "prompt": "Why is inventory accuracy existential for retail?",
+        "answer": "Persistent inaccuracy breaks sales, replenishment, and customer trust at the same time."
+      }
+    },
+    {
+      "title": "Chapter 1: Inventory Fundamentals",
+      "content": "\n          <h3>What is Inventory?</h3>\n          <p>Inventory is all merchandise owned or controlled by the retailer for sale.</p>\n          <p>Examples: products in warehouse, products on shelves, products in backroom, products reserved for pickup, and products in transit.</p>\n\n          <h3>Why Inventory Matters</h3>\n          <p>Inventory impacts revenue, customer satisfaction, working capital, forecast accuracy, and replenishment efficiency.</p>\n          <p><strong>Too little inventory:</strong> lost sales and out-of-stock situations.</p>\n          <p><strong>Too much inventory:</strong> storage cost, expiration risk, and markdown losses.</p>\n\n          <h3>Inventory Lifecycle</h3>\n          <pre class=\"flow-block\">Supplier\n  -> Distribution Center\n  -> Warehouse\n  -> Store Receiving\n  -> Store Shelf\n  -> Customer Purchase\n  -> Inventory Reduction</pre>\n          <p>Alternative paths: transfer, return, damage, shrinkage, online fulfillment.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Two opposite inventory risk extremes?",
+        "answer": "Stock-outs from too little stock and carrying/markdown losses from too much stock."
+      }
+    },
+    {
+      "title": "Chapter 2: Inventory States",
+      "content": "\n          <p>Inventory exists in different business states. Understanding these states is critical.</p>\n\n          <h3>On-Hand Inventory</h3>\n          <p>Physical inventory present at location.</p>\n          <pre class=\"flow-block\">Store 100\nMilk = 50 Units</pre>\n\n          <h3>Available-to-Sell (ATS)</h3>\n          <p>Inventory available for purchase.</p>\n          <pre class=\"flow-block\">ATS = On-Hand - Reserved\nOn-Hand = 50\nReserved = 10\nATS = 40</pre>\n\n          <h3>Reserved Inventory</h3>\n          <p>Inventory committed to orders. Example: BOPIS TV removed from ATS until pickup.</p>\n\n          <h3>In-Transit Inventory</h3>\n          <p>Inventory moving between locations and not yet sellable.</p>\n\n          <h3>Damaged Inventory</h3>\n          <p>Broken, expired, water damaged, or packaging damaged; must be separated from sellable stock.</p>\n\n          <h3>Return Inventory</h3>\n          <p>Products returned by customers. Outcomes: restock, refurbish, destroy, return-to-vendor.</p>\n\n          <h3>Inventory State Diagram</h3>\n          <pre class=\"flow-block\">Received\n  -> On-Hand\n  -> Available To Sell\n  -> Sold\n\nAlternative routes:\nOn-Hand -> Damaged\nOn-Hand -> Transfer\nOn-Hand -> Reserved</pre>\n        ",
+      "checkpoint": {
+        "prompt": "What does ATS represent?",
+        "answer": "Sellable units after reservations are deducted."
+      }
+    },
+    {
+      "title": "Chapter 3: Inventory Movements",
+      "content": "\n          <p>Inventory changes through events. Every inventory adjustment should have a business reason.</p>\n\n          <h3>Receiving</h3>\n          <pre class=\"flow-block\">PO: 12345\nExpected: 100 Cases\nReceived: 100 Cases</pre>\n          <p>Inventory increases.</p>\n\n          <h3>Sales</h3>\n          <pre class=\"flow-block\">Milk: 50\nCustomer Buys 2\nInventory = 48</pre>\n          <p>Inventory decreases.</p>\n\n          <h3>Returns</h3>\n          <p>Customer returns item. Inventory usually increases.</p>\n\n          <h3>Transfers</h3>\n          <pre class=\"flow-block\">Store 100 -> Store 120\nStore 100 = -10\nStore 120 = +10</pre>\n\n          <h3>Adjustments</h3>\n          <p>Manual changes for damage, theft, audits, and corrections. Should be highly controlled.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Why reason codes for adjustments?",
+        "answer": "To preserve auditability and reduce unexplained drift."
+      }
+    },
+    {
+      "title": "Chapter 4: Receiving Process",
+      "content": "\n          <p>Receiving is where inventory officially enters store ownership.</p>\n\n          <h3>Receiving Workflow</h3>\n          <pre class=\"flow-block\">PO Created\n  -> Shipment Sent\n  -> Store Receives Shipment\n  -> Count Verification\n  -> Inventory Updated</pre>\n\n          <h3>Receiving Variance</h3>\n          <pre class=\"flow-block\">Expected = 100\nReceived = 95\nShortage = 5</pre>\n          <p>Investigation required.</p>\n\n          <h3>Over Receiving</h3>\n          <pre class=\"flow-block\">Expected = 100\nReceived = 110</pre>\n          <p>Possible causes: supplier error, count error, data error.</p>\n\n          <h3>Receiving KPIs</h3>\n          <p>Receiving Accuracy, Shipment Accuracy, Supplier Compliance, Receiving Time.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Main receiving variance types?",
+        "answer": "Short receiving and over receiving against expected quantity."
+      }
+    },
+    {
+      "title": "Chapter 5: Inventory Replenishment",
+      "content": "\n          <p>Replenishment ensures products remain available.</p>\n\n          <h3>Why Replenishment Matters</h3>\n          <p>Without replenishment: empty shelves, lost revenue, customer churn.</p>\n\n          <h3>Reorder Point</h3>\n          <pre class=\"flow-block\">Current Stock = 20\nReorder Point = 15\nNo action yet.\n\nAt Stock = 15\nReplenishment initiated.</pre>\n\n          <h3>Safety Stock</h3>\n          <p>Extra inventory maintained for demand fluctuations, supplier delays, and unexpected sales.</p>\n\n          <h3>Forecast-Based Replenishment</h3>\n          <p>Uses historical sales, seasonality, promotions, weather, and local events.</p>\n\n          <h3>Replenishment KPIs</h3>\n          <p>Stock-Out Rate, Fill Rate, Inventory Turnover, Forecast Accuracy.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Purpose of safety stock?",
+        "answer": "Buffer uncertainty in demand and supply."
+      }
+    },
+    {
+      "title": "Chapter 6: Stock-Out Prevention",
+      "content": "\n          <h3>What is a Stock-Out?</h3>\n          <p>Product unavailable despite demand. Example: customer wants product but shelf is empty.</p>\n\n          <h3>Causes</h3>\n          <p>Poor forecasting, delayed replenishment, incorrect inventory data, unexpected demand, supplier issues.</p>\n\n          <h3>Business Impact</h3>\n          <p>Revenue loss, customer dissatisfaction, and competitor purchases.</p>\n\n          <h3>Detection Signals</h3>\n          <p>ATS = 0, shelf-empty alerts, sales drop anomalies, pickup failures.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Strongest immediate stock-out signal?",
+        "answer": "ATS equals zero under active demand."
+      }
+    },
+    {
+      "title": "Chapter 7: Store Transfers",
+      "content": "\n          <p>Stores often balance inventory through transfers.</p>\n\n          <h3>Example</h3>\n          <pre class=\"flow-block\">Store A: 500 Units\nStore B: 10 Units\nTransfer: 100 Units from Store A to B</pre>\n\n          <h3>Transfer Lifecycle</h3>\n          <pre class=\"flow-block\">Transfer Request\n  -> Approval\n  -> Shipment\n  -> In Transit\n  -> Receiving\n  -> Inventory Updated</pre>\n\n          <h3>Common Problems</h3>\n          <p>Missing inventory, wrong quantities, transfer delays, lost shipments.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Where do transfer failures cluster?",
+        "answer": "Shipment/receiving handoff and in-transit tracking gaps."
+      }
+    },
+    {
+      "title": "Chapter 8: Inventory Shrinkage",
+      "content": "\n          <pre class=\"flow-block\">Shrinkage = Expected Inventory - Actual Inventory</pre>\n          <h3>Causes</h3>\n          <p><strong>Theft:</strong> shoplifting and employee theft.</p>\n          <p><strong>Administrative Errors:</strong> wrong counts, wrong receiving, data entry mistakes.</p>\n          <p><strong>Vendor Fraud:</strong> missing shipment quantities.</p>\n          <p><strong>Damage:</strong> broken or expired products.</p>\n\n          <h3>Shrinkage Impact</h3>\n          <p>Reduced profit, inventory inaccuracy, replenishment errors.</p>\n\n          <h3>Shrinkage KPI</h3>\n          <p>Shrink %, lost inventory value, high-risk departments.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Why does shrinkage affect replenishment?",
+        "answer": "False stock signals trigger wrong reorder behavior."
+      }
+    },
+    {
+      "title": "Chapter 9: Cycle Counting",
+      "content": "\n          <h3>Why Cycle Counts Matter</h3>\n          <p>System inventory eventually diverges from reality. Cycle counts correct errors.</p>\n\n          <h3>Example</h3>\n          <pre class=\"flow-block\">System: 50 Bottles\nPhysical Count: 47 Bottles\nDifference: -3</pre>\n          <p>Investigation required.</p>\n\n          <h3>Counting Approaches</h3>\n          <p>Full physical count (usually annual) and recurring cycle counts (daily/weekly/monthly).</p>\n\n          <h3>Inventory Accuracy Formula</h3>\n          <pre class=\"flow-block\">Accurate Items / Counted Items\n\n980 Accurate Items\n1000 Counted Items\nAccuracy = 98%</pre>\n        ",
+      "checkpoint": {
+        "prompt": "Why cycle count instead of only annual full count?",
+        "answer": "Continuous correction with less operational disruption."
+      }
+    },
+    {
+      "title": "Chapter 10: Omnichannel Fulfillment",
+      "content": "\n          <h3>Buy Online Pickup In Store (BOPIS)</h3>\n          <pre class=\"flow-block\">Order Created\n  -> Inventory Reserved\n  -> Store Picks Product\n  -> Customer Pickup\n  -> Order Complete</pre>\n\n          <h3>Ship From Store</h3>\n          <pre class=\"flow-block\">Online Order\n  -> Store Selected\n  -> Item Picked\n  -> Packed\n  -> Shipped</pre>\n\n          <h3>Return To Store</h3>\n          <p>Online purchase returned physically, requiring cross-system visibility, order lookup, and refund capability.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Common BOPIS failure pattern?",
+        "answer": "System reserves item but store cannot physically locate it."
+      }
+    },
+    {
+      "title": "Chapter 11: Stock Drift and Reconciliation",
+      "content": "\n          <h3>What is Stock Drift?</h3>\n          <p>Inventory differs between systems.</p>\n          <pre class=\"flow-block\">POS = 100\nIMS = 95\nMismatch exists.</pre>\n\n          <h3>Common Causes</h3>\n          <p>Sale upload failure, duplicate messages, transfer errors, improper manual adjustments, offline store sync delay.</p>\n\n          <h3>Reconciliation Process</h3>\n          <pre class=\"flow-block\">Compare Systems\n  -> Identify Variance\n  -> Determine Root Cause\n  -> Correct Inventory\n  -> Document Adjustment</pre>\n        ",
+      "checkpoint": {
+        "prompt": "First reconciliation step?",
+        "answer": "Compare systems and quantify variance."
+      }
+    },
+    {
+      "title": "Chapter 12: Inventory KPIs",
+      "content": "\n          <p>Core KPIs: inventory accuracy, stock-out rate, fill rate, inventory turnover, and days of supply.</p>\n          <pre class=\"flow-block\">Inventory Turnover = COGS / Average Inventory</pre>\n          <pre class=\"flow-block\">Days of Supply = Current Stock / Average Daily Sales</pre>\n          <p>Higher turnover generally indicates healthier inventory movement.</p>\n        ",
+      "checkpoint": {
+        "prompt": "KPI for demand satisfaction quality?",
+        "answer": "Fill rate."
+      }
+    },
+    {
+      "title": "Chapter 13: Common Inventory Incidents",
+      "content": "\n          <h3>Incident 1: Inventory Not Updated After Sale</h3>\n          <p>Symptom: store shows stock but shelf empty. Cause: transaction upload problem.</p>\n\n          <h3>Incident 2: Negative Inventory</h3>\n          <pre class=\"flow-block\">Inventory = -5</pre>\n          <p>Usually indicates data issues.</p>\n\n          <h3>Incident 3: BOPIS Inventory Mismatch</h3>\n          <p>Customer ordered but store cannot find product. Cause: reserved inventory logic failure.</p>\n\n          <h3>Incident 4: Transfer Inventory Lost</h3>\n          <p>Shipped but never received. Cause: process failure, logistics error, or sync issue.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Most customer-visible inventory incident?",
+        "answer": "Promised item unavailable at pickup despite confirmed order."
+      }
+    },
+    {
+      "title": "Chapter 14: AI Applications in Inventory Management",
+      "content": "\n          <h3>Inventory Drift Detection Agent</h3>\n          <p>Inputs: POS data, IMS data, transfers, cycle counts. Output: probable drift root causes.</p>\n\n          <h3>Replenishment Recommendation Agent</h3>\n          <p>Analyzes demand, inventory, seasonality, promotions and suggests reorder quantities.</p>\n\n          <h3>Shrinkage Analysis Agent</h3>\n          <p>Detects theft patterns, store outliers, and high-risk categories.</p>\n\n          <h3>Fulfillment Intelligence Agent</h3>\n          <p>Monitors BOPIS, ship-from-store, transfer delays and recommends actions.</p>\n\n          <h3>Failure Scenarios Every Specialist Must Know</h3>\n          <ul class=\"clean\">\n            <li>Sale succeeded but inventory not deducted</li>\n            <li>Inventory deducted twice</li>\n            <li>Transfer shipped but not received</li>\n            <li>Reserved inventory never released</li>\n            <li>BOPIS order cannot be fulfilled</li>\n            <li>Negative inventory values</li>\n            <li>Store shows stock but shelf empty</li>\n            <li>Cycle count variance spikes</li>\n            <li>Supplier shipment discrepancy</li>\n            <li>Damaged inventory sold accidentally</li>\n            <li>Inventory synchronization backlog</li>\n            <li>Promotion causes unexpected stock depletion</li>\n            <li>Omnichannel overselling</li>\n            <li>Duplicate adjustment transactions</li>\n            <li>Inventory drift across systems</li>\n          </ul>\n        ",
+      "checkpoint": {
+        "prompt": "First AI use case to deploy in inventory domain?",
+        "answer": "Drift detection with probable root-cause ranking."
+      }
+    },
+    {
+      "title": "Chapter 15: Module 3 Knowledge Checklist and Deliverables",
+      "content": "\n          <ul class=\"clean\">\n            <li>Difference between On-Hand, ATS, Reserved, In-Transit, and Damaged inventory</li>\n            <li>Inventory lifecycle from supplier to customer</li>\n            <li>How replenishment works</li>\n            <li>Causes of stock-outs</li>\n            <li>How store transfers work</li>\n            <li>How shrinkage impacts profitability</li>\n            <li>How cycle counting improves inventory accuracy</li>\n            <li>BOPIS, Ship-from-Store, and Return-to-Store workflows</li>\n            <li>Top causes of stock drift</li>\n            <li>Inventory KPIs and business impact</li>\n            <li>Where AI agents can improve inventory operations</li>\n          </ul>\n          <p><strong>Deliverables</strong></p>\n          <p><strong>domain/inventory-event-model.md</strong> should include inventory states, inventory events, state transitions, reconciliation logic, and omnichannel flows.</p>\n          <p><strong>domain/stock-drift-root-causes.md</strong> should include drift taxonomy, detection methods, RCA templates, incident examples, and recovery procedures.</p>\n          <p>This module is the core knowledge layer before Module 4 (Payments, Compliance, and Risk), where inventory and sales connect to settlement, PCI, reconciliation, and fraud detection.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Which two artifacts prove Module 3 completion?",
+        "answer": "inventory-event-model and stock-drift-root-causes documents."
+      }
+    }
+  ]
+}

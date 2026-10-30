@@ -1,0 +1,353 @@
+{
+  "id": "m8",
+  "title": "AI Rollout, Governance, and Value Realization",
+  "weeks": "Weeks 15-16",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "<h3>Purpose</h3>\n<p>This module is about converting AI capability into stable business outcomes. You will learn how to move from one successful pilot to a governed multi-domain rollout where reliability, accountability, and measurable value remain intact.</p>\n<p>Goal: build an execution model where AI programs are not judged by demos, but by operational KPIs, risk posture, and financial impact over repeated cycles.</p>\n\n<h3>Why This Module Exists</h3>\n<ul class=\"clean\">\n  <li>Many AI initiatives fail after pilot because rollout governance is weak.</li>\n  <li>Teams optimize model quality but ignore adoption, policy, and ownership design.</li>\n  <li>Executives need evidence of value realization, not only usage charts.</li>\n</ul>\n\n<h3>Learning Outcomes</h3>\n<ul class=\"clean check\">\n  <li>Prioritize AI use-case portfolios by value and risk</li>\n  <li>Design pilot and shadow-mode rollout plans</li>\n  <li>Define human-in-the-loop governance boundaries</li>\n  <li>Measure AI program ROI with operational and financial KPIs</li>\n  <li>Scale AI pods across domains without losing control quality</li>\n</ul>\n\n<h3>Scope</h3>\n<ul class=\"clean\">\n  <li>In scope: rollout strategy, governance controls, adoption system, and value realization tracking.</li>\n  <li>Out of scope: low-level model architecture internals covered in prior modules.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What is the primary objective of Module 8?",
+        "answer": "To operationalize AI programs with governance and measurable business outcomes at enterprise scale."
+      },
+      "flashcards": [
+        {
+          "front": "What does this module add beyond AI architecture?",
+          "back": "Rollout strategy, governance controls, adoption design, and value realization metrics."
+        },
+        {
+          "front": "What is considered out of scope in Module 8?",
+          "back": "Low-level model internals and algorithmic design details."
+        },
+        {
+          "front": "What is the program-level success definition here?",
+          "back": "Safe, scalable AI adoption with clear operational and financial impact."
+        },
+        {
+          "front": "Why is this module important after data platform and AI pod modules?",
+          "back": "Because technical capability must translate into governed execution and sustained business value."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 1: Use-Case Portfolio Prioritization",
+      "content": "<h3>Portfolio Lens</h3>\n<p>Do not prioritize use cases by novelty. Prioritize by risk-adjusted business return and execution feasibility. A portfolio approach protects budget and avoids overcommitting to low-readiness ideas.</p>\n\n<h3>Scoring Model</h3>\n<table class=\"content-table\">\n  <tr><th>Dimension</th><th>Question</th></tr>\n  <tr><td>Value</td><td>How much customer/revenue/reliability gain is expected?</td></tr>\n  <tr><td>Risk</td><td>What compliance, financial, or operational harm is possible?</td></tr>\n  <tr><td>Readiness</td><td>Do data, ownership, and workflows exist to deliver safely?</td></tr>\n</table>\n\n<h3>Scoring Method Example</h3>\n<ul class=\"clean\">\n  <li>Score each dimension on a 1-5 scale.</li>\n  <li>Apply higher weight to risk in regulated and payment-adjacent workflows.</li>\n  <li>Reject high-value ideas if readiness is below minimum threshold.</li>\n</ul>\n\n<h3>Retail Example</h3>\n<p>Dynamic promo recommendations may have high value, but if customer identity confidence is low and approval workflow is undefined, rollout should wait. In contrast, incident triage summarization with clear runbook boundaries often reaches production faster and safer.</p>\n\n<h3>Rule</h3>\n<p>Start with high-value, manageable-risk, high-readiness opportunities to prove repeatable outcomes before expanding scope.</p>",
+      "checkpoint": {
+        "prompt": "What combination is best for first-wave AI rollout?",
+        "answer": "High value, manageable risk, and strong readiness."
+      },
+      "flashcards": [
+        {
+          "front": "Why use a portfolio model for AI rollout?",
+          "back": "It allocates investment toward the best risk-adjusted business outcomes instead of hype-driven picks."
+        },
+        {
+          "front": "What are the three prioritization dimensions?",
+          "back": "Value, risk, and readiness."
+        },
+        {
+          "front": "Why avoid low-readiness use cases early?",
+          "back": "They delay outcomes and often fail due to missing data, ownership, or operating controls."
+        },
+        {
+          "front": "What is a practical first-wave use-case profile?",
+          "back": "High-impact opportunities with clear data and controllable operational risk."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 2: Pilot Design and Success Criteria",
+      "content": "<h3>Pilot Goals</h3>\n<ul class=\"clean\">\n  <li>Validate measurable operational outcomes</li>\n  <li>Identify failure modes early</li>\n  <li>Prove governance controls under real load</li>\n</ul>\n\n<h3>What a Pilot Must Prove</h3>\n<p>A pilot should prove not only that recommendations look good, but that operations can execute safely with clear ownership when the system is wrong, delayed, or uncertain.</p>\n\n<h3>Pilot Design Checklist</h3>\n<ul class=\"clean check\">\n  <li>Defined baseline and target KPI deltas</li>\n  <li>Scope boundaries by region/channel/use-case</li>\n  <li>Approval matrix for risky actions</li>\n  <li>Explicit stop conditions and rollback criteria</li>\n</ul>\n\n<h3>Pilot Evaluation Dimensions</h3>\n<ul class=\"clean\">\n  <li><strong>Outcome:</strong> improvement in target KPI with confidence interval.</li>\n  <li><strong>Safety:</strong> violation rate, rollback frequency, and policy exception handling.</li>\n  <li><strong>Operability:</strong> escalation clarity, support load, and incident recovery speed.</li>\n</ul>\n\n<h3>Failure Pattern</h3>\n<p>Pilots fail when teams optimize presentation quality instead of production constraints, edge-case handling, and measurable business deltas.</p>",
+      "checkpoint": {
+        "prompt": "What makes a pilot decision-ready for scale-up?",
+        "answer": "Clear KPI movement, controlled risk behavior, and validated governance under realistic conditions."
+      },
+      "flashcards": [
+        {
+          "front": "What should a pilot prove besides model quality?",
+          "back": "Operational value, governance reliability, and safe execution patterns."
+        },
+        {
+          "front": "Why are explicit stop conditions essential?",
+          "back": "They prevent risk escalation when performance or policy behavior degrades."
+        },
+        {
+          "front": "What is a common pilot anti-pattern?",
+          "back": "Optimizing for presentation outputs rather than production constraints and KPIs."
+        },
+        {
+          "front": "What is required before approving pilot expansion?",
+          "back": "Verified KPI gains plus evidence that safety and approval controls worked as designed."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 3: Shadow-Mode Validation",
+      "content": "<h3>What Shadow Mode Means</h3>\n<p>AI runs against live traffic and current context but cannot execute production actions. This phase reveals behavioral gaps that synthetic and offline tests usually miss.</p>\n\n<h3>What You Validate</h3>\n<ul class=\"clean\">\n  <li>Recommendation quality against real-world outcomes</li>\n  <li>Agreement/disagreement with human operators</li>\n  <li>Policy and compliance alignment before live activation</li>\n</ul>\n\n<h3>Key Metrics in Shadow Mode</h3>\n<ul class=\"clean\">\n  <li>Acceptance tendency by operator cohort and shift</li>\n  <li>High-severity disagreement rate on sensitive decisions</li>\n  <li>Policy-block frequency and root-cause category</li>\n  <li>Recommendation latency under peak volume</li>\n</ul>\n\n<h3>Operational Pattern</h3>\n<p>Review disagreement cases weekly with domain leads. Categorize whether divergence came from model limits, stale data, unclear policy, or operator playbook ambiguity. Use these reviews to decide whether to retrain, re-scope, or hold rollout.</p>\n\n<h3>Go/No-Go Rule</h3>\n<p>No production action rights until shadow-mode error budget and policy thresholds are satisfied across repeated cycles, not one-time snapshots.</p>",
+      "checkpoint": {
+        "prompt": "Why is shadow mode critical before live execution?",
+        "answer": "It tests real-world behavior safely without risking customer or financial harm."
+      },
+      "flashcards": [
+        {
+          "front": "What is the core purpose of shadow mode?",
+          "back": "Validate live-context AI behavior without allowing autonomous production actions."
+        },
+        {
+          "front": "What metric indicates trust readiness in shadow mode?",
+          "back": "Consistent recommendation quality with acceptable disagreement and policy compliance rates."
+        },
+        {
+          "front": "Why isn’t offline benchmark success enough?",
+          "back": "Offline tests miss live data complexity, workflow constraints, and operator behavior differences."
+        },
+        {
+          "front": "What blocks transition from shadow to active mode?",
+          "back": "Unmet error-budget or policy-compliance thresholds."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 4: Human-in-the-Loop Operating Model",
+      "content": "<h3>Role Split</h3>\n<ul class=\"clean\">\n  <li>AI: summarize, classify, correlate, recommend</li>\n  <li>Human: approve, override, and own accountable decisions</li>\n</ul>\n\n<h3>Decision Boundary</h3>\n<table class=\"content-table\">\n  <tr><th>Action Tier</th><th>Mode</th></tr>\n  <tr><td>Low-risk reversible</td><td>Conditional automation</td></tr>\n  <tr><td>Medium-risk</td><td>Single approver</td></tr>\n  <tr><td>High-risk financial/compliance</td><td>Dual approver + audit trail</td></tr>\n</table>\n\n<h3>How to Define Boundaries Correctly</h3>\n<ul class=\"clean\">\n  <li>Classify each action by reversibility, customer impact, and policy exposure.</li>\n  <li>Map each class to approval depth and evidence requirements.</li>\n  <li>Embed approval paths in tooling, not only SOP documents.</li>\n</ul>\n\n<h3>Retail Example</h3>\n<p>AI can auto-suggest inventory reallocation options, but transfers affecting perishables or regulated products may require additional approver roles and explicit compliance checks before execution.</p>\n\n<h3>Control Requirement</h3>\n<p>Every recommendation must include rationale, evidence, confidence level, and rollback implications so approvers can make accountable decisions.</p>",
+      "checkpoint": {
+        "prompt": "What is the non-negotiable principle of human-in-the-loop design?",
+        "answer": "Humans remain accountable for medium/high-risk decisions with auditable approval boundaries."
+      },
+      "flashcards": [
+        {
+          "front": "Why keep humans in medium/high-risk decisions?",
+          "back": "To preserve accountability and prevent unsafe automation in financially or legally sensitive contexts."
+        },
+        {
+          "front": "What information must accompany each AI recommendation?",
+          "back": "Evidence, rationale, confidence, and rollback implications."
+        },
+        {
+          "front": "What determines approval depth in this model?",
+          "back": "Risk tier, reversibility, and potential compliance/financial impact."
+        },
+        {
+          "front": "What is a strong boundary example for high-risk actions?",
+          "back": "Dual approvals plus audit logging before execution."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 5: Policy, Compliance, and Audit Controls",
+      "content": "<h3>Control Objectives</h3>\n<ul class=\"clean\">\n  <li>Prevent prohibited action types</li>\n  <li>Enforce approval routing and evidence retention</li>\n  <li>Provide traceability for audits and incident review</li>\n</ul>\n\n<h3>Audit Artifacts</h3>\n<ul class=\"clean\">\n  <li>Prompt/context lineage</li>\n  <li>Policy decision records</li>\n  <li>Approver identity and timestamps</li>\n  <li>Execution result and rollback status</li>\n</ul>\n\n<h3>Enforcement Architecture</h3>\n<ul class=\"clean\">\n  <li>Policy engine evaluates recommendations before action handoff.</li>\n  <li>Approval workflow service enforces role-based signoff.</li>\n  <li>Immutable audit log stores context, policy verdict, and execution outcome.</li>\n</ul>\n\n<h3>Common Governance Gaps</h3>\n<ul class=\"clean\">\n  <li>Policies exist in docs but not in runtime controls.</li>\n  <li>Audit logs store outcomes but not decision context.</li>\n  <li>Approval bypasses during incidents are not back-reviewed.</li>\n</ul>\n\n<h3>Governance Rule</h3>\n<p>Controls must be enforceable by platform policy engines, continuously monitored, and testable in release gates.</p>",
+      "checkpoint": {
+        "prompt": "What makes governance controls trustworthy in production?",
+        "answer": "They are system-enforced, auditable, and consistently applied at decision and execution time."
+      },
+      "flashcards": [
+        {
+          "front": "Why are documented policies alone insufficient?",
+          "back": "Because unenforced policies drift in practice; platform-level enforcement is required."
+        },
+        {
+          "front": "Name two mandatory audit artifacts for AI actions.",
+          "back": "Policy decision records and approver/timestamp execution trace."
+        },
+        {
+          "front": "What is the main purpose of policy engines in rollout?",
+          "back": "To block disallowed actions and route approvals consistently based on risk rules."
+        },
+        {
+          "front": "What should be logged for rollback transparency?",
+          "back": "Rollback trigger, action details, outcome status, and responsible approver/owner."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 6: Change Management and Adoption",
+      "content": "<h3>Adoption Reality</h3>\n<p>Even strong AI systems fail when operators do not trust recommendations, do not know escalation paths, or cannot interpret risk signals. Adoption design is a core reliability function, not a change-management afterthought.</p>\n\n<h3>Adoption Levers</h3>\n<ul class=\"clean\">\n  <li>Role-based onboarding and scenario drills</li>\n  <li>Clear operator playbooks and escalation paths</li>\n  <li>Feedback loops for recommendation quality and usability</li>\n</ul>\n\n<h3>What Good Enablement Looks Like</h3>\n<ul class=\"clean\">\n  <li>Operators can explain recommendation confidence and risk class.</li>\n  <li>Escalation ownership is clear by shift, region, and function.</li>\n  <li>Override reasons are captured and reviewed to improve system behavior.</li>\n</ul>\n\n<h3>Rollout Sequence</h3>\n<ol class=\"flow-steps\">\n  <li>Pilot cohort onboarding</li>\n  <li>Guided operation period</li>\n  <li>Measured autonomy expansion</li>\n  <li>Steady-state governance reviews</li>\n</ol>\n\n<h3>Failure Pattern</h3>\n<p>Teams often measure login and usage but ignore override quality and escalation hygiene, leading to fragile adoption that collapses during incident pressure.</p>",
+      "checkpoint": {
+        "prompt": "Why is change management a core AI rollout component?",
+        "answer": "Because adoption quality directly determines whether AI capabilities become reliable operational behavior."
+      },
+      "flashcards": [
+        {
+          "front": "What causes technically good AI programs to fail in practice?",
+          "back": "Weak adoption design, unclear ownership, and poor operator trust/enablement."
+        },
+        {
+          "front": "Why run scenario drills during rollout?",
+          "back": "They prepare teams for real incident decisions and reduce unsafe usage patterns."
+        },
+        {
+          "front": "What is measured autonomy expansion?",
+          "back": "Gradually increasing AI action scope based on proven safety and performance evidence."
+        },
+        {
+          "front": "What must adoption feedback loops capture?",
+          "back": "Recommendation quality, usability friction, trust signals, and operator override patterns."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 7: KPI Framework for AI Programs",
+      "content": "<h3>KPI Layers</h3>\n<table class=\"content-table\">\n  <tr><th>Layer</th><th>Examples</th></tr>\n  <tr><td>Usage & Adoption</td><td>Active users, recommendation acceptance rate</td></tr>\n  <tr><td>Operational Outcome</td><td>MTTR change, triage speed, recurrence reduction</td></tr>\n  <tr><td>Risk & Safety</td><td>Policy violations, rollback rate, audit exceptions</td></tr>\n  <tr><td>Financial</td><td>Revenue protection, cost avoidance, support efficiency gains</td></tr>\n</table>\n\n<h3>Measurement Design Principles</h3>\n<ul class=\"clean\">\n  <li>Every KPI must map to a business question leadership cares about.</li>\n  <li>Pair each positive metric with a risk guard metric to avoid local optimization.</li>\n  <li>Use before/after and matched-cohort comparisons where possible.</li>\n</ul>\n\n<h3>Executive Narrative Template</h3>\n<p>Report performance as: adoption trend, operational impact, risk behavior, and financial effect. This prevents misleading narratives where usage rises but decision quality stagnates.</p>\n\n<h3>Interpretation Rule</h3>\n<p>Do not claim success from adoption-only metrics without outcome and risk movement.</p>",
+      "checkpoint": {
+        "prompt": "Why are adoption metrics alone insufficient?",
+        "answer": "They show usage, not whether AI improved outcomes safely or financially."
+      },
+      "flashcards": [
+        {
+          "front": "What KPI layers are required for credible AI program reporting?",
+          "back": "Adoption, operational outcome, risk/safety, and financial impact layers."
+        },
+        {
+          "front": "What does high adoption with flat outcomes imply?",
+          "back": "Usage exists, but decision quality or action value may still be weak."
+        },
+        {
+          "front": "Why track rollback rate in AI programs?",
+          "back": "It indicates whether approved actions are stable and safe in production."
+        },
+        {
+          "front": "What is a strong KPI statement for executives?",
+          "back": "AI reduced MTTR and recurrence while keeping policy violations within threshold and improving cost efficiency."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 8: Cost and ROI Modeling",
+      "content": "<h3>Cost Components</h3>\n<ul class=\"clean\">\n  <li>Platform and inference runtime cost</li>\n  <li>Integration and operations staffing</li>\n  <li>Governance and compliance overhead</li>\n</ul>\n\n<h3>Value Components</h3>\n<ul class=\"clean\">\n  <li>Revenue protected through faster recovery</li>\n  <li>Incident handling effort reduction</li>\n  <li>Error and rework reduction from better decisions</li>\n</ul>\n\n<h3>ROI Formula</h3>\n<pre class=\"flow-block\">ROI = (Annual Value Gain - Annual Program Cost) / Annual Program Cost</pre>\n\n<h3>How to Build a Decision-Grade Model</h3>\n<ul class=\"clean\">\n  <li>Use conservative benefit assumptions based on observed pilot deltas.</li>\n  <li>Separate one-time implementation cost from recurring run cost.</li>\n  <li>Model downside scenarios: adoption lag, incident spikes, policy exceptions.</li>\n  <li>Include governance and control cost explicitly.</li>\n</ul>\n\n<h3>Common ROI Errors</h3>\n<ul class=\"clean\">\n  <li>Counting gross benefit without subtracting stabilization cost.</li>\n  <li>Ignoring human review overhead in sensitive workflows.</li>\n  <li>Using best-case assumptions as baseline forecast.</li>\n</ul>\n\n<h3>Rule</h3>\n<p>Always model downside scenarios and governance cost, not just optimistic savings.</p>",
+      "checkpoint": {
+        "prompt": "What makes an AI ROI model decision-grade?",
+        "answer": "It includes full run cost, governance overhead, and conservative downside-adjusted value estimates."
+      },
+      "flashcards": [
+        {
+          "front": "Why include governance cost in ROI models?",
+          "back": "Because safe operation requires controls and review processes that materially affect total program cost."
+        },
+        {
+          "front": "What are two major value drivers in retail AI ops ROI?",
+          "back": "Revenue protection from faster recovery and reduced incident handling effort."
+        },
+        {
+          "front": "What is the core ROI equation used here?",
+          "back": "ROI = (Annual Value Gain - Annual Program Cost) / Annual Program Cost."
+        },
+        {
+          "front": "Why model downside scenarios?",
+          "back": "To avoid overestimating benefits and to ensure resilient investment decisions."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 9: Scale Playbook - From One Pod to Many",
+      "content": "<h3>Scale Challenges</h3>\n<ul class=\"clean\">\n  <li>Inconsistent controls across domains</li>\n  <li>Fragmented metrics and ownership models</li>\n  <li>Duplicated platform effort and policy drift</li>\n</ul>\n\n<h3>Scale Playbook</h3>\n<ol class=\"flow-steps\">\n  <li>Standardize policy and contract templates</li>\n  <li>Create shared observability and governance layer</li>\n  <li>Reuse evaluation gates across pods</li>\n  <li>Expand domain-by-domain with explicit readiness checks</li>\n</ol>\n\n<h3>Readiness Gate Design</h3>\n<ul class=\"clean\">\n  <li>Domain data quality and SLA compliance is consistently within thresholds.</li>\n  <li>Human approval model is staffed and proven under load.</li>\n  <li>KPI and risk dashboarding is productionized and reviewed regularly.</li>\n  <li>Incident drill results meet recovery and communication targets.</li>\n</ul>\n\n<h3>Scale Anti-Pattern</h3>\n<p>Expanding to many domains after one successful demo creates policy inconsistency and fragmented accountability. Scale should follow repeatable control maturity, not excitement cycles.</p>\n\n<h3>Expansion Rule</h3>\n<p>Do not expand a pod pattern to new domains until current domain shows stable risk and outcome metrics over multiple operating cycles.</p>",
+      "checkpoint": {
+        "prompt": "What is the biggest scaling risk in multi-pod programs?",
+        "answer": "Control inconsistency and policy drift across domains, causing uneven risk exposure."
+      },
+      "flashcards": [
+        {
+          "front": "Why standardize templates before scaling pods?",
+          "back": "To keep governance, contracts, and evaluation controls consistent across domains."
+        },
+        {
+          "front": "What should be shared centrally in multi-pod rollout?",
+          "back": "Policy enforcement, observability, and evaluation gates."
+        },
+        {
+          "front": "What indicates a domain is ready for expansion?",
+          "back": "Stable outcome gains with acceptable risk metrics across repeated operating cycles."
+        },
+        {
+          "front": "What is a common failure in rapid AI scale-ups?",
+          "back": "Expanding before control maturity, leading to inconsistent quality and elevated risk."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 10: Capstone - Rollout and Value Blueprint",
+      "content": "<h3>Capstone Goal</h3>\n<p>Create a complete rollout blueprint for one retail AI program from pilot through scaled operation.</p>\n\n<h3>Blueprint Components</h3>\n<ul class=\"clean\">\n  <li>Use-case prioritization rationale</li>\n  <li>Pilot and shadow-mode plan</li>\n  <li>Approval matrix and governance controls</li>\n  <li>KPI scorecard and ROI model</li>\n  <li>Scale roadmap with readiness gates</li>\n</ul>\n\n<h3>Capstone Expectation</h3>\n<p>Your blueprint should be actionable by engineering, operations, and governance teams without hidden assumptions. Include explicit trade-offs, owner mapping, failure handling, and evidence requirements for go/no-go decisions.</p>\n\n<h3>Evaluation Criteria</h3>\n<ul class=\"clean check\">\n  <li>Risk controls are explicit and enforceable</li>\n  <li>KPI framework includes outcome and safety measures</li>\n  <li>ROI model is conservative and auditable</li>\n  <li>Scale plan avoids premature expansion</li>\n</ul>\n\n<h3>Strong Submission Signals</h3>\n<ul class=\"clean\">\n  <li>Decision boundaries are policy-enforced, not manually interpreted.</li>\n  <li>Metrics connect operator behavior to business and risk outcomes.</li>\n  <li>Rollout sequencing includes fallback and containment strategy.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What distinguishes a strong capstone blueprint?",
+        "answer": "A plan that connects rollout decisions to measurable outcomes, enforceable controls, and scalable operating discipline."
+      },
+      "flashcards": [
+        {
+          "front": "What five sections must the capstone blueprint include?",
+          "back": "Prioritization, rollout plan, governance, KPI/ROI model, and scale roadmap."
+        },
+        {
+          "front": "Why is auditable ROI modeling required in capstone output?",
+          "back": "To support leadership decisions with transparent assumptions and verifiable value logic."
+        },
+        {
+          "front": "What prevents premature scale in the blueprint?",
+          "back": "Explicit readiness gates tied to stable risk and outcome metrics."
+        },
+        {
+          "front": "What is the capstone’s core success signal?",
+          "back": "A rollout plan that is both operationally feasible and governance-safe at scale."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 11: Quick Quiz",
+      "content": "<h3>Quick Quiz</h3><p>Choose one answer for each question. The correct answer is marked with <strong>(Correct)</strong>.</p><div class=\"quiz-q\"><h4>Q1</h4><p>What is the best first-wave AI portfolio profile?</p><ul class=\"clean\"><li>A. Low readiness, high novelty</li><li class=\"correct\">B. High value with manageable risk and readiness (Correct)</li><li>C. Highest model complexity only</li><li>D. Any use case with executive visibility</li></ul></div><div class=\"quiz-q\"><h4>Q2</h4><p>Shadow mode is mainly used to:</p><ul class=\"clean\"><li>A. Reduce cloud bills</li><li>B. Replace operators immediately</li><li class=\"correct\">C. Validate live behavior without execution risk (Correct)</li><li>D. Skip governance reviews</li></ul></div><div class=\"quiz-q\"><h4>Q3</h4><p>A strong AI KPI framework must include:</p><ul class=\"clean\"><li>A. Adoption only</li><li class=\"correct\">B. Outcome, safety, and financial layers (Correct)</li><li>C. Latency only</li><li>D. User sentiment only</li></ul></div><div class=\"quiz-q\"><h4>Q4</h4><p>When should a pod pattern scale to new domains?</p><ul class=\"clean\"><li>A. After first successful demo</li><li>B. After model retraining</li><li class=\"correct\">C. After stable risk/outcome metrics over cycles (Correct)</li><li>D. Immediately after pilot</li></ul></div><div class=\"quiz-q\"><h4>Q5</h4><p>Which ROI modeling practice is most reliable?</p><ul class=\"clean\"><li>A. Ignore governance costs</li><li class=\"correct\">B. Include full run cost and downside scenarios (Correct)</li><li>C. Use best-case assumptions only</li><li>D. Skip financial validation</li></ul></div>",
+      "checkpoint": {
+        "prompt": "What is the key principle for scaling AI programs safely?",
+        "answer": "Scale only when governance, outcomes, and risk controls are stable and measurable across real operating cycles."
+      }
+    },
+    {
+      "title": "Knowledge Checklist and Deliverables",
+      "content": "<h3>Knowledge Checklist</h3>\n<ul class=\"clean check\">\n  <li>Prioritize AI use-case portfolios using value/risk/readiness</li>\n  <li>Design pilot and shadow-mode validation plans</li>\n  <li>Define human-in-the-loop governance boundaries</li>\n  <li>Build outcome + safety + financial KPI scorecards</li>\n  <li>Create conservative ROI models for program decisions</li>\n  <li>Plan scale expansion with readiness gates</li>\n</ul>\n\n<h3>Deliverables</h3>\n<ul class=\"clean\">\n  <li>ai/rollout/portfolio-prioritization-matrix.md</li>\n  <li>ai/rollout/pilot-shadow-plan.md</li>\n  <li>ai/rollout/governance-and-approval-model.md</li>\n  <li>ai/rollout/value-scorecard-and-roi.md</li>\n  <li>ai/rollout/scale-readiness-gate-review.md</li>\n</ul>\n\n<h3>Self-Review Questions</h3>\n<ul class=\"clean\">\n  <li>Can leaders see clear go/no-go logic from your artifacts?</li>\n  <li>Can operations run your governance flow during incident pressure?</li>\n  <li>Can auditors trace one high-risk action end-to-end?</li>\n</ul>\n\n<h3>Deliverable Quality Rubric</h3>\n<table class=\"content-table\">\n  <tr><th>Area</th><th>Strong</th><th>Weak</th></tr>\n  <tr><td>Portfolio</td><td>Evidence-based risk-adjusted ranking</td><td>Subjective prioritization</td></tr>\n  <tr><td>Governance</td><td>Enforceable approval and audit model</td><td>Policy text without controls</td></tr>\n  <tr><td>Value model</td><td>Outcome-linked KPI and conservative ROI</td><td>Adoption-only reporting</td></tr>\n  <tr><td>Scale readiness</td><td>Gate criteria with owners and evidence</td><td>Expansion by intuition or pressure</td></tr>\n</table>",
+      "checkpoint": {
+        "prompt": "What indicates readiness to lead an AI rollout program?",
+        "answer": "Ability to combine prioritization, governance, and value measurement into a scalable operating blueprint."
+      },
+      "flashcards": [
+        {
+          "front": "What deliverables prove rollout-program readiness?",
+          "back": "Portfolio matrix, pilot/shadow plan, governance model, and KPI+ROI scorecard artifacts."
+        },
+        {
+          "front": "Why is adoption-only reporting considered weak?",
+          "back": "Because it does not prove operational outcome gains or safety control quality."
+        },
+        {
+          "front": "What distinguishes a strong governance deliverable?",
+          "back": "Approval logic that is enforceable, auditable, and integrated into execution workflows."
+        },
+        {
+          "front": "What must a strong value scorecard include?",
+          "back": "Outcome, safety, and financial indicators tied to rollout decisions."
+        }
+      ]
+    },
+    {
+      "title": "Final Role Positioning Statement",
+      "content": "<h3>Role Positioning</h3>\n<p>I can move retail AI from pilot success to enterprise rollout by combining governance rigor, adoption design, and measurable value realization.</p>\n\n<h3>Role Readiness Evidence</h3>\n<ul class=\"clean\">\n  <li>Designs risk-aware rollout plans aligned to operating realities</li>\n  <li>Builds governance and approval controls for accountable execution</li>\n  <li>Measures value with KPI and ROI frameworks trusted by leadership</li>\n</ul>\n\n<h3>Executive-Level Capability Statement</h3>\n<p>I can lead cross-functional rollout decisions using clear readiness gates, policy enforcement, and business-impact metrics that stand up to operational and audit scrutiny.</p>",
+      "checkpoint": {
+        "prompt": "What is your strongest post-module capability claim?",
+        "answer": "I can operationalize and scale retail AI programs with governance rigor and measurable value outcomes."
+      },
+      "flashcards": [
+        {
+          "front": "How should this module be positioned in your professional narrative?",
+          "back": "As AI program operationalization capability: from pilot design to governed enterprise-scale execution."
+        },
+        {
+          "front": "What leadership-facing strength does this module build?",
+          "back": "The ability to connect AI rollout decisions to risk controls and business value metrics."
+        },
+        {
+          "front": "What is the core scale-up competency demonstrated here?",
+          "back": "Expanding AI safely across domains through standardized governance and readiness gates."
+        },
+        {
+          "front": "What is the strongest closing capability statement?",
+          "back": "Driving AI rollout from pilot to production with accountability, control, and measurable ROI."
+        }
+      ]
+    }
+  ]
+}

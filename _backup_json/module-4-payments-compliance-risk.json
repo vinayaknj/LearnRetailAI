@@ -1,0 +1,111 @@
+{
+  "id": "m4",
+  "title": "Payments, Compliance, and Risk",
+  "weeks": "Weeks 7-8",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "<h3>Purpose</h3><p>A retail payment is complete only after authorization, capture, settlement, and reconciliation succeed under compliance controls.</p><p>Payment failure is one of the fastest paths to direct revenue loss.</p><h3>Learning Outcomes</h3><ul class=\"clean\"><li>Explain authorization, capture, settlement, and reconciliation</li><li>Identify common payment failures and incident signals</li><li>Understand PCI scope and card-data protection boundaries</li><li>Classify payment incidents by severity</li><li>Define fraud indicators and response workflows</li><li>Apply AI safely in payment operations</li></ul>",
+      "checkpoint": {
+        "prompt": "What completes a payment financially?",
+        "answer": "Funds must be captured, settled, and reconciled, not just authorized."
+      }
+    },
+    {
+      "title": "Chapter 1: Payment Ecosystem Fundamentals",
+      "content": "<pre class=\"flow-block\">Customer -> POS -> Gateway -> Card Network -> Issuer Bank -> Response -> POS</pre><p>Core participants: customer, merchant, payment gateway, card network, issuer bank, and acquirer bank.</p><p>A sale on receipt is not cash in account until settlement completes.</p>",
+      "checkpoint": {
+        "prompt": "Why is participant mapping important?",
+        "answer": "Because incident ownership and escalation depend on where failure occurs in the payment chain."
+      }
+    },
+    {
+      "title": "Chapter 2: Authorization",
+      "content": "<p>Authorization asks: is this transaction allowed right now?</p><h3>Issuer Validation</h3><ul class=\"clean\"><li>Card status and validity</li><li>Available balance/credit</li><li>Fraud and risk checks</li><li>Account restrictions</li></ul><h3>Responses</h3><ul class=\"clean\"><li>Approved</li><li>Declined</li><li>Timeout</li></ul><p>Timeout spikes often increase customer retries and duplicate-attempt risk.</p>",
+      "checkpoint": {
+        "prompt": "Authorization approved. Is cash received?",
+        "answer": "No, authorization only reserves/permits payment; capture and settlement must still occur."
+      }
+    },
+    {
+      "title": "Chapter 3: Capture",
+      "content": "<p>Capture submits the approved amount for transfer processing.</p><pre class=\"flow-block\">Authorization -> Capture Request -> Clearing/Settlement Pipeline</pre><h3>Capture Models</h3><ul class=\"clean\"><li>Immediate capture: common in store checkout</li><li>Delayed capture: common in e-commerce/travel/hospitality</li></ul><p>Capture gaps can create approved transactions without downstream funds.</p>",
+      "checkpoint": {
+        "prompt": "What is the key distinction of capture?",
+        "answer": "Capture initiates fund transfer after authorization."
+      }
+    },
+    {
+      "title": "Chapter 4: Settlement",
+      "content": "<pre class=\"flow-block\">Customer Bank -> Card Network -> Acquirer -> Retailer Account</pre><p>Settlement is typically batch-based and may complete after checkout day.</p><h3>Risks</h3><ul class=\"clean\"><li>Missing settlement after successful sale</li><li>Duplicate settlement submission</li><li>Delayed batch processing</li></ul><p>Settlement quality directly affects cashflow predictability and finance controls.</p>",
+      "checkpoint": {
+        "prompt": "Why can sales and cash disagree temporarily?",
+        "answer": "Because settlement and bank posting can lag checkout completion."
+      }
+    },
+    {
+      "title": "Chapter 5: Payment Reconciliation",
+      "content": "<p>Reconciliation verifies consistency across POS, gateway, settlement files, bank statements, and ERP.</p><pre class=\"flow-block\">Collect Data -> Compare Records -> Find Variance -> Root Cause -> Correct</pre><h3>Common Variances</h3><ul class=\"clean\"><li>Missing capture</li><li>Duplicate transaction</li><li>Settlement failure</li><li>Offline upload delay</li><li>Batch processing mismatch</li></ul>",
+      "checkpoint": {
+        "prompt": "First step in reconciliation work?",
+        "answer": "Collect and align records from all source systems before root-cause analysis."
+      }
+    },
+    {
+      "title": "Chapter 6: Payment Failure Taxonomy",
+      "content": "<table class=\"content-table\"><tr><th>Category</th><th>Symptoms</th><th>Likely Impact</th></tr><tr><td>Authorization failures</td><td>Decline spike, tender unavailable</td><td>Immediate conversion drop</td></tr><tr><td>Timeouts</td><td>Long waits, retry storms</td><td>Abandonment and duplicates</td></tr><tr><td>Duplicate charges</td><td>Multiple auth/capture records</td><td>Chargebacks and trust loss</td></tr><tr><td>Settlement failure</td><td>Completed sales, missing deposits</td><td>Cashflow and accounting risk</td></tr><tr><td>Gift card issues</td><td>Wrong balances, rejects</td><td>Store escalations and delay</td></tr></table>",
+      "checkpoint": {
+        "prompt": "Most customer-visible payment failures?",
+        "answer": "Authorization failures, timeouts, and duplicate charge incidents."
+      }
+    },
+    {
+      "title": "Chapter 7: PCI Compliance Fundamentals",
+      "content": "<p>PCI DSS defines controls for payment card data protection.</p><h3>Sensitive Data</h3><ul class=\"clean\"><li>PAN (card number)</li><li>CVV</li><li>Track data</li><li>PIN-related data</li></ul><h3>PCI Scope</h3><p>POS, PIN pads, payment applications, and payment network touchpoints are typically in scope.</p><h3>Control Objectives</h3><ul class=\"clean\"><li>Protect and encrypt cardholder data</li><li>Restrict access</li><li>Maintain audit trails</li><li>Monitor security events</li></ul>",
+      "checkpoint": {
+        "prompt": "Why does PCI scope clarity matter?",
+        "answer": "It determines where strict controls, auditability, and security obligations are mandatory."
+      }
+    },
+    {
+      "title": "Chapter 8: Fraud in Retail Payments",
+      "content": "<h3>Fraud Types</h3><ul class=\"clean\"><li>Stolen card usage</li><li>Friendly fraud disputes</li><li>Gift card fraud</li><li>Refund fraud</li><li>Employee fraud</li></ul><h3>Indicators</h3><ul class=\"clean\"><li>High-value velocity spikes</li><li>High decline then approval patterns</li><li>Excessive refund concentration by operator</li><li>Tender anomalies by store/time window</li></ul><p>Fraud controls should reduce false positives while preserving checkout flow.</p>",
+      "checkpoint": {
+        "prompt": "What is a common card-testing indicator?",
+        "answer": "Large decline volumes followed by intermittent approvals."
+      }
+    },
+    {
+      "title": "Chapter 9: Severity Classification for Payment Incidents",
+      "content": "<table class=\"content-table\"><tr><th>Severity</th><th>Example</th><th>Response</th></tr><tr><td>SEV1</td><td>Chain-wide payment outage</td><td>War room + executive escalation</td></tr><tr><td>SEV2</td><td>Regional outage or major tender failure</td><td>Rapid escalation + command coordination</td></tr><tr><td>SEV3</td><td>Store-local or intermittent issue</td><td>Standard incident process</td></tr><tr><td>SEV4</td><td>Minor config/terminal defect</td><td>Planned remediation</td></tr></table>",
+      "checkpoint": {
+        "prompt": "Primary severity driver in payments?",
+        "answer": "Revenue-at-risk multiplied by scope and customer impact."
+      }
+    },
+    {
+      "title": "Chapter 10: Incident Response Playbooks",
+      "content": "<h3>Gateway Outage Playbook</h3><ul class=\"clean\"><li>Detect: authorization failures and timeout spike</li><li>Validate: gateway health, network path, error classes</li><li>Mitigate: failover route, backup tender messaging</li><li>Communicate: store guidance and status cadence</li></ul><h3>Duplicate Charge Playbook</h3><ul class=\"clean\"><li>Investigate retries and idempotency</li><li>Reverse duplicate charges</li><li>Issue customer communication</li><li>Fix retry/root-cause logic</li></ul>",
+      "checkpoint": {
+        "prompt": "What prevents duplicate-charge recurrence?",
+        "answer": "Idempotency controls and corrected retry behavior with clear timeout handling."
+      }
+    },
+    {
+      "title": "Chapter 11: Payment KPIs",
+      "content": "<pre class=\"flow-block\">Authorization Rate = Approved / Authorization Attempts\nSettlement Success Rate = Settled / Captured</pre><ul class=\"clean\"><li>Chargeback rate: lower is better</li><li>Payment latency: lower improves checkout conversion</li><li>Tender mix: informs strategy and risk concentration</li></ul><p>High latency can be as damaging as outright decline spikes in peak hours.</p>",
+      "checkpoint": {
+        "prompt": "Which KPI exposes checkout friction quickly?",
+        "answer": "Payment latency and authorization success trend together expose friction early."
+      }
+    },
+    {
+      "title": "Chapter 12: AI in Payments and Risk",
+      "content": "<h3>AI Opportunities</h3><ul class=\"clean\"><li>Payment health agent for outage precursors</li><li>Fraud signal agent for suspicious behavior patterns</li><li>Reconciliation agent for variance detection</li><li>RCA draft agent for incident evidence synthesis</li></ul><h3>Safety Boundary</h3><p>AI should recommend and prioritize; human owners approve high-risk actions affecting money movement or compliance obligations.</p>",
+      "checkpoint": {
+        "prompt": "Best first AI use case in payments?",
+        "answer": "Payment health monitoring with anomaly detection and clear human escalation paths."
+      }
+    }
+  ]
+}

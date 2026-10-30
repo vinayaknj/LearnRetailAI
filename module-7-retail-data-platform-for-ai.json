@@ -1,0 +1,327 @@
+{
+  "id": "m7",
+  "title": "Retail Data Platform for AI Systems",
+  "weeks": "Weeks 13-14",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "<h3>Purpose</h3>\n<p>This module explains the platform discipline required to make retail AI trustworthy in production, not just impressive in demos. You will learn how raw transactional signals become governed, reliable context for AI recommendations and actions.</p>\n<p>In practical terms, this means designing data pipelines that can survive late events, duplicated messages, schema changes, seasonal spikes, and compliance constraints without silently degrading decision quality.</p>\n\n<h3>What This Module Solves</h3>\n<ul class=\"clean\">\n  <li><strong>Reliability gap:</strong> models may be accurate, but decisions fail when source data is stale or inconsistent.</li>\n  <li><strong>Governance gap:</strong> teams cannot explain why AI recommended something because lineage is missing.</li>\n  <li><strong>Operations gap:</strong> incidents are handled manually because there are no degradation and replay patterns.</li>\n</ul>\n\n<h3>Retail Reality You Must Design For</h3>\n<ul class=\"clean\">\n  <li>Omnichannel systems produce conflicting truth windows (store POS, e-commerce, OMS, WMS, payment gateway).</li>\n  <li>Identifiers drift over time (SKU migration, store remodel, customer-account merges).</li>\n  <li>Business risk tolerance differs by workflow: inventory promises and payment actions have lower error tolerance than advisory analytics.</li>\n</ul>\n\n<h3>Learning Outcomes</h3>\n<ul class=\"clean check\">\n  <li>Design event-driven retail data flows for AI use cases</li>\n  <li>Define data contracts and schema evolution rules</li>\n  <li>Choose batch vs streaming patterns by business need</li>\n  <li>Set data quality SLAs linked to AI reliability</li>\n  <li>Operationalize lineage, drift monitoring, and data incident response</li>\n</ul>\n\n<h3>Boundary</h3>\n<ul class=\"clean\">\n  <li>In scope: platform architecture, controls, incident patterns, and decision safety.</li>\n  <li>Out of scope: low-level model optimization and advanced learning algorithms.</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "Why is this module needed after AI pod design?",
+        "answer": "Because AI pods are only trustworthy when the underlying retail data platform is reliable, governed, and observable."
+      },
+      "flashcards": [
+        {
+          "front": "What is the core purpose of Module 7?",
+          "back": "To build production-grade data platform foundations for reliable retail AI systems."
+        },
+        {
+          "front": "What is explicitly out of scope in this module?",
+          "back": "Deep ML model internals and advanced training algorithm theory."
+        },
+        {
+          "front": "Why is a data platform critical for AI pods?",
+          "back": "Because weak data quality and governance make AI recommendations unreliable and unsafe."
+        },
+        {
+          "front": "Name one learning outcome from this module.",
+          "back": "Designing event flows, data contracts, SLAs, or drift/lineage monitoring for retail AI."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 1: Event-Driven Retail Architecture",
+      "content": "<h3>Core Event Domains</h3>\n<ul class=\"clean\">\n  <li>POS transactions and tender events</li>\n  <li>Inventory movements and reservation changes</li>\n  <li>Order lifecycle events from OMS</li>\n  <li>Payment authorization, capture, and settlement events</li>\n</ul>\n\n<h3>Detailed Flow Walkthrough</h3>\n<ol class=\"flow-steps\">\n  <li><strong>Emit:</strong> source systems publish immutable events with event IDs, business timestamps, and entity keys.</li>\n  <li><strong>Validate:</strong> bus or gateway enforces schema, rejects malformed events, and applies producer policy.</li>\n  <li><strong>Enrich:</strong> platform joins master data, computes quality tags, and classifies trust tier.</li>\n  <li><strong>Route:</strong> downstream services receive stream branches by use case (fraud, fulfillment, analytics, AI features).</li>\n  <li><strong>Observe:</strong> lineage, lag, and quality metrics are recorded for every transformation stage.</li>\n</ol>\n\n<h3>Example Scenario: BOPIS Stock Promise</h3>\n<p>A customer sees item availability online and places a pickup order. If the reservation event is delayed by even a few seconds during peak volume, multiple orders can consume the same stock unit. The platform must therefore support deterministic ordering policy, idempotent reservation processing, and instant freshness checks before confirmation.</p>\n\n<h3>Retail Failure Modes</h3>\n<ul class=\"clean\">\n  <li>Out-of-order events causing false stock availability</li>\n  <li>Duplicate tender events leading to inflated revenue features</li>\n  <li>Missing cancellation signals corrupting demand patterns</li>\n  <li>Clock skew between systems producing incorrect freshness classification</li>\n</ul>\n\n<h3>Design Principle</h3>\n<p>Prefer immutable business events over mutable snapshots so you can replay history, reconstruct decisions, and prove what context AI used at recommendation time.</p>",
+      "checkpoint": {
+        "prompt": "Why are immutable events preferred for AI workflows?",
+        "answer": "They provide replayable, auditable history for root-cause analysis and trustworthy AI context."
+      },
+      "flashcards": [
+        {
+          "front": "Which retail event domains are most critical for AI operations?",
+          "back": "POS, inventory, order lifecycle, and payment lifecycle events."
+        },
+        {
+          "front": "What is the benefit of immutable events over snapshots?",
+          "back": "They enable replay, auditability, and better explanation of AI decisions."
+        },
+        {
+          "front": "What role does the event bus play in architecture quality?",
+          "back": "It enforces contracts, controls event flow, and prevents malformed payload propagation."
+        },
+        {
+          "front": "What should happen before AI consumers use events?",
+          "back": "Events should be validated, enriched, and lineage-tracked by the platform layer."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 2: Data Contracts and Schema Versioning",
+      "content": "<h3>Contract Components</h3>\n<table class=\"content-table\">\n  <tr><th>Field</th><th>Purpose</th></tr>\n  <tr><td>eventType</td><td>Business meaning and deterministic routing</td></tr>\n  <tr><td>eventId</td><td>Idempotency and deduplication safety</td></tr>\n  <tr><td>timestamp</td><td>Ordering, freshness, and SLA windows</td></tr>\n  <tr><td>entity keys</td><td>Cross-system joins and identity consistency</td></tr>\n  <tr><td>schemaVersion</td><td>Evolution compatibility and migration control</td></tr>\n</table>\n\n<h3>Why Contracts Matter</h3>\n<p>In retail platforms, one producer can feed dozens of consumers. A single undocumented field rename can silently poison payment risk features, inventory analytics, and AI explanation traces at the same time. Contracts are not documentation artifacts; they are production safety boundaries.</p>\n\n<h3>Versioning Strategy</h3>\n<ul class=\"clean\">\n  <li><strong>Minor/additive:</strong> add optional fields without breaking existing consumers.</li>\n  <li><strong>Major/breaking:</strong> change required fields only with explicit migration phases.</li>\n  <li><strong>Dual-run period:</strong> publish old and new versions in parallel until adoption threshold is met.</li>\n  <li><strong>Sunset:</strong> retire old version only after contract-usage telemetry confirms zero critical dependency.</li>\n</ul>\n\n<h3>Enforcement Controls</h3>\n<ul class=\"clean check\">\n  <li>Producer-side schema lint and compatibility checks in CI</li>\n  <li>Consumer-side contract tests for required fields and type assumptions</li>\n  <li>Registry metadata: owner, criticality tier, deprecation date, migration ticket</li>\n  <li>Release gate: block deploy when compatibility risk exceeds policy</li>\n</ul>\n\n<h3>Common Failure Pattern</h3>\n<p>Teams treat schema as internal implementation detail, ship breaking changes quickly, and only discover impact after model behavior drifts. Contract governance prevents this class of hidden regression.</p>",
+      "checkpoint": {
+        "prompt": "What is the safest default for schema evolution?",
+        "answer": "Use backward-compatible additive changes and explicit version signaling."
+      },
+      "flashcards": [
+        {
+          "front": "Why is schemaVersion mandatory in event contracts?",
+          "back": "It allows controlled evolution and safe compatibility handling by downstream consumers."
+        },
+        {
+          "front": "What is a common anti-pattern in schema updates?",
+          "back": "Shipping breaking field changes without version bumps or migration paths."
+        },
+        {
+          "front": "Why is eventId operationally important?",
+          "back": "It supports deduplication and idempotent processing in retries or replay paths."
+        },
+        {
+          "front": "What kind of schema change is generally safest?",
+          "back": "Additive, backward-compatible changes with consumer compatibility checks."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 3: Batch vs Streaming for Retail Use Cases",
+      "content": "<h3>Decision Matrix</h3>\n<table class=\"content-table\">\n  <tr><th>Use Case</th><th>Pattern</th><th>Why</th></tr>\n  <tr><td>Fraud and payment anomaly detection</td><td>Streaming</td><td>Low-latency intervention required</td></tr>\n  <tr><td>Daily sales and margin reporting</td><td>Batch</td><td>Periodic completeness over immediacy</td></tr>\n  <tr><td>BOPIS stock reservation consistency</td><td>Streaming</td><td>Real-time inventory correctness</td></tr>\n  <tr><td>Historical feature backfills</td><td>Batch</td><td>Large-scale recomputation efficiency</td></tr>\n</table>\n\n<h3>How to Decide</h3>\n<p>Choose pipeline mode by business harm window, not by engineering preference. If a delay can create customer-visible error, financial loss, or compliance breach, streaming is usually mandatory. If the task is trend analysis or periodic accounting reconciliation, batch is often cheaper and simpler.</p>\n\n<h3>Trade-offs You Must Explain</h3>\n<ul class=\"clean\">\n  <li><strong>Streaming:</strong> lower latency, higher operational complexity, stronger monitoring needs.</li>\n  <li><strong>Batch:</strong> simpler operations, slower decisions, risk of stale context in fast-changing workflows.</li>\n  <li><strong>Hybrid:</strong> best practical option for most retailers, but requires strong consistency strategy.</li>\n</ul>\n\n<h3>Consistency Pattern in Hybrid Systems</h3>\n<ol class=\"flow-steps\">\n  <li>Use streaming for first-response decisions.</li>\n  <li>Reconcile with batch truth snapshots on fixed cadence.</li>\n  <li>Track divergence metrics and trigger replay when thresholds are exceeded.</li>\n</ol>\n\n<h3>Hybrid Reality</h3>\n<p>Mature retail platforms mix modes intentionally: streaming protects live operations while batch ensures long-horizon correctness and financial consistency.</p>",
+      "checkpoint": {
+        "prompt": "When should streaming be mandatory?",
+        "answer": "When latency directly affects customer impact, financial risk, or inventory correctness."
+      },
+      "flashcards": [
+        {
+          "front": "What is the primary differentiator between batch and streaming decisions?",
+          "back": "Latency sensitivity and immediacy of business impact."
+        },
+        {
+          "front": "Why is BOPIS reservation handling usually streaming?",
+          "back": "Because stale inventory state creates immediate fulfillment and customer trust failures."
+        },
+        {
+          "front": "What retail workload is typically batch-first?",
+          "back": "Periodic reporting, reconciliation, and historical feature recomputation."
+        },
+        {
+          "front": "Why do many teams run hybrid architectures?",
+          "back": "They need both real-time operational correctness and cost-efficient deep analytics."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 4: Master Data and Identity Resolution",
+      "content": "<h3>Master Data Entities</h3>\n<ul class=\"clean\">\n  <li>Product: SKU, hierarchy, packaging, tax category, substitution family</li>\n  <li>Store: location, format, timezone, operating windows, fulfillment capabilities</li>\n  <li>Order: lifecycle state, channel, fulfillment mode, payment status</li>\n  <li>Customer: profile, loyalty ID, consent boundaries, contact verification state</li>\n</ul>\n\n<h3>Why Identity Resolution Is a Hard Problem</h3>\n<p>Retail systems evolve independently. A product can be renamed, repackaged, or migrated across catalogs; customers can hold multiple accounts; and store metadata can change after remodels. Without a canonical identity layer, AI sees fragmented truth and makes inconsistent recommendations.</p>\n\n<h3>Identity Resolution Risks</h3>\n<ul class=\"clean\">\n  <li>Same entity represented by multiple keys across systems</li>\n  <li>Inconsistent store or SKU mapping in joins</li>\n  <li>Duplicate customer profiles impacting personalization and fraud checks</li>\n  <li>Delayed identity merges causing inconsistent recommendation context</li>\n</ul>\n\n<h3>Resolution Strategy</h3>\n<ol class=\"flow-steps\">\n  <li>Define canonical IDs and survivorship rules by entity type.</li>\n  <li>Maintain mapping tables with freshness SLAs and ownership.</li>\n  <li>Assign match-confidence scores and route low-confidence matches to review queues.</li>\n  <li>Expose identity-quality flags to AI consumers so risk can be downgraded automatically.</li>\n</ol>\n\n<h3>Operational Tip</h3>\n<p>Never hide identity uncertainty. Propagate confidence metadata so downstream workflows can decide whether to automate, advise, or defer.</p>",
+      "checkpoint": {
+        "prompt": "Why does identity resolution matter for AI quality?",
+        "answer": "Wrong entity joins create incorrect context, which leads to wrong recommendations and decisions."
+      },
+      "flashcards": [
+        {
+          "front": "What is the consequence of inconsistent SKU identity across systems?",
+          "back": "Incorrect joins and misleading inventory, pricing, or demand context for AI decisions."
+        },
+        {
+          "front": "What is a canonical ID strategy used for?",
+          "back": "To unify entity references across systems and reduce mapping ambiguity."
+        },
+        {
+          "front": "Which customer data risk affects AI personalization reliability?",
+          "back": "Duplicate or fragmented customer profiles that split history and intent signals."
+        },
+        {
+          "front": "Name four master data entities in retail platforms.",
+          "back": "Product, store, order, and customer."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 5: Data Quality SLAs and Trust Tiers",
+      "content": "<h3>Core Data Quality Dimensions</h3>\n<ul class=\"clean\">\n  <li>Completeness: required fields present and non-null</li>\n  <li>Freshness: event and feature age within decision window</li>\n  <li>Validity: passes schema and business validation rules</li>\n  <li>Consistency: cross-system values agree within tolerance</li>\n</ul>\n\n<h3>From Metrics to Decisions</h3>\n<p>Data quality is meaningful only when tied to operational decisions. A 5-minute freshness delay might be acceptable for weekly merchandising analysis but unacceptable for payment fraud checks or pickup inventory confirmations. Define SLAs per decision class, not globally.</p>\n\n<h3>Trust Tier Model</h3>\n<table class=\"content-table\">\n  <tr><th>Tier</th><th>Usage</th><th>Control Expectation</th></tr>\n  <tr><td>Tier 1</td><td>Production decisioning and high-risk actions</td><td>Hard SLA enforcement + auto-degrade</td></tr>\n  <tr><td>Tier 2</td><td>Operational analytics and advisory recommendations</td><td>Soft alerts + supervised usage</td></tr>\n  <tr><td>Tier 3</td><td>Exploratory analysis and offline experimentation</td><td>Lenient checks, no autonomous action</td></tr>\n</table>\n\n<h3>Degrade Policy Example</h3>\n<ul class=\"clean\">\n  <li>If Tier 1 freshness exceeds threshold, block autonomous actions.</li>\n  <li>Switch to advisory mode with visible data-risk warning.</li>\n  <li>Require human approver before execution for affected workflows.</li>\n</ul>\n\n<h3>Operational Guardrail</h3>\n<p>If Tier 1 sources breach freshness or validity SLA, high-risk recommendations must move to review mode until integrity is restored and verified.</p>",
+      "checkpoint": {
+        "prompt": "What should happen when a Tier 1 source violates freshness SLA?",
+        "answer": "Block or downgrade high-risk automation and route decisions for human review."
+      },
+      "flashcards": [
+        {
+          "front": "Why are trust tiers important for AI operations?",
+          "back": "They separate high-confidence production data from lower-confidence data and enforce safe usage boundaries."
+        },
+        {
+          "front": "Which data quality dimensions should be SLA-backed?",
+          "back": "Completeness, freshness, validity, and consistency."
+        },
+        {
+          "front": "What is the right response to Tier 1 SLA breach?",
+          "back": "Degrade automation and move sensitive decisions to human approval paths."
+        },
+        {
+          "front": "Why is freshness critical in retail AI?",
+          "back": "Outdated inventory, payment, or order state leads to wrong real-time operational decisions."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 6: Feature Store and Serving Patterns",
+      "content": "<h3>Feature Store Roles</h3>\n<ul class=\"clean\">\n  <li>Standardize feature definitions across training and inference</li>\n  <li>Prevent skew between historical and online values</li>\n  <li>Track feature lineage, owner, and SLA class</li>\n</ul>\n\n<h3>Why Feature Stores Fail in Practice</h3>\n<p>Many teams define features once for training notebooks and reimplement them differently for online serving. Even small logic drift, like rounding or default-value differences, can cause large production behavior changes. A feature store prevents this by centralizing definitions and ownership.</p>\n\n<h3>Serving Modes</h3>\n<table class=\"content-table\">\n  <tr><th>Mode</th><th>Best For</th><th>Risk</th></tr>\n  <tr><td>Online feature serving</td><td>Low-latency scoring for operational actions</td><td>Staleness and cache invalidation faults</td></tr>\n  <tr><td>Offline feature serving</td><td>Training, backtesting, drift diagnostics</td><td>Lagged parity with live behavior</td></tr>\n</table>\n\n<h3>Critical Controls</h3>\n<ul class=\"clean\">\n  <li>Point-in-time correctness checks for historical training extraction</li>\n  <li>Same transformation logic package for online and offline paths</li>\n  <li>Feature-level ownership and on-call routing for incidents</li>\n</ul>\n\n<h3>Production Checklist</h3>\n<ul class=\"clean check\">\n  <li>Per-feature freshness SLO and null/error budget</li>\n  <li>Training-serving parity tests in release pipeline</li>\n  <li>Fallback behavior for missing critical features</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What problem does a feature store primarily solve?",
+        "answer": "It prevents training-inference mismatch and standardizes reliable feature usage."
+      },
+      "flashcards": [
+        {
+          "front": "What is feature skew and why is it dangerous?",
+          "back": "It is mismatch between training and inference feature values, causing degraded model behavior in production."
+        },
+        {
+          "front": "When is online feature serving required?",
+          "back": "When decisions must be made with low latency in live operational workflows."
+        },
+        {
+          "front": "What should be monitored for critical features?",
+          "back": "Freshness, null rate, distribution drift, and lineage integrity."
+        },
+        {
+          "front": "Why keep offline and online feature paths coordinated?",
+          "back": "To maintain model consistency, trust, and debuggability over time."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 7: Retrieval Layer for Domain-Safe AI",
+      "content": "<h3>Retrieval Objectives</h3>\n<ul class=\"clean\">\n  <li>Provide trusted, current, domain-relevant context</li>\n  <li>Reduce hallucinations through source constraints</li>\n  <li>Preserve explainability with citation-ready evidence</li>\n</ul>\n\n<h3>Source Strategy</h3>\n<table class=\"content-table\">\n  <tr><th>Source Type</th><th>Policy</th></tr>\n  <tr><td>Runbooks and incident records</td><td>Approved, versioned, and recency-checked</td></tr>\n  <tr><td>Operational metrics and logs</td><td>Time-bounded, environment-scoped, and access-controlled</td></tr>\n  <tr><td>Policy and compliance docs</td><td>Mandatory for risky action recommendations</td></tr>\n</table>\n\n<h3>How to Keep Retrieval Safe</h3>\n<p>Retrieval quality is not about finding the most text, but finding the most trusted and relevant evidence. Build a retrieval index with source trust class, timestamp, environment tag, owner, and policy category. Then require the inference layer to filter by these fields before generating output.</p>\n\n<h3>Retrieval Quality Gates</h3>\n<ul class=\"clean\">\n  <li>Reject sources that fail trust or freshness policy</li>\n  <li>Rank evidence by authority and recency</li>\n  <li>Attach citations and context timestamps to every recommendation</li>\n  <li>Block high-risk recommendations when policy evidence is missing</li>\n</ul>\n\n<h3>Guardrail</h3>\n<p>No recommendation should be shown without source evidence, freshness metadata, and policy applicability signals.</p>",
+      "checkpoint": {
+        "prompt": "What is the primary role of retrieval constraints in AI systems?",
+        "answer": "To keep AI grounded in trusted, current domain context and reduce unsupported claims."
+      },
+      "flashcards": [
+        {
+          "front": "Why must retrieval include freshness metadata?",
+          "back": "Because stale context can produce outdated or unsafe operational recommendations."
+        },
+        {
+          "front": "Which sources should be mandatory for high-risk recommendations?",
+          "back": "Approved policy and compliance artifacts, plus operational evidence."
+        },
+        {
+          "front": "What is a retrieval anti-pattern in production AI?",
+          "back": "Using unrestricted context sources without trust, scope, or recency controls."
+        },
+        {
+          "front": "What should accompany every recommendation output?",
+          "back": "Evidence citations and timestamped context provenance."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 8: Lineage, Observability, and Drift Monitoring",
+      "content": "<h3>Lineage Requirements</h3>\n<ul class=\"clean\">\n  <li>Track source-to-feature-to-decision path</li>\n  <li>Record transformation versions, owners, and deployment timestamps</li>\n  <li>Enable incident-time replay and audit queries</li>\n</ul>\n\n<h3>Why Lineage Is Non-Negotiable</h3>\n<p>When a bad recommendation reaches operations, teams ask three questions: what data was used, what transformation changed it, and which model or rule consumed it. Without lineage, you cannot answer quickly, and incident MTTR grows while trust falls.</p>\n\n<h3>Drift Types</h3>\n<ul class=\"clean\">\n  <li>Data drift: input distribution changes</li>\n  <li>Concept drift: relationship between features and outcomes changes</li>\n  <li>Operational drift: pipeline delays or quality degradation</li>\n</ul>\n\n<h3>Monitoring Design</h3>\n<ul class=\"clean\">\n  <li>Pair statistical drift thresholds with business KPI movement</li>\n  <li>Segment monitoring by channel, region, and seasonality</li>\n  <li>Route high-impact drift to incident workflow with ownership tags</li>\n  <li>Define automatic degrade actions when confidence falls below threshold</li>\n</ul>\n\n<h3>Alerting Priorities</h3>\n<p>Prioritize drift alerts by potential business harm and decision criticality, not by raw statistical deviation alone.</p>",
+      "checkpoint": {
+        "prompt": "Why is lineage critical during AI incident response?",
+        "answer": "It shows exactly which data and transformations influenced a decision, enabling fast root-cause isolation."
+      },
+      "flashcards": [
+        {
+          "front": "What does end-to-end lineage enable during failures?",
+          "back": "Fast traceability from bad decision to source data and transformation steps."
+        },
+        {
+          "front": "How is concept drift different from data drift?",
+          "back": "Concept drift changes feature-outcome relationships, while data drift changes input distributions."
+        },
+        {
+          "front": "Why should drift alerts be impact-ranked?",
+          "back": "Because not all statistical shifts cause meaningful business or operational risk."
+        },
+        {
+          "front": "What is operational drift in data platforms?",
+          "back": "Pipeline performance or quality degradation that harms decision timeliness or reliability."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 9: Data Incident Response for AI Platforms",
+      "content": "<h3>Data Incident Types</h3>\n<ul class=\"clean\">\n  <li>Schema breaks and consumer parse failures</li>\n  <li>Late or missing event batches/streams</li>\n  <li>Cross-system mismatch beyond threshold</li>\n  <li>Feature corruption or stale feature serving</li>\n</ul>\n\n<h3>Response Lifecycle</h3>\n<ol class=\"flow-steps\">\n  <li>Detect SLA or policy breach and open incident</li>\n  <li>Classify impact by decision tier and blast radius</li>\n  <li>Contain by degrading risky automation paths</li>\n  <li>Recover integrity and replay with deterministic checks</li>\n  <li>Verify post-recovery metrics and publish RCA actions</li>\n</ol>\n\n<h3>Detailed Containment Logic</h3>\n<p>Containment should be tier-aware. For Tier 1 workflows, disable autonomous execution immediately and force human approval. For Tier 2, continue advisory recommendations with risk banners. For Tier 3, continue exploration but block promotion to operational channels.</p>\n\n<h3>Runbook Essentials</h3>\n<ul class=\"clean check\">\n  <li>Decision-tier aware severity matrix</li>\n  <li>Automated kill-switch for high-risk recommendation routes</li>\n  <li>Replay validation checklist before re-enable</li>\n  <li>Communication template for business and engineering stakeholders</li>\n</ul>\n\n<h3>Golden Rule</h3>\n<p>When data trust is uncertain, prioritize safe degradation and explicit operator visibility over silent continuation.</p>",
+      "checkpoint": {
+        "prompt": "What is the first safe action when data trust is uncertain?",
+        "answer": "Contain risk by degrading or pausing high-impact automation until data integrity is restored."
+      },
+      "flashcards": [
+        {
+          "front": "What makes a data incident severe in AI systems?",
+          "back": "When it can influence high-impact decisions with incorrect or stale context."
+        },
+        {
+          "front": "Why is replay capability important in data incident recovery?",
+          "back": "It allows rebuilding correct downstream state after fixing source or transformation issues."
+        },
+        {
+          "front": "What should happen before risky automation resumes?",
+          "back": "Data quality and SLA checks must return to accepted thresholds with verification evidence."
+        },
+        {
+          "front": "What is the safest default during uncertain data quality?",
+          "back": "Safe degradation and human review, not silent autonomous operation."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 10: Practical Lab - Build an Event-to-Insight Pipeline",
+      "content": "<h3>Lab Objectives</h3>\n<ul class=\"clean\">\n  <li>Design one event contract for POS or inventory signals</li>\n  <li>Define contract validation, ownership, and versioning checks</li>\n  <li>Create trust-tiered retrieval context for one AI recommendation</li>\n  <li>Set three operational quality alerts with threshold and action policy</li>\n</ul>\n\n<h3>Scenario</h3>\n<p>Assume a BOPIS reliability incident where store stock appears available online but fails at pickup. Build a data pipeline plan that detects and contains this failure early.</p>\n\n<h3>What Your Solution Must Explain</h3>\n<ul class=\"clean\">\n  <li>How event ordering and idempotency avoid double reservation.</li>\n  <li>How freshness SLA protects stock promise reliability.</li>\n  <li>How retrieval and policy evidence are attached to operator recommendations.</li>\n  <li>How incident replay validates post-fix state before reopening automation.</li>\n</ul>\n\n<h3>Required Outputs</h3>\n<ul class=\"clean\">\n  <li>data/contracts/retail-event-contract.md</li>\n  <li>data/slas/retail-data-quality-slas.md</li>\n  <li>data/runbooks/data-incident-response.md</li>\n</ul>\n\n<h3>Pass Criteria</h3>\n<ul class=\"clean check\">\n  <li>Contract fields are complete, versioned, idempotency-safe, and owner-tagged</li>\n  <li>SLA thresholds are measurable and linked to decision risk</li>\n  <li>Incident runbook includes containment, replay, verification, and reopen criteria</li>\n  <li>Deliverables justify trade-offs between latency, cost, and reliability</li>\n</ul>",
+      "checkpoint": {
+        "prompt": "What proves lab readiness for production discussion?",
+        "answer": "Clear contracts, measurable SLAs, and an executable data incident runbook with safe recovery logic."
+      },
+      "flashcards": [
+        {
+          "front": "What three artifacts are mandatory in the lab output?",
+          "back": "Event contract doc, data quality SLA doc, and data incident response runbook."
+        },
+        {
+          "front": "Why include idempotency in a contract lab?",
+          "back": "To prevent duplicate effects during retries and replay in distributed systems."
+        },
+        {
+          "front": "What should SLA thresholds be linked to?",
+          "back": "Decision risk and operational impact, not arbitrary numeric targets."
+        },
+        {
+          "front": "What is a core pass criterion for the runbook?",
+          "back": "It must include containment, recovery/replay, and post-fix verification steps."
+        }
+      ]
+    },
+    {
+      "title": "Chapter 11: Quick Quiz",
+      "content": "<h3>Quick Quiz</h3><p>Choose one answer for each question. The correct answer is marked with <strong>(Correct)</strong>.</p><div class=\"quiz-q\"><h4>Q1</h4><p>What is the safest schema evolution default?</p><ul class=\"clean\"><li>A. Break fields silently</li><li class=\"correct\">B. Additive backward-compatible changes (Correct)</li><li>C. Remove required keys immediately</li><li>D. Skip versioning</li></ul></div><div class=\"quiz-q\"><h4>Q2</h4><p>Which source should be required for high-risk recommendation context?</p><ul class=\"clean\"><li>A. Any internet source</li><li>B. Unreviewed docs</li><li class=\"correct\">C. Approved policy and operational evidence (Correct)</li><li>D. User memory only</li></ul></div><div class=\"quiz-q\"><h4>Q3</h4><p>What is the first action when Tier 1 data SLA is violated?</p><ul class=\"clean\"><li>A. Ignore and continue</li><li class=\"correct\">B. Degrade risky automation and route to review (Correct)</li><li>C. Delete all features</li><li>D. Restart UI</li></ul></div><div class=\"quiz-q\"><h4>Q4</h4><p>Why is lineage critical?</p><ul class=\"clean\"><li>A. For color themes</li><li>B. To reduce file size</li><li class=\"correct\">C. To trace decision inputs and transformations (Correct)</li><li>D. To avoid monitoring</li></ul></div><div class=\"quiz-q\"><h4>Q5</h4><p>Batch vs streaming should be selected mainly by:</p><ul class=\"clean\"><li>A. Engineer preference</li><li>B. Vendor marketing</li><li class=\"correct\">C. Latency sensitivity and business impact (Correct)</li><li>D. File format</li></ul></div>",
+      "checkpoint": {
+        "prompt": "What is the key platform safety principle from this module?",
+        "answer": "When data trust drops, safely degrade AI automation and restore integrity before resuming risk-bearing decisions."
+      }
+    },
+    {
+      "title": "Knowledge Checklist and Deliverables",
+      "content": "<h3>Knowledge Checklist</h3>\n<ul class=\"clean check\">\n  <li>Explain event-driven architecture for retail AI</li>\n  <li>Define data contracts with safe versioning rules</li>\n  <li>Choose batch vs streaming by use-case impact</li>\n  <li>Set actionable data quality SLAs and trust tiers</li>\n  <li>Design lineage and drift monitoring strategy</li>\n  <li>Create a data incident response playbook</li>\n</ul>\n\n<h3>Deliverables</h3>\n<ul class=\"clean\">\n  <li>data/contracts/retail-event-contract.md</li>\n  <li>data/slas/retail-data-quality-slas.md</li>\n  <li>data/runbooks/data-incident-response.md</li>\n  <li>data/observability/lineage-and-drift-monitoring-plan.md</li>\n</ul>\n\n<h3>How to Evaluate Your Own Work</h3>\n<ul class=\"clean\">\n  <li>Can another team run your incident steps without tribal knowledge?</li>\n  <li>Can leadership understand which SLAs protect which business decisions?</li>\n  <li>Can auditors trace one recommendation to its exact data and policy evidence?</li>\n</ul>\n\n<h3>Deliverable Quality Rubric</h3>\n<table class=\"content-table\">\n  <tr><th>Area</th><th>Strong</th><th>Weak</th></tr>\n  <tr><td>Contracts</td><td>Versioned, explicit, idempotency-safe, owner-defined</td><td>Ambiguous fields, no evolution policy</td></tr>\n  <tr><td>SLAs</td><td>Measurable, risk-linked, enforceable with degrade actions</td><td>Generic targets without decision context</td></tr>\n  <tr><td>Incident response</td><td>Containment + replay + verification + reopen logic</td><td>Only alerts, no recovery path</td></tr>\n  <tr><td>Observability</td><td>Lineage, drift thresholds, and ownership routing</td><td>Dashboards without action policies</td></tr>\n</table>",
+      "checkpoint": {
+        "prompt": "What distinguishes a strong data platform deliverable set?",
+        "answer": "Contracts, SLAs, and response runbooks that are explicit, measurable, and tied to operational decision safety."
+      },
+      "flashcards": [
+        {
+          "front": "What three deliverables prove module completion quality?",
+          "back": "A versioned event contract, risk-linked data SLA set, and executable data incident runbook."
+        },
+        {
+          "front": "Why is idempotency required in contract quality criteria?",
+          "back": "Because retries and replays are normal in distributed data systems and must not duplicate effects."
+        },
+        {
+          "front": "What makes an SLA weak in platform governance?",
+          "back": "When thresholds are generic and not tied to decision risk or operational impact."
+        },
+        {
+          "front": "What is the strongest indicator of incident runbook readiness?",
+          "back": "A clear containment-recovery-verification flow with measurable success conditions."
+        }
+      ]
+    }
+  ]
+}

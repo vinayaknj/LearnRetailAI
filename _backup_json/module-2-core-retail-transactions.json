@@ -1,0 +1,578 @@
+{
+  "moduleId": "m2",
+  "title": "Core Retail Transactions and Data Semantics",
+  "weeks": "Weeks 3-4",
+  "purpose": [
+    "Every retail operation ultimately revolves around one thing: the transaction.",
+    "Inventory exists to support transactions. Promotions exist to influence transactions. Payments exist to complete transactions. Financial systems exist to account for transactions.",
+    "A deep understanding of transaction processing is the foundation of retail domain expertise."
+  ],
+  "learningOutcomes": [
+    "Explain the complete basket lifecycle from scan to receipt",
+    "Understand pricing, promotions, taxes, and tender processing",
+    "Distinguish returns, refunds, exchanges, voids, and cancellations",
+    "Understand SKU, UOM, hierarchy, catalog, and price-book concepts",
+    "Identify common retail failure patterns",
+    "Translate retail business rules into system behavior",
+    "Understand business impact when transaction processing fails"
+  ],
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "Retail Transaction Lifecycle",
+      "sections": [
+        {
+          "heading": "Overview",
+          "points": [
+            "A retail transaction is a sequence of business events that transforms customer intent into revenue.",
+            "Most customers think checkout is simple: Scan, Pay, Leave.",
+            "Reality: Scan -> Product Lookup -> Price Calculation -> Promotion Evaluation -> Tax Calculation -> Tender Selection -> Payment Processing -> Receipt Generation -> Inventory Update -> Sales Reporting -> Financial Posting.",
+            "One transaction can generate dozens of system events."
+          ]
+        },
+        {
+          "heading": "Business Importance",
+          "points": [
+            "Transactions drive revenue, gross margin, tax calculation, inventory consumption, customer loyalty, financial reporting, and store performance.",
+            "Incorrect transactions create revenue leakage, inventory inaccuracy, tax errors, customer complaints, and audit risks."
+          ]
+        },
+        {
+          "heading": "Transaction Example",
+          "points": [
+            "Customer purchases: 1 x Coke = $3, 1 x Chips = $2",
+            "Basket: Subtotal = $5, Tax = $0.40, Total = $5.40",
+            "Behind the scenes: Catalog Service, Pricing Engine, Promotion Engine, Tax Engine, Payment Processor, Receipt Service, Inventory Service, Analytics Platform, ERP Integration must all work correctly."
+          ]
+        },
+        {
+          "heading": "Transaction Event Timeline",
+          "points": [
+            "T+0.0 Scan Item",
+            "T+0.2 Product Lookup",
+            "T+0.4 Pricing Lookup",
+            "T+0.8 Promotion Evaluation",
+            "T+1.0 Tax Calculation",
+            "T+1.3 Tender Selection",
+            "T+2.0 Authorization Request",
+            "T+3.1 Authorization Response",
+            "T+3.5 Receipt Generation",
+            "T+4.0 Inventory Update",
+            "T+5.0 Sales Upload",
+            "Many production incidents can be isolated to a specific stage of this timeline."
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "Product Lookup and Catalog Management",
+      "sections": [
+        {
+          "heading": "What is Product Lookup?",
+          "points": [
+            "When a barcode is scanned, POS retrieves product information.",
+            "Retrieved fields: SKU, Description, UOM, Department, Category, Tax Group, Price Group, Status."
+          ]
+        },
+        {
+          "heading": "Example Product Record",
+          "json": {
+            "sku": "100123",
+            "description": "Coca Cola 2L",
+            "uom": "EA",
+            "department": "Beverages",
+            "category": "Soft Drinks",
+            "taxGroup": "FOOD",
+            "status": "ACTIVE"
+          }
+        },
+        {
+          "heading": "Common Catalog Issues",
+          "points": [
+            "Missing SKU: barcode scanned, product not found. Impact: cannot complete sale, manual intervention needed.",
+            "Duplicate barcode: two products mapped to one barcode. Impact: incorrect product sold.",
+            "Inactive product: product exists but status is inactive. Impact: unexpected checkout rejection."
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "title": "Pricing Fundamentals",
+      "sections": [
+        {
+          "heading": "Why Pricing Matters",
+          "points": [
+            "Revenue depends on pricing accuracy.",
+            "Even a 1% pricing error can affect millions of dollars annually for large retailers."
+          ]
+        },
+        {
+          "heading": "Sources of Price",
+          "points": [
+            "Standard Retail Price",
+            "Regional Price",
+            "Promotional Price",
+            "Markdown Price",
+            "Clearance Price",
+            "Member Price"
+          ]
+        },
+        {
+          "heading": "Pricing Flow",
+          "points": [
+            "Scan Item -> Identify Store -> Locate Price Book -> Retrieve Active Price -> Apply Overrides -> Display Price"
+          ]
+        },
+        {
+          "heading": "Example",
+          "points": [
+            "Store 101 = $4.99",
+            "Store 102 = $5.29",
+            "Store 103 = $4.79",
+            "Same SKU, different stores, different prices."
+          ]
+        },
+        {
+          "heading": "Price Override",
+          "points": [
+            "Shelf Price = $5.99",
+            "POS Price = $6.99",
+            "Manager Override = $5.99",
+            "Reason: customer satisfaction."
+          ]
+        },
+        {
+          "heading": "Pricing KPIs",
+          "points": [
+            "Price Accuracy %",
+            "Override Frequency",
+            "Revenue Leakage",
+            "Price Sync Success Rate"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "title": "Promotion Processing",
+      "sections": [
+        {
+          "heading": "Why Promotions Matter",
+          "points": [
+            "Promotions influence revenue, customer retention, basket size, foot traffic, and inventory clearance.",
+            "Many retailers generate 20-40% of sales through promotional campaigns."
+          ]
+        },
+        {
+          "heading": "Types of Promotions",
+          "points": [
+            "Percentage Discount (20% Off)",
+            "Fixed Amount Discount (Save $10)",
+            "Buy One Get One (BOGO)",
+            "Spend Threshold (Spend $100, Get $15 Off)",
+            "Loyalty Promotion (Members Only)"
+          ]
+        },
+        {
+          "heading": "Promotion Evaluation Flow",
+          "points": [
+            "Check Active Dates -> Check Store Eligibility -> Check Customer Eligibility -> Check Item Eligibility -> Determine Priority -> Determine Stackability -> Apply Discount"
+          ]
+        },
+        {
+          "heading": "Promotion Concepts",
+          "points": [
+            "Stackability: can multiple promotions combine?",
+            "Non-stackable: only one promotion allowed.",
+            "Priority: determines winning promotion.",
+            "Exclusions: alcohol, tobacco, gift cards, lottery."
+          ]
+        },
+        {
+          "heading": "Promotion Failure Example",
+          "points": [
+            "Expected: Buy 2 Shampoo, Get $5 Off",
+            "Actual: No Discount",
+            "Potential causes: promotion misconfiguration, POS bug, date validation failure, catalog mapping problem."
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 5,
+      "title": "Tax Calculation",
+      "sections": [
+        {
+          "heading": "Why Taxes are Complex",
+          "points": [
+            "Tax differs by country, state, city, county, product type, and customer type.",
+            "Example: Food = 0%, Candy = 8%, Electronics = 18%."
+          ]
+        },
+        {
+          "heading": "Tax Flow",
+          "points": [
+            "Determine Tax Jurisdiction -> Determine Tax Group -> Retrieve Tax Rules -> Calculate Tax -> Apply Exemptions"
+          ]
+        },
+        {
+          "heading": "Tax Exempt Customers",
+          "points": [
+            "Government organizations",
+            "Schools",
+            "Charities"
+          ]
+        },
+        {
+          "heading": "Tax Failure Impact",
+          "points": [
+            "Regulatory Risk",
+            "Audit Findings",
+            "Customer Refunds",
+            "Financial Corrections"
+          ]
+        },
+        {
+          "heading": "Tax KPIs",
+          "points": [
+            "Tax Accuracy %",
+            "Tax Exceptions",
+            "Audit Adjustments",
+            "Compliance Violations"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "title": "Tender and Payment Processing",
+      "sections": [
+        {
+          "heading": "Tender Definition",
+          "points": [
+            "Tender = method used to pay.",
+            "Examples: cash, debit card, credit card, gift card, store credit, mobile wallet, EBT."
+          ]
+        },
+        {
+          "heading": "Payment Ecosystem",
+          "points": [
+            "Customer -> POS -> Gateway -> Card Network -> Issuer Bank -> Response"
+          ]
+        },
+        {
+          "heading": "Authorization Checks",
+          "points": [
+            "Card valid?",
+            "Funds available?",
+            "Card active?",
+            "Fraud rules passed?"
+          ]
+        },
+        {
+          "heading": "Possible Outcomes",
+          "points": [
+            "Approved: transaction continues",
+            "Declined: customer selects another tender",
+            "Timeout: retry required"
+          ]
+        },
+        {
+          "heading": "Partial Tender Example",
+          "points": [
+            "Basket = $50",
+            "Gift Card = $30",
+            "Remaining = $20 via Credit Card"
+          ]
+        },
+        {
+          "heading": "Payment KPIs",
+          "points": [
+            "Authorization Rate",
+            "Approval Rate",
+            "Timeout Rate",
+            "Settlement Success Rate",
+            "Chargeback Rate"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "title": "Receipt Generation",
+      "sections": [
+        {
+          "heading": "Purpose",
+          "points": [
+            "Receipts provide proof of purchase.",
+            "Used for returns, fraud investigation, customer service, audit verification, and tax reporting."
+          ]
+        },
+        {
+          "heading": "Receipt Contents",
+          "points": [
+            "Store Number",
+            "Terminal Number",
+            "Transaction ID",
+            "Cashier ID",
+            "Items",
+            "Discounts",
+            "Taxes",
+            "Tenders",
+            "Timestamp"
+          ]
+        },
+        {
+          "heading": "Digital Receipt Advantages",
+          "points": [
+            "Lower cost",
+            "Searchable",
+            "Environment friendly",
+            "Easy access"
+          ]
+        },
+        {
+          "heading": "Receipt Failure Example",
+          "points": [
+            "Transaction completed but printer offline.",
+            "Questions: can receipt be reprinted, was transaction saved, can return still occur?"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "title": "Returns, Refunds, Exchanges, Voids, and Cancellations",
+      "sections": [
+        {
+          "heading": "Definitions",
+          "points": [
+            "Return: customer gives item back, inventory usually increases.",
+            "Refund: money returned.",
+            "Exchange: item replaced by another; one inventory up and one down.",
+            "Cancellation: sale never completed.",
+            "Void: removes item before completion while sale continues."
+          ]
+        },
+        {
+          "heading": "Comparison",
+          "table": {
+            "headers": ["Action", "Sale Completed?", "Inventory Impact"],
+            "rows": [
+              ["Void", "No", "No"],
+              ["Cancellation", "No", "No"],
+              ["Return", "Yes", "Usually Increase"],
+              ["Refund", "Yes", "Depends"],
+              ["Exchange", "Yes", "Increase + Decrease"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "chapter": 9,
+      "title": "Transaction State Management",
+      "sections": [
+        {
+          "heading": "Why States Matter",
+          "points": [
+            "States determine allowed actions, recovery logic, and audit rules."
+          ]
+        },
+        {
+          "heading": "Standard State Flow",
+          "points": [
+            "Created -> Scanning -> Pricing -> Promotion -> Tax -> Tender -> Authorization -> Completed"
+          ]
+        },
+        {
+          "heading": "Failure States",
+          "points": [
+            "Cancelled",
+            "Aborted",
+            "Failed",
+            "Suspended",
+            "Timed Out",
+            "Offline",
+            "Voided",
+            "Refunded"
+          ]
+        },
+        {
+          "heading": "Recovery Paths",
+          "points": [
+            "Payment Timeout -> Retry Once -> Retry Again -> Different Tender -> Cancel Transaction"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 10,
+      "title": "Master Data Fundamentals",
+      "sections": [
+        {
+          "heading": "What is Master Data?",
+          "points": [
+            "Master data defines retail entities: products, stores, vendors, customers, price books, departments, categories."
+          ]
+        },
+        {
+          "heading": "SKU",
+          "points": [
+            "Stock Keeping Unit: unique product identifier.",
+            "Coke 2L = SKU 100123",
+            "Coke 500ml = SKU 100124"
+          ]
+        },
+        {
+          "heading": "UOM",
+          "points": [
+            "EA = Each",
+            "KG = Kilogram",
+            "LTR = Liter",
+            "BOX = Box"
+          ]
+        },
+        {
+          "heading": "Product Hierarchy",
+          "points": [
+            "Food -> Beverage -> Soft Drink -> Cola",
+            "Used for reporting, promotions, replenishment."
+          ]
+        },
+        {
+          "heading": "Price Book",
+          "points": [
+            "Stores active selling prices.",
+            "Store 101 = $5.99",
+            "Store 102 = $6.49"
+          ]
+        },
+        {
+          "heading": "Master Data Failure Example",
+          "points": [
+            "Sprite 2L assigned tax group Alcohol.",
+            "Result: incorrect tax, compliance risk, customer complaints."
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 11,
+      "title": "Common Retail Transaction Failures",
+      "sections": [
+        {
+          "heading": "Failure Cases",
+          "points": [
+            "Price mismatch: shelf $5.99, POS $7.99 -> complaints, overrides, revenue loss.",
+            "Missing promotion: expected BOGO, applied none -> dissatisfaction, abandoned purchase.",
+            "Duplicate payment -> chargebacks, support calls, trust reduction.",
+            "Inventory not updated after sale -> stock drift, forecasting errors.",
+            "Transaction upload failure -> reporting errors, settlement mismatch, reconciliation issues.",
+            "Offline store -> delayed uploads, missing promotions, reconciliation work."
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 12,
+      "title": "AI Opportunities in Transaction Processing",
+      "sections": [
+        {
+          "heading": "Pricing Validation Agent",
+          "points": [
+            "Detects shelf price not matching POS price before customer impact."
+          ]
+        },
+        {
+          "heading": "Promotion Validation Agent",
+          "points": [
+            "Checks promotion rules, date validity, and eligibility logic before deployment."
+          ]
+        },
+        {
+          "heading": "Payment Monitoring Agent",
+          "points": [
+            "Identifies approval rate drops, timeout spikes, and gateway failures in real time."
+          ]
+        },
+        {
+          "heading": "Transaction RCA Agent",
+          "points": [
+            "Inputs: POS logs, payment logs, support tickets, store alerts.",
+            "Outputs: root cause, severity, affected stores, recommended recovery action."
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 13,
+      "title": "Module 2 Knowledge Checklist",
+      "sections": [
+        {
+          "heading": "Checklist",
+          "points": [
+            "Explain basket lifecycle from scan to receipt",
+            "Explain pricing, promotion, tax, and payment interactions",
+            "Differentiate return vs refund vs exchange vs void vs cancellation",
+            "Explain SKU, UOM, hierarchy, catalog, and price book",
+            "Identify top transaction failure patterns",
+            "Explain business impact of transaction issues",
+            "Describe how AI agents can assist transaction operations"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter": 14,
+      "title": "Deliverables and Learning-App Structure",
+      "sections": [
+        {
+          "heading": "Deliverables",
+          "points": [
+            "domain/transaction-lifecycle.md",
+            "domain/retail-glossary.md"
+          ]
+        },
+        {
+          "heading": "Recommended Learning-App Structure",
+          "points": [
+            "1. Transaction Lifecycle",
+            "2. Product Lookup",
+            "3. Pricing",
+            "4. Promotions",
+            "5. Taxes",
+            "6. Payments",
+            "7. Receipts",
+            "8. Returns and Refunds",
+            "9. Transaction States",
+            "10. Master Data",
+            "11. Failure Scenarios",
+            "12. AI Applications",
+            "13. Quiz Bank",
+            "14. Flashcards",
+            "15. Case Studies"
+          ]
+        },
+        {
+          "heading": "Study Estimate",
+          "points": [
+            "Detailed enough for roughly 2 weeks (12-16 hours) and a strong foundation before Module 3."
+          ]
+        }
+      ]
+    }
+  ],
+  "styleNotes": {
+    "anchor": {
+      "textDecoration": "none",
+      "color": "#464feb"
+    },
+    "table": {
+      "thTdBorder": "1px solid #e6e6e6",
+      "thBackgroundColor": "#f5f5f5"
+    }
+  }
+}

@@ -1,0 +1,960 @@
+Module 2: Core Retail Transactions and Data Semantics
+Purpose
+
+Every retail operation ultimately revolves around one thing:
+
+The transaction.
+
+Inventory exists to support transactions. Promotions exist to influence transactions. Payments exist to complete transactions. Financial systems exist to account for transactions.
+
+A deep understanding of transaction processing is the foundation of retail domain expertise.
+
+Learning Outcomes
+
+By the end of this module, learners should be able to:
+
+Explain the complete basket lifecycle from scan to receipt
+Understand pricing, promotions, taxes, and tender processing
+Distinguish returns, refunds, exchanges, voids, and cancellations
+Understand SKU, UOM, hierarchy, catalog, and price-book concepts
+Identify common retail failure patterns
+Translate retail business rules into system behavior
+Understand business impact when transaction processing fails
+Chapter 1: Retail Transaction Lifecycle
+Overview
+
+A retail transaction is a sequence of business events that transforms customer intent into revenue.
+
+Most customers think checkout is simple:
+
+Plain Text
+Scan
+Pay
+Leave
+
+Reality:
+
+Plain Text
+Scan
+↓
+Product Lookup
+↓
+Price Calculation
+↓
+Promotion Evaluation
+↓
+Tax Calculation
+↓
+Tender Selection
+↓
+Payment Processing
+↓
+Receipt Generation
+↓
+Inventory Update
+↓
+Sales Reporting
+↓
+Financial Posting
+
+One transaction can generate dozens of system events.
+
+Business Importance
+
+Transactions drive:
+
+Plain Text
+Revenue
+Gross Margin
+Tax Calculation
+Inventory Consumption
+Customer Loyalty
+Financial Reporting
+Store Performance
+
+Incorrect transactions create:
+
+Plain Text
+Revenue Leakage
+Inventory Inaccuracy
+Tax Errors
+Customer Complaints
+Audit Risks
+Transaction Example
+
+Customer purchases:
+
+Plain Text
+1 × Coke = $3
+1 × Chips = $2
+
+Basket:
+
+Plain Text
+Subtotal = $5
+Tax = $0.40
+Total = $5.40
+
+Behind the scenes:
+
+Plain Text
+Catalog Service
+Pricing Engine
+Promotion Engine
+Tax Engine
+Payment Processor
+Receipt Service
+Inventory Service
+Analytics Platform
+ERP Integration
+
+must all work correctly.
+
+Transaction Event Timeline
+
+Example:
+
+Plain Text
+T+0.0 Scan Item
+ 
+T+0.2 Product Lookup
+ 
+T+0.4 Pricing Lookup
+ 
+T+0.8 Promotion Evaluation
+ 
+T+1.0 Tax Calculation
+ 
+T+1.3 Tender Selection
+ 
+T+2.0 Authorization Request
+ 
+T+3.1 Authorization Response
+ 
+T+3.5 Receipt Generation
+ 
+T+4.0 Inventory Update
+ 
+T+5.0 Sales Upload
+
+Many production incidents can be isolated to a specific stage of this timeline.
+
+Chapter 2: Product Lookup and Catalog Management
+What is Product Lookup?
+
+When a barcode is scanned, POS retrieves product information.
+
+Example:
+
+Plain Text
+Barcode: 123456789
+
+Retrieved:
+
+Plain Text
+SKU
+Description
+UOM
+Department
+Category
+Tax Group
+Price Group
+Status
+Example Product Record
+JSON
+{
+"sku": "100123",
+"description": "Coca Cola 2L",
+"uom": "EA",
+"department": "Beverages",
+"category": "Soft Drinks",
+"taxGroup": "FOOD",
+"status": "ACTIVE"
+}
+Common Catalog Issues
+Missing SKU
+Plain Text
+Barcode scanned
+Product not found
+
+Impact:
+
+Plain Text
+Cannot complete sale
+Manual intervention needed
+Duplicate Barcode
+Plain Text
+Two products
+One barcode
+
+Impact:
+
+Plain Text
+Incorrect product sold
+Inactive Product
+Plain Text
+Product exists
+Status = Inactive
+
+Impact:
+
+Plain Text
+Unexpected checkout rejection
+Chapter 3: Pricing Fundamentals
+Why Pricing Matters
+
+Revenue depends on pricing accuracy.
+
+Even a 1% pricing error can affect millions of dollars annually for large retailers.
+
+Sources of Price
+Plain Text
+Standard Retail Price
+Regional Price
+Promotional Price
+Markdown Price
+Clearance Price
+Member Price
+Pricing Flow
+Plain Text
+Scan Item
+↓
+Identify Store
+↓
+Locate Price Book
+↓
+Retrieve Active Price
+↓
+Apply Overrides
+↓
+Display Price
+Example
+
+Price Book:
+
+Plain Text
+Store 101 = $4.99
+ 
+Store 102 = $5.29
+ 
+Store 103 = $4.79
+
+Same SKU.
+
+Different stores.
+
+Different prices.
+
+Price Override
+
+Manager manually changes price.
+
+Example:
+
+Plain Text
+Shelf Price = $5.99
+ 
+POS Price = $6.99
+ 
+Manager Override = $5.99
+
+Reason:
+
+Plain Text
+Customer Satisfaction
+Pricing KPIs
+Plain Text
+Price Accuracy %
+ 
+Override Frequency
+ 
+Revenue Leakage
+ 
+Price Sync Success Rate
+Chapter 4: Promotion Processing
+Why Promotions Matter
+
+Promotions influence:
+
+Plain Text
+Revenue
+Customer Retention
+Basket Size
+Foot Traffic
+Inventory Clearance
+
+Many retailers generate 20–40% of sales through promotional campaigns.
+
+Types of Promotions
+Percentage Discount
+Plain Text
+20% Off
+Fixed Amount Discount
+Plain Text
+Save $10
+Buy One Get One
+Plain Text
+BOGO
+Spend Threshold
+Plain Text
+Spend $100
+Get $15 Off
+Loyalty Promotion
+Plain Text
+Members Only
+Promotion Evaluation Flow
+Plain Text
+Check Active Dates
+↓
+Check Store Eligibility
+↓
+Check Customer Eligibility
+↓
+Check Item Eligibility
+↓
+Determine Priority
+↓
+Determine Stackability
+↓
+Apply Discount
+Promotion Concepts
+Stackability
+
+Can multiple promotions combine?
+
+Example:
+
+Plain Text
+10% Coupon
+ 
++ 5% Loyalty Discount
+
+Allowed.
+
+Non-Stackable
+
+Only one promotion allowed.
+
+Example:
+
+Plain Text
+BOGO
+ 
+OR
+ 
+20% Off
+Priority
+
+Determines winning promotion.
+
+Example:
+
+Plain Text
+Black Friday = Priority 100
+ 
+Store Coupon = Priority 50
+
+Black Friday wins.
+
+Exclusions
+
+Products excluded from promotions:
+
+Plain Text
+Alcohol
+Tobacco
+Gift Cards
+Lottery
+Promotion Failure Example
+
+Expected:
+
+Plain Text
+Buy 2 Shampoo
+Get $5 Off
+
+Actual:
+
+Plain Text
+No Discount
+
+Potential Causes:
+
+Plain Text
+Promotion Misconfiguration
+POS Bug
+Date Validation Failure
+Catalog Mapping Problem
+Chapter 5: Tax Calculation
+Why Taxes are Complex
+
+Tax differs by:
+
+Plain Text
+Country
+State
+City
+County
+Product Type
+Customer Type
+Example
+Plain Text
+Food = 0%
+ 
+Candy = 8%
+ 
+Electronics = 18%
+
+Same store.
+
+Different products.
+
+Different tax.
+
+Tax Flow
+Plain Text
+Determine Tax Jurisdiction
+↓
+Determine Tax Group
+↓
+Retrieve Tax Rules
+↓
+Calculate Tax
+↓
+Apply Exemptions
+Tax Exempt Customers
+
+Possible examples:
+
+Plain Text
+Government Organizations
+ 
+Schools
+ 
+Charities
+Tax Failure Impact
+
+Creates:
+
+Plain Text
+Regulatory Risk
+Audit Findings
+Customer Refunds
+Financial Corrections
+Tax KPIs
+Plain Text
+Tax Accuracy %
+ 
+Tax Exceptions
+ 
+Audit Adjustments
+ 
+Compliance Violations
+Chapter 6: Tender and Payment Processing
+Tender Definition
+
+Tender = Method Used To Pay
+
+Examples:
+
+Plain Text
+Cash
+Debit Card
+Credit Card
+Gift Card
+Store Credit
+Mobile Wallet
+EBT
+Payment Ecosystem
+Plain Text
+Customer
+↓
+POS
+↓
+Gateway
+↓
+Card Network
+↓
+Issuer Bank
+↓
+Response
+Authorization
+
+Checks:
+
+Plain Text
+Card Valid?
+Funds Available?
+Card Active?
+Fraud Rules Passed?
+Possible Outcomes
+Approved
+Plain Text
+Transaction Continues
+Declined
+Plain Text
+Customer Selects Another Tender
+Timeout
+Plain Text
+Retry Required
+Partial Tender Example
+
+Basket:
+
+Plain Text
+$50
+
+Gift Card:
+
+Plain Text
+$30
+
+Remaining:
+
+Plain Text
+$20 via Credit Card
+Payment KPIs
+Plain Text
+Authorization Rate
+ 
+Approval Rate
+ 
+Timeout Rate
+ 
+Settlement Success Rate
+ 
+Chargeback Rate
+Chapter 7: Receipt Generation
+Purpose
+
+Receipts provide proof of purchase.
+
+Functions:
+
+Plain Text
+Returns Support
+Fraud Investigation
+Customer Service
+Audit Verification
+Tax Reporting
+Receipt Contents
+Plain Text
+Store Number
+Terminal Number
+Transaction ID
+Cashier ID
+Items
+Discounts
+Taxes
+Tenders
+Timestamp
+Digital Receipts
+
+Advantages:
+
+Plain Text
+Lower Cost
+Searchable
+Environment Friendly
+Easy Access
+Receipt Failure Example
+
+Transaction:
+
+Plain Text
+Completed
+
+Printer:
+
+Plain Text
+Offline
+
+Questions:
+
+Plain Text
+Can receipt be reprinted?
+Was transaction saved?
+Can return still occur?
+Chapter 8: Returns, Refunds, Exchanges, Voids, and Cancellations
+Return
+
+Customer gives item back.
+
+Example:
+
+Plain Text
+Purchased TV
+ 
+Returned TV
+
+Inventory generally increases.
+
+Refund
+
+Money returned.
+
+Example:
+
+Plain Text
+Original Sale = $100
+ 
+Refund = $100
+Exchange
+
+One item replaced with another.
+
+Example:
+
+Plain Text
+Shirt Medium
+↓
+Shirt Large
+
+Inventory Impact:
+
+Plain Text
+Medium +1
+ 
+Large -1
+Cancellation
+
+Sale never completed.
+
+Example:
+
+Plain Text
+Customer Walks Away
+
+No completed transaction exists.
+
+Void
+
+Removes item before completion.
+
+Example:
+
+Plain Text
+Cashier scans wrong item
+
+Item removed.
+
+Sale continues.
+
+Comparison
+Action	Sale Completed?	Inventory ImpactVoid	No	No
+Cancellation	No	No
+Return	Yes	Usually Increase
+Refund	Yes	Depends
+Exchange	Yes	Increase + Decrease
+Chapter 9: Transaction State Management
+Why States Matter
+
+States determine:
+
+Plain Text
+Allowed Actions
+Recovery Logic
+Audit Rules
+Standard State Flow
+Plain Text
+Created
+↓
+Scanning
+↓
+Pricing
+↓
+Promotion
+↓
+Tax
+↓
+Tender
+↓
+Authorization
+↓
+Completed
+Failure States
+Plain Text
+Cancelled
+Aborted
+Failed
+Suspended
+Timed Out
+Offline
+Voided
+Refunded
+Recovery Paths
+
+Example:
+
+Plain Text
+Payment Timeout
+↓
+Retry Once
+↓
+Retry Again
+↓
+Different Tender
+↓
+Cancel Transaction
+Chapter 10: Master Data Fundamentals
+What is Master Data?
+
+Master data defines retail entities.
+
+Examples:
+
+Plain Text
+Products
+Stores
+Vendors
+Customers
+Price Books
+Departments
+Categories
+SKU
+
+Stock Keeping Unit.
+
+Unique product identifier.
+
+Example:
+
+Plain Text
+Coke 2L = SKU 100123
+ 
+Coke 500ml = SKU 100124
+
+Different size.
+
+Different SKU.
+
+UOM
+
+Unit of Measure.
+
+Examples:
+
+Plain Text
+EA = Each
+ 
+KG = Kilogram
+ 
+LTR = Liter
+ 
+BOX = Box
+Product Hierarchy
+Plain Text
+Food
+└─ Beverage
+└─ Soft Drink
+└─ Cola
+
+Used for:
+
+Plain Text
+Reporting
+Promotions
+Replenishment
+Price Book
+
+Stores active selling prices.
+
+Example:
+
+Plain Text
+Store 101 = $5.99
+ 
+Store 102 = $6.49
+Master Data Failure Example
+
+Product:
+
+Plain Text
+Sprite 2L
+
+Tax Group Assigned:
+
+Plain Text
+Alcohol
+
+Result:
+
+Plain Text
+Incorrect Tax
+Compliance Risk
+Customer Complaints
+Chapter 11: Common Retail Transaction Failures
+1. Price Mismatch
+
+Shelf:
+
+Plain Text
+$5.99
+
+POS:
+
+Plain Text
+$7.99
+
+Impact:
+
+Plain Text
+Customer Complaints
+Manager Overrides
+Revenue Loss
+2. Missing Promotion
+
+Expected:
+
+Plain Text
+BOGO
+
+Applied:
+
+Plain Text
+No Discount
+
+Impact:
+
+Plain Text
+Customer Dissatisfaction
+Abandoned Purchase
+3. Duplicate Payment
+
+Customer charged twice.
+
+Impact:
+
+Plain Text
+Chargebacks
+Support Calls
+Trust Reduction
+4. Inventory Not Updated
+
+Sale successful.
+
+Inventory unchanged.
+
+Impact:
+
+Plain Text
+Stock Drift
+Bad Forecasting
+Availability Errors
+5. Transaction Upload Failure
+
+Sale completed.
+
+Central system never receives transaction.
+
+Impact:
+
+Plain Text
+Reporting Errors
+Settlement Mismatch
+Inventory Reconciliation Problems
+6. Offline Store
+
+Store loses network connectivity.
+
+Challenges:
+
+Plain Text
+Offline Payments
+Delayed Uploads
+Missing Promotions
+Reconciliation Work
+Chapter 12: AI Opportunities in Transaction Processing
+Pricing Validation Agent
+
+Detects:
+
+Plain Text
+Shelf Price ≠ POS Price
+
+before customer impact.
+
+Promotion Validation Agent
+
+Checks:
+
+Plain Text
+Promotion Rules
+Date Validity
+Eligibility Logic
+
+before deployment.
+
+Payment Monitoring Agent
+
+Identifies:
+
+Plain Text
+Approval Rate Drops
+Timeout Spikes
+Gateway Failures
+
+in real time.
+
+Transaction RCA Agent
+
+Inputs:
+
+Plain Text
+POS Logs
+Payment Logs
+Support Tickets
+Store Alerts
+
+Outputs:
+
+Plain Text
+Root Cause
+ 
+Severity
+ 
+Affected Stores
+ 
+Recommended Recovery Action
+Module 2 Knowledge Checklist
+
+A learner should be able to answer without notes:
+
+✅ Explain basket lifecycle from scan to receipt
+
+✅ Explain pricing, promotion, tax, and payment interactions
+
+✅ Differentiate return vs refund vs exchange vs void vs cancellation
+
+✅ Explain SKU, UOM, hierarchy, catalog, and price book
+
+✅ Identify top transaction failure patterns
+
+✅ Explain business impact of transaction issues
+
+✅ Describe how AI agents can assist transaction operations
+
+Deliverables
+Plain Text
+domain/transaction-lifecycle.md
+ 
+domain/retail-glossary.md
+Recommended Learning-App Structure
+Plain Text
+1. Transaction Lifecycle
+2. Product Lookup
+3. Pricing
+4. Promotions
+5. Taxes
+6. Payments
+7. Receipts
+8. Returns & Refunds
+9. Transaction States
+10. Master Data
+11. Failure Scenarios
+12. AI Applications
+13. Quiz Bank
+14. Flashcards
+15. Case Studies
+
+This is detailed enough for roughly 2 weeks (12-16 hours) of study and serves as a solid foundation before moving to Module 3: Inventory & Fulfillment Domain Mastery.

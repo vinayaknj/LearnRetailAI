@@ -1,0 +1,111 @@
+{
+  "id": "m6",
+  "title": "AI Pods Applied to Retail Domain Problems",
+  "weeks": "Weeks 11-12",
+  "chapters": [
+    {
+      "title": "Chapter 0: Purpose and Learning Outcomes",
+      "content": "<h3>Purpose</h3><p>Apply AI pods to real retail operations with safety, traceability, and measurable business impact.</p><p>This module is not about generic chatbots. It is about domain-aware operational intelligence.</p><h3>Learning Outcomes</h3><ul class=\"clean\"><li>Identify high-value retail AI opportunities</li><li>Design specialized multi-agent workflows</li><li>Define safe vs unsafe automation boundaries</li><li>Build approval-gated recommendations</li><li>Measure AI effectiveness with retail KPIs</li><li>Reduce hallucination risk through domain constraints</li></ul>",
+      "checkpoint": {
+        "prompt": "What makes this module different from generic AI training?",
+        "answer": "It targets retail operations with domain constraints, safety gates, and KPI-linked outcomes."
+      }
+    },
+    {
+      "title": "Chapter 1: Why Retail AI Needs Domain Knowledge",
+      "content": "<p>Retail operations require policy-aware, context-rich decision support.</p><table class=\"content-table\"><tr><th>Generic AI</th><th>Retail-Aware AI</th></tr><tr><td>Suggests broad troubleshooting steps</td><td>Classifies incident, maps severity, routes ownership, and references runbook</td></tr><tr><td>Limited operational context</td><td>Uses taxonomy, historical incidents, and KPI impact</td></tr></table><p>Domain grounding makes recommendations actionable and safer.</p>",
+      "checkpoint": {
+        "prompt": "Why does retail context matter for AI support?",
+        "answer": "Because incident routing, severity, and mitigations depend on domain-specific rules and constraints."
+      }
+    },
+    {
+      "title": "Chapter 2: High-Value AI Opportunity Selection",
+      "content": "<h3>Strong First Use Cases</h3><ul class=\"clean\"><li>Incident classification</li><li>Evidence correlation</li><li>RCA drafting</li><li>Runbook recommendation</li></ul><h3>Avoid Early Full Automation</h3><ul class=\"clean\"><li>Auto inventory corrections</li><li>Auto refunds</li><li>Auto price/tax updates</li></ul><p>Prioritize recommendations and diagnostics before direct control actions.</p>",
+      "checkpoint": {
+        "prompt": "What is a poor first automation target?",
+        "answer": "High-risk financial or inventory mutations without approval controls."
+      }
+    },
+    {
+      "title": "Chapter 3: AI Pod Architecture",
+      "content": "<pre class=\"flow-block\">Ticket -> Classifier Agent -> Evidence Agent -> RCA Agent -> Action Agent -> Human Approval -> Execution</pre><p>A pod uses specialized agents instead of one giant model, improving auditability and maintainability.</p><h3>Agent Responsibilities</h3><ul class=\"clean\"><li>Classifier: category, severity, owner</li><li>Evidence: logs, alerts, metrics, changes, similar incidents</li><li>RCA: probable cause + impact narrative</li><li>Action: mitigation options + escalation advice</li></ul>",
+      "checkpoint": {
+        "prompt": "Why split work across agents?",
+        "answer": "It improves precision, transparency, and risk control by separating responsibilities."
+      }
+    },
+    {
+      "title": "Chapter 4: Agent 1 - Incident Classifier",
+      "content": "<p>Convert unstructured reports into structured incidents.</p><pre class=\"flow-block\">Input: \"Store 145 cannot process Visa cards\"\nOutput: { category: Payment, severity: SEV2, owner: Payments Team, confidence: 0.94 }</pre><h3>Dimensions</h3><ul class=\"clean\"><li>Domain: POS, pricing, inventory, payments, infrastructure, fulfillment</li><li>Severity: SEV1-SEV4</li><li>Scope: terminal, store, region, enterprise</li></ul>",
+      "checkpoint": {
+        "prompt": "Classifier output must include which four fields?",
+        "answer": "Category, severity, ownership suggestion, and confidence."
+      }
+    },
+    {
+      "title": "Chapter 5: Agent 2 - Evidence Correlator",
+      "content": "<p>Gather relevant signals before human deep-dive begins.</p><h3>Evidence Sources</h3><ul class=\"clean\"><li>Monitoring (latency, errors, resource metrics)</li><li>Service and application logs</li><li>Deployments/config changes/feature flags</li><li>Historical incident patterns</li></ul><p>Outcome: condensed incident context that shortens MTTR and reduces blind investigations.</p>",
+      "checkpoint": {
+        "prompt": "Why include change events in correlation?",
+        "answer": "Recent changes are high-probability causes for new production regressions."
+      }
+    },
+    {
+      "title": "Chapter 6: Agent 3 - RCA Drafter",
+      "content": "<p>Draft RCA structure from evidence for reviewer refinement.</p><h3>Draft Sections</h3><ul class=\"clean\"><li>Executive summary</li><li>Timeline</li><li>Business impact</li><li>Probable technical root cause</li><li>Corrective and preventive actions</li></ul><p>RCA quality improves when evidence and chronology are explicit and traceable.</p>",
+      "checkpoint": {
+        "prompt": "What is the key benefit of RCA drafting AI?",
+        "answer": "Faster, more consistent post-incident analysis with structured evidence."
+      }
+    },
+    {
+      "title": "Chapter 7: Agent 4 - Action Recommender",
+      "content": "<p>Recommend actions, not autonomous high-risk execution.</p><h3>Typical Recommendations</h3><ul class=\"clean\"><li>Runbook step sequence</li><li>Escalation path</li><li>Containment options</li><li>Communication guidance</li></ul><p>All medium/high-risk actions require explicit human approval gates.</p>",
+      "checkpoint": {
+        "prompt": "Core safety principle for action agent?",
+        "answer": "AI recommends; humans approve risk-bearing actions."
+      }
+    },
+    {
+      "title": "Chapter 8: Domain-Constrained AI",
+      "content": "<p>Retail AI must remain grounded in trusted operational knowledge.</p><h3>Allowed Sources</h3><ul class=\"clean\"><li>Runbooks</li><li>Incident taxonomy</li><li>Knowledge base and approved policies</li><li>Historical RCAs</li><li>Operational metrics</li></ul><h3>Disallowed Behavior</h3><p>Inventing policy, compliance rules, payment procedures, or unsafe remediation actions.</p>",
+      "checkpoint": {
+        "prompt": "How do you reduce hallucination risk?",
+        "answer": "Constrain retrieval to approved sources and require evidence-backed recommendations."
+      }
+    },
+    {
+      "title": "Chapter 9: Human Approval Boundaries",
+      "content": "<table class=\"content-table\"><tr><th>Action Class</th><th>Examples</th><th>Approval Requirement</th></tr><tr><td>Low Risk</td><td>Ticket creation, log collection, severity tagging</td><td>Auto-allowed</td></tr><tr><td>Medium Risk</td><td>Service restart, escalation trigger, deployment pause</td><td>Reviewer approval</td></tr><tr><td>High Risk</td><td>Price changes, inventory corrections, refunds, DB writes</td><td>Explicit manager/owner approval</td></tr></table>",
+      "checkpoint": {
+        "prompt": "Which actions must never be fully autonomous at launch?",
+        "answer": "High-risk financial, inventory, and production data mutation actions."
+      }
+    },
+    {
+      "title": "Chapter 10: Retail AI Metrics",
+      "content": "<pre class=\"flow-block\">Classification Accuracy = Correct Predictions / Total Predictions\nRecommendation Acceptance = Accepted Recommendations / Total Recommendations</pre><ul class=\"clean\"><li>Triage time reduction target: 30% or better</li><li>Acceptance target: 80% or better</li><li>Hallucination rate target: below 5%</li><li>MTTR improvement tracked by incident class</li></ul><p>Measure business value, not just model performance.</p>",
+      "checkpoint": {
+        "prompt": "What metric prevents over-trusting AI outputs?",
+        "answer": "Hallucination rate, reviewed alongside acceptance and incident outcomes."
+      }
+    },
+    {
+      "title": "Chapter 11: Retail Knowledge Graph and Context",
+      "content": "<p>Model relationships across stores, terminals, services, vendors, incidents, and changes.</p><pre class=\"flow-block\">Promotion Failure -> Promotion Service -> Pricing Platform -> Recent Deployment</pre><p>Graph context helps agents surface indirect causal chains humans may miss in noisy incidents.</p>",
+      "checkpoint": {
+        "prompt": "Why include relationships, not just logs?",
+        "answer": "Because cross-entity links expose hidden dependencies and probable root-cause paths."
+      }
+    },
+    {
+      "title": "Chapter 12: Evaluation and Capstone",
+      "content": "<h3>Evaluation Framework</h3><ul class=\"clean\"><li>Accuracy</li><li>Consistency</li><li>Explainability</li><li>Safety</li><li>Business value</li></ul><h3>Capstone</h3><p>Build a Retail Domain Intelligence Pod combining systems map, transaction and inventory intelligence, payment operations, incident taxonomy, runbooks, RCA framework, and approval-gated agents.</p><h3>Success Criteria</h3><ul class=\"clean\"><li>Classification accuracy >= 90%</li><li>Triage time improvement >= 30%</li><li>Recommendation acceptance >= 80%</li><li>Hallucination rate <= 5%</li><li>Measurable MTTR reduction</li></ul>",
+      "checkpoint": {
+        "prompt": "What proves a retail AI pod is production-ready?",
+        "answer": "It consistently improves triage and MTTR while staying within defined safety and approval boundaries."
+      }
+    }
+  ]
+}

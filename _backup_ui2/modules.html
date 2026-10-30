@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modules | Retail Domain Tutorial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Serif:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=4" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <header class="topbar home-topbar">
+      <div>
+        <a class="back-link" href="index.html">&larr; Home</a>
+        <p class="eyebrow">Interactive Course</p>
+        <h1>Course Modules</h1>
+      </div>
+      <div class="stats-wrap">
+        <div class="stats" id="globalStats">0% complete</div>
+        <div class="bar"><i id="globalBar" style="width: 0%"></i></div>
+      </div>
+    </header>
+
+    <main class="home-layout">
+      <section class="home-card">
+        <h2>Modules</h2>
+        <p class="home-subtitle">Expand a module, then choose a chapter to start learning.</p>
+        <div id="moduleAccordion" class="accordion"></div>
+      </section>
+    </main>
+
+    <script src="course-data.js?v=3"></script>
+    <script src="home.js?v=3"></script>
+  </body>
+</html>

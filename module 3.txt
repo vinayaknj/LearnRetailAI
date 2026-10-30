@@ -1,0 +1,972 @@
+Module 3: Inventory and Fulfillment Domain Mastery
+Purpose
+
+Inventory is the lifeblood of retail operations.
+
+Customers buy products, but retailers manage inventory.
+
+A retailer can survive a temporary POS issue. It cannot survive prolonged inventory inaccuracy.
+
+Poor inventory management causes:
+
+Plain Text
+Lost Sales
+Stock-Outs
+Excess Inventory
+Shrinkage
+Customer Dissatisfaction
+Forecasting Errors
+Financial Losses
+
+This module teaches how inventory moves, changes, gets reconciled, and supports omnichannel retail operations.
+
+Learning Outcomes
+
+By the end of this module, learners should be able to:
+
+✅ Explain the inventory lifecycle
+
+✅ Differentiate inventory states
+
+✅ Understand replenishment models
+
+✅ Identify causes of stock drift
+
+✅ Explain receiving and transfer processes
+
+✅ Understand cycle counting and inventory accuracy
+
+✅ Describe omnichannel fulfillment workflows
+
+✅ Diagnose inventory-related production incidents
+
+✅ Design AI agents for inventory intelligence
+
+Chapter 1: Inventory Fundamentals
+What is Inventory?
+
+Inventory is all merchandise owned or controlled by the retailer for sale.
+
+Examples:
+
+Plain Text
+Products in warehouse
+ 
+Products on store shelves
+ 
+Products in backroom storage
+ 
+Products reserved for pickup
+ 
+Products in transit
+Why Inventory Matters
+
+Inventory impacts:
+
+Plain Text
+Revenue
+ 
+Customer Satisfaction
+ 
+Working Capital
+ 
+Forecast Accuracy
+ 
+Replenishment Efficiency
+
+Too Little Inventory:
+
+Plain Text
+Lost Sales
+ 
+Out-of-Stock Situations
+
+Too Much Inventory:
+
+Plain Text
+Storage Cost
+ 
+Expiration Risk
+ 
+Markdown Losses
+Inventory Lifecycle
+Plain Text
+Supplier
+↓
+Distribution Center
+↓
+Warehouse
+↓
+Store Receiving
+↓
+Store Shelf
+↓
+Customer Purchase
+↓
+Inventory Reduction
+
+Alternative paths:
+
+Plain Text
+Transfer
+ 
+Return
+ 
+Damage
+ 
+Shrinkage
+ 
+Online Fulfillment
+Chapter 2: Inventory States
+
+Inventory exists in different business states.
+
+Understanding these states is critical.
+
+On-Hand Inventory
+
+Physical inventory present at location.
+
+Example:
+
+Plain Text
+Store 100
+ 
+Milk = 50 Units
+
+Inventory physically exists.
+
+Available-to-Sell (ATS)
+
+Inventory available for purchase.
+
+Formula:
+
+Plain Text
+ATS = On-Hand - Reserved
+
+Example:
+
+Plain Text
+On-Hand = 50
+ 
+Reserved = 10
+ 
+ATS = 40
+
+Customers can only buy from ATS.
+
+Reserved Inventory
+
+Inventory committed to orders.
+
+Example:
+
+Plain Text
+BOPIS Order
+ 
+Customer Ordered TV
+ 
+TV Removed From ATS
+
+Until pickup occurs.
+
+In-Transit Inventory
+
+Inventory moving between locations.
+
+Example:
+
+Plain Text
+Warehouse → Store
+ 
+500 Units
+
+Not yet available for sale.
+
+Damaged Inventory
+
+Inventory unsuitable for sale.
+
+Examples:
+
+Plain Text
+Broken
+ 
+Expired
+ 
+Water Damage
+ 
+Packaging Damage
+
+Must be segregated from sellable stock.
+
+Return Inventory
+
+Products returned by customers.
+
+Possible outcomes:
+
+Plain Text
+Restock
+ 
+Refurbish
+ 
+Destroy
+ 
+Return To Vendor
+Inventory State Diagram
+Plain Text
+Received
+↓
+On-Hand
+↓
+Available To Sell
+↓
+Sold
+
+Alternative routes:
+
+Plain Text
+On-Hand
+↓
+Damaged
+ 
+On-Hand
+↓
+Transfer
+ 
+On-Hand
+↓
+Reserved
+Chapter 3: Inventory Movements
+
+Inventory changes through events.
+
+Every inventory adjustment should have a business reason.
+
+Receiving
+
+Store receives inventory.
+
+Example:
+
+Plain Text
+PO: 12345
+ 
+Expected: 100 Cases
+ 
+Received: 100 Cases
+
+Inventory increases.
+
+Sales
+
+Customer buys product.
+
+Example:
+
+Plain Text
+Milk: 50
+ 
+Customer Buys 2
+ 
+Inventory = 48
+
+Inventory decreases.
+
+Returns
+
+Customer returns item.
+
+Example:
+
+Plain Text
+Laptop Returned
+
+Inventory usually increases.
+
+Transfers
+
+Inventory moved between locations.
+
+Example:
+
+Plain Text
+Store 100 → Store 120
+ 
+Inventory:
+Store 100 = -10
+ 
+Store 120 = +10
+Adjustments
+
+Manual changes.
+
+Examples:
+
+Plain Text
+Damage
+ 
+Theft
+ 
+Audits
+ 
+Corrections
+
+Should be highly controlled.
+
+Chapter 4: Receiving Process
+
+Receiving is where inventory officially enters store ownership.
+
+Receiving Workflow
+Plain Text
+PO Created
+↓
+Shipment Sent
+↓
+Store Receives Shipment
+↓
+Count Verification
+↓
+Inventory Updated
+Receiving Variance
+
+Example:
+
+Plain Text
+Expected = 100
+ 
+Received = 95
+
+Shortage:
+
+Plain Text
+5 Units Missing
+
+Investigation required.
+
+Over Receiving
+
+Example:
+
+Plain Text
+Expected = 100
+ 
+Received = 110
+
+Possible causes:
+
+Plain Text
+Supplier Error
+ 
+Count Error
+ 
+Data Error
+Receiving KPIs
+Plain Text
+Receiving Accuracy
+ 
+Shipment Accuracy
+ 
+Supplier Compliance
+ 
+Receiving Time
+Chapter 5: Inventory Replenishment
+
+Replenishment ensures products remain available.
+
+Why Replenishment Matters
+
+Without replenishment:
+
+Plain Text
+Empty Shelves
+ 
+Lost Revenue
+ 
+Customer Churn
+Reorder Point
+
+Threshold triggering replenishment.
+
+Example:
+
+Plain Text
+Current Stock = 20
+ 
+Reorder Point = 15
+
+No action yet.
+
+At:
+
+Plain Text
+Stock = 15
+
+Replenishment initiated.
+
+Safety Stock
+
+Additional inventory maintained for uncertainty.
+
+Purpose:
+
+Plain Text
+Demand Fluctuations
+ 
+Supplier Delays
+ 
+Unexpected Sales
+Forecast-Based Replenishment
+
+Uses:
+
+Plain Text
+Historical Sales
+ 
+Seasonality
+ 
+Promotions
+ 
+Weather
+ 
+Local Events
+
+to predict future demand.
+
+Replenishment KPIs
+Plain Text
+Stock-Out Rate
+ 
+Fill Rate
+ 
+Inventory Turnover
+ 
+Forecast Accuracy
+Chapter 6: Stock-Out Prevention
+What is a Stock-Out?
+
+Product unavailable despite demand.
+
+Example:
+
+Plain Text
+Customer Wants Product
+ 
+Shelf Empty
+
+Sale lost.
+
+Causes
+Plain Text
+Poor Forecasting
+ 
+Delayed Replenishment
+ 
+Incorrect Inventory Data
+ 
+Unexpected Demand
+ 
+Supplier Issues
+Business Impact
+Plain Text
+Revenue Loss
+ 
+Customer Dissatisfaction
+ 
+Competitor Purchases
+Detection Signals
+Plain Text
+ATS = 0
+ 
+Shelf Empty Alerts
+ 
+Sales Drop Anomalies
+ 
+Pickup Failures
+Chapter 7: Store Transfers
+
+Stores often balance inventory by transferring stock.
+
+Example
+
+Store A:
+
+Plain Text
+500 Units
+
+Store B:
+
+Plain Text
+10 Units
+
+Transfer:
+
+Plain Text
+100 Units
+
+from Store A to B.
+
+Transfer Lifecycle
+Plain Text
+Transfer Request
+↓
+Approval
+↓
+Shipment
+↓
+In Transit
+↓
+Receiving
+↓
+Inventory Updated
+Common Problems
+Plain Text
+Missing Inventory
+ 
+Wrong Quantities
+ 
+Transfer Delays
+ 
+Lost Shipments
+Chapter 8: Inventory Shrinkage
+
+One of the most important retail concepts.
+
+Definition
+
+Inventory loss not explained by legitimate transactions.
+
+Formula:
+
+Plain Text
+Expected Inventory
+-
+Actual Inventory
+=
+Shrinkage
+Causes
+Theft
+Plain Text
+Shoplifting
+ 
+Employee Theft
+Administrative Errors
+Plain Text
+Wrong Counts
+ 
+Wrong Receiving
+ 
+Data Entry Errors
+Vendor Fraud
+Plain Text
+Missing Shipment Quantities
+Damage
+Plain Text
+Broken Products
+ 
+Expired Goods
+Shrinkage Impact
+Plain Text
+Reduced Profit
+ 
+Inventory Inaccuracy
+ 
+Replenishment Errors
+Shrinkage KPI
+Plain Text
+Shrink %
+ 
+Lost Inventory Value
+ 
+High-Risk Departments
+Chapter 9: Cycle Counting
+
+Physical inventory verification.
+
+Why Cycle Counts Matter
+
+System inventory eventually diverges from reality.
+
+Cycle counts correct errors.
+
+Example
+
+System:
+
+Plain Text
+50 Bottles
+
+Physical Count:
+
+Plain Text
+47 Bottles
+
+Difference:
+
+Plain Text
+-3 Bottles
+
+Investigation required.
+
+Counting Approaches
+Full Physical Inventory
+
+Count entire store.
+
+Usually annual.
+
+Cycle Count
+
+Count selected inventory regularly.
+
+Example:
+
+Plain Text
+Daily
+ 
+Weekly
+ 
+Monthly
+Inventory Accuracy Formula
+Plain Text
+Accurate Items
+---------------
+Counted Items
+
+Example:
+
+Plain Text
+980 Accurate Items
+ 
+1000 Counted Items
+ 
+Accuracy = 98%
+Chapter 10: Omnichannel Fulfillment
+
+Modern retail combines online and physical inventory.
+
+Buy Online Pickup In Store (BOPIS)
+
+Customer:
+
+Plain Text
+Orders Online
+
+Store:
+
+Plain Text
+Reserves Inventory
+
+Customer:
+
+Plain Text
+Picks Up In Store
+BOPIS Flow
+Plain Text
+Order Created
+↓
+Inventory Reserved
+↓
+Store Picks Product
+↓
+Customer Pickup
+↓
+Order Complete
+Ship From Store
+
+Store inventory fulfills online order.
+
+Flow:
+
+Plain Text
+Online Order
+↓
+Store Selected
+↓
+Item Picked
+↓
+Packed
+↓
+Shipped
+Return to Store
+
+Customer purchases online.
+
+Returns in physical store.
+
+Requirements:
+
+Plain Text
+Cross-system visibility
+ 
+Order lookup
+ 
+Refund capability
+Chapter 11: Stock Drift and Reconciliation
+
+Critical topic for support engineers.
+
+What is Stock Drift?
+
+Inventory differs between systems.
+
+Example:
+
+Plain Text
+POS = 100
+ 
+IMS = 95
+
+Mismatch exists.
+
+Common Causes
+Sale Upload Failure
+
+POS sold item.
+
+Inventory system never updated.
+
+Duplicate Messages
+
+Inventory deducted twice.
+
+Transfer Errors
+
+Transfer shipped but not received.
+
+Manual Adjustments
+
+Improper inventory changes.
+
+Offline Stores
+
+Delayed synchronization.
+
+Reconciliation Process
+Plain Text
+Compare Systems
+↓
+Identify Variance
+↓
+Determine Root Cause
+↓
+Correct Inventory
+↓
+Document Adjustment
+Chapter 12: Inventory KPIs
+Inventory Accuracy
+
+Measures system correctness.
+
+Stock-Out Rate
+
+Measures unavailable inventory.
+
+Fill Rate
+
+Percentage of demand satisfied.
+
+Inventory Turnover
+
+Formula:
+
+Plain Text
+COGS
+---------
+Average Inventory
+
+Higher turnover usually means healthier inventory movement.
+
+Days of Supply
+
+Measures future inventory coverage.
+
+Example:
+
+Plain Text
+Current Stock
+ 
+÷
+ 
+Average Daily Sales
+Chapter 13: Common Inventory Incidents
+Incident 1
+
+Inventory Not Updated After Sale
+
+Symptoms:
+
+Plain Text
+Store Shows Stock
+ 
+Shelf Empty
+
+Cause:
+
+Plain Text
+Transaction Upload Problem
+Incident 2
+
+Negative Inventory
+
+Example:
+
+Plain Text
+Inventory = -5
+
+Usually indicates data issues.
+
+Incident 3
+
+BOPIS Inventory Mismatch
+
+Customer ordered.
+
+Store cannot find product.
+
+Cause:
+
+Plain Text
+Reserved Inventory Logic Failure
+Incident 4
+
+Transfer Inventory Lost
+
+Shipped but never received.
+
+Cause:
+
+Plain Text
+Process Failure
+ 
+Logistics Error
+ 
+System Synchronization Issue
+Chapter 14: AI Applications in Inventory Management
+Inventory Drift Detection Agent
+
+Inputs:
+
+Plain Text
+POS Data
+ 
+IMS Data
+ 
+Transfers
+ 
+Cycle Counts
+
+Output:
+
+Plain Text
+Probable Drift Root Causes
+Replenishment Recommendation Agent
+
+Analyzes:
+
+Plain Text
+Demand
+ 
+Inventory
+ 
+Seasonality
+ 
+Promotions
+
+Generates:
+
+Plain Text
+Suggested Reorder Quantities
+Shrinkage Analysis Agent
+
+Detects:
+
+Plain Text
+Theft Patterns
+ 
+Store Outliers
+ 
+High-Risk Categories
+Fulfillment Intelligence Agent
+
+Monitors:
+
+Plain Text
+BOPIS
+ 
+Ship From Store
+ 
+Transfer Delays
+
+Provides:
+
+Plain Text
+Recommended Actions
+Retail Inventory Failure Scenarios Every Specialist Must Know
+Sale succeeded but inventory not deducted
+Inventory deducted twice
+Transfer shipped but not received
+Reserved inventory never released
+BOPIS order cannot be fulfilled
+Negative inventory values
+Store shows stock but shelf empty
+Cycle count variance spikes
+Supplier shipment discrepancy
+Damaged inventory sold accidentally
+Inventory synchronization backlog
+Promotion causes unexpected stock depletion
+Omnichannel overselling
+Duplicate adjustment transactions
+Inventory drift across systems
+Module 3 Knowledge Checklist
+
+A learner should be able to answer without notes:
+
+✅ Difference between On-Hand, ATS, Reserved, In-Transit, and Damaged inventory
+
+✅ Inventory lifecycle from supplier to customer
+
+✅ How replenishment works
+
+✅ Causes of stock-outs
+
+✅ How store transfers work
+
+✅ How shrinkage impacts profitability
+
+✅ How cycle counting improves inventory accuracy
+
+✅ BOPIS, Ship-from-Store, and Return-to-Store workflows
+
+✅ Top causes of stock drift
+
+✅ Inventory KPIs and business impact
+
+✅ Where AI agents can improve inventory operations
+
+Deliverables
+Plain Text
+domain/inventory-event-model.md
+
+Contents:
+
+Inventory states
+Inventory events
+State transitions
+Reconciliation logic
+Omnichannel flows
+Plain Text
+domain/stock-drift-root-causes.md
+
+Contents:
+
+Drift taxonomy
+Detection methods
+RCA templates
+Incident examples
+Recovery procedures
+
+This module forms the core domain knowledge needed before Module 4 (Payments, Compliance, and Risk), where you'll connect inventory and sales events to financial settlement, PCI compliance, reconciliation, and fraud detection.

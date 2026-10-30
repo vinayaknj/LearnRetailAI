@@ -1,0 +1,103 @@
+{
+  "id": "m1",
+  "title": "Retail Operating Model Fundamentals",
+  "weeks": "Weeks 1-2",
+  "chapters": [
+    {
+      "title": "Chapter 0: Learning Objective",
+      "content": "\n          <p>By the end of this module, learners should be able to:</p>\n          <ul class=\"clean\">\n            <li>Explain how a retail business operates end-to-end</li>\n            <li>Identify major retail systems and their responsibilities</li>\n            <li>Understand how data flows through retail operations</li>\n            <li>Describe store hierarchy and ownership structures</li>\n            <li>Recognize POS dependencies and failure impact</li>\n          </ul>\n          <h3>Outcome Standard</h3>\n          <p>You are ready for Module 2 when you can trace one transaction from supplier inventory creation through checkout, payment settlement, and finance posting without ambiguity.</p>\n          <h3>How To Study This Module</h3>\n          <ul class=\"clean\">\n            <li>Focus first on process sequence, then on system ownership.</li>\n            <li>Learn incident impact in business terms, not only technical terms.</li>\n            <li>Memorize where data is mastered vs where it is consumed.</li>\n          </ul>\n        ",
+      "checkpoint": {
+        "prompt": "What is the focus of Module 1 in one line?",
+        "answer": "Build clear retail domain foundations before deeper technical or AI implementation."
+      }
+    },
+    {
+      "title": "Chapter 1: What is Retail?",
+      "content": "\n          <h3>Definition</h3>\n          <p>Retail is the business of selling products or services directly to consumers.</p>\n          <p>Examples: Walmart, Target, Costco, Kroger, HEB, Amazon Fresh.</p>\n          <p>A retail company does much more than billing. It sources products, stores inventory, transports products, sells to customers, collects payment, and reconciles finances.</p>\n          <h3>Retail Is A Coordinated Network</h3>\n          <p>A customer sees one bill at checkout, but the business depends on synchronized operations across merchandising, supply chain, store execution, finance, and digital channels.</p>\n          <ol>\n            <li>Source products</li>\n            <li>Store inventory</li>\n            <li>Transport products</li>\n            <li>Sell to customers</li>\n            <li>Collect payment</li>\n            <li>Reconcile finances</li>\n          </ol>\n          <h3>Core Operating Risks</h3>\n          <ul class=\"clean\">\n            <li>Demand mismatch: overstock creates carrying cost, understock creates lost sales.</li>\n            <li>Price integrity gaps: wrong price or missing promotion erodes trust.</li>\n            <li>Execution variance: store-level process inconsistency impacts service quality.</li>\n            <li>Settlement delay: recognized sales may not equal cash received same day.</li>\n          </ul>\n        ",
+      "checkpoint": {
+        "prompt": "Why is retail not just billing at POS?",
+        "answer": "Because billing is one step in the full chain from sourcing to settlement and accounting."
+      }
+    },
+    {
+      "title": "Chapter 2: Retail Value Chain",
+      "content": "\n          <h3>End-to-End Retail Flow</h3>\n            <pre class=\"flow-block\">Supplier\n          -> Distribution Center\n          -> Warehouse\n          -> Store\n          -> POS Checkout\n          -> Payment Processor\n          -> Settlement\n          -> Finance Systems</pre>\n\n          <h3>Detailed Explanation</h3>\n          <p><strong>Supplier:</strong> manufactures products and sends master data.</p>\n          <p><strong>Distribution Center:</strong> receives, aggregates, and routes stock.</p>\n          <p><strong>Warehouse:</strong> tracks on-hand, reserved, damaged inventory.</p>\n          <p><strong>Store Operations:</strong> stocking, receiving, cycle counting, customer service.</p>\n          <p><strong>Checkout:</strong> scan, lookup, price, promo, tax, payment, receipt.</p>\n          <p><strong>Settlement:</strong> fund movement after checkout through payment network and bank.</p>\n\n          <p><strong>Important distinction:</strong> Sale completed is not equal to money settled.</p>\n          <h3>Where Delays Commonly Occur</h3>\n          <table class=\"content-table\">\n            <tr><th>Step</th><th>Frequent Delay Cause</th><th>Business Effect</th></tr>\n            <tr><td>Supplier -> DC</td><td>Late ASN or shipment mismatch</td><td>Receiving backlog, shelf gaps</td></tr>\n            <tr><td>Store -> POS</td><td>Catalog or price feed lag</td><td>Manual overrides at checkout</td></tr>\n            <tr><td>Payment -> Settlement</td><td>Batch timing or processor hold</td><td>Cashflow visibility delay</td></tr>\n          </table>\n          <h3>Key Point</h3>\n          <p>Retail success depends on both physical product flow and digital data flow. Break either one and customer experience degrades quickly.</p>\n        ",
+      "checkpoint": {
+        "prompt": "What comes after POS checkout in money movement?",
+        "answer": "Processor and banking settlement flow, then finance posting."
+      }
+    },
+    {
+      "title": "Chapter 3: Retail Organization Hierarchy",
+      "content": "\n            <pre class=\"flow-block\">Retail Chain\n          -> Region\n          -> District / Cluster\n          -> Store\n          -> POS Terminal</pre>\n          <table class=\"content-table\">\n            <tr><th>Level</th><th>Example</th><th>Notes</th></tr>\n            <tr><td>Retail Chain</td><td>HEB</td><td>Entire business</td></tr>\n            <tr><td>Region</td><td>Texas Central</td><td>Geographic grouping</td></tr>\n            <tr><td>District / Cluster</td><td>District 48</td><td>Manager oversees many stores</td></tr>\n            <tr><td>Store</td><td>Store #245</td><td>Address, hours, manager, inventory</td></tr>\n            <tr><td>Terminal</td><td>POS 12</td><td>Scans items, takes tenders, prints receipts</td></tr>\n          </table>\n          <h3>Operational Ownership By Level</h3>\n          <ul class=\"clean\">\n            <li>Chain: enterprise standards, platform strategy, vendor contracts.</li>\n            <li>Region: execution consistency, regional demand shape, escalations.</li>\n            <li>District: multi-store coaching, incident triage coordination.</li>\n            <li>Store: daily operations, labor allocation, service quality.</li>\n            <li>Terminal: transaction execution and immediate customer interaction.</li>\n          </ul>\n          <h3>Incident Blast Radius</h3>\n          <p>Terminal issue impacts one checkout lane; store issue impacts all lanes in one location; region-level issue can affect dozens of stores simultaneously.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Why does hierarchy matter for incidents?",
+        "answer": "It determines blast radius, owner routing, and escalation urgency."
+      }
+    },
+    {
+      "title": "Chapter 4: Retail Systems Landscape",
+      "content": "\n          <h3>Core System Map</h3>\n            <pre class=\"flow-block\">             ERP\n              |\n      IMS -------- POS -------- CRM\n       |             |           |\n      OMS ------- Loyalty ---- Payments</pre>\n\n          <ul class=\"clean\">\n            <li>POS: transaction execution</li>\n            <li>OMS: online order orchestration</li>\n            <li>IMS: inventory truth and stock state</li>\n            <li>ERP: accounting and finance posting</li>\n            <li>CRM/Loyalty: customer behavior and rewards</li>\n            <li>Payments: authorization, capture, settlement</li>\n          </ul>\n          <h3>System Of Record Vs System Of Engagement</h3>\n          <table class=\"content-table\">\n            <tr><th>Category</th><th>Examples</th><th>Primary Purpose</th></tr>\n            <tr><td>System of Record</td><td>ERP, IMS, Catalog</td><td>Trusted master data and auditable state</td></tr>\n            <tr><td>System of Engagement</td><td>POS, E-commerce UI, Loyalty App</td><td>Customer and operator interaction</td></tr>\n            <tr><td>System of Orchestration</td><td>OMS, Payment Gateway</td><td>Cross-system coordination and workflow control</td></tr>\n          </table>\n          <h3>Design Principle</h3>\n          <p>Do not duplicate business truth in every system. Define one owning system per critical domain object.</p>\n        ",
+      "checkpoint": {
+        "prompt": "OMS vs IMS in one line?",
+        "answer": "OMS manages order lifecycle; IMS manages inventory state."
+      }
+    },
+    {
+      "title": "Chapter 5: POS Dependencies",
+      "content": "\n          <h3>Upstream Dependencies</h3>\n          <p>Price Service, Inventory Service, Tax Service, Promotion Service, Product Catalog, Loyalty Service.</p>\n\n          <h3>Downstream Dependencies</h3>\n          <p>Reporting, ERP, Inventory Updates, Settlement, Analytics, Fraud Detection.</p>\n\n          <h3>Example Impacts</h3>\n          <ul class=\"clean\">\n            <li>Price service failure -> wrong prices, complaints, sales loss</li>\n            <li>Transaction upload failure -> inventory drift, reporting errors, reconciliation issues</li>\n          </ul>\n          <h3>Dependency Failure Matrix</h3>\n          <table class=\"content-table\">\n            <tr><th>Dependency</th><th>Typical Symptom</th><th>Immediate Mitigation</th></tr>\n            <tr><td>Price Service</td><td>Unexpected totals</td><td>Fallback to approved emergency price list</td></tr>\n            <tr><td>Tax Service</td><td>Tax mismatch warnings</td><td>Trigger regional tax-rule fallback and audit queue</td></tr>\n            <tr><td>Loyalty Service</td><td>Points not applied</td><td>Issue deferred benefit token for later reconciliation</td></tr>\n            <tr><td>Upload Pipeline</td><td>Missing transactions in HQ</td><td>Replay queue with idempotency keys</td></tr>\n          </table>\n          <h3>Operational Insight</h3>\n          <p>POS resilience is less about one perfect service and more about controlled degradation with clear reconciliation paths.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Price service down, POS up. What happens?",
+        "answer": "Checkout may continue with wrong/stale prices, causing overrides and revenue leakage."
+      }
+    },
+    {
+      "title": "Chapter 6: Online vs Offline vs Omnichannel",
+      "content": "\n          <h3>Offline Retail</h3>\n          <pre class=\"flow-block\">Customer -> Store -> POS</pre>\n\n          <h3>Online Retail</h3>\n          <pre class=\"flow-block\">Website -> OMS -> Warehouse -> Shipping -> Customer</pre>\n\n          <h3>Omnichannel Retail</h3>\n          <table class=\"content-table\">\n            <tr><th>Pattern</th><th>Meaning</th></tr>\n            <tr><td>BOPIS</td><td>Buy online, pick up in store</td></tr>\n            <tr><td>Ship From Store</td><td>Store inventory fulfills online order</td></tr>\n            <tr><td>Return To Store</td><td>Online purchase returned physically</td></tr>\n          </table>\n          <h3>Capability Comparison</h3>\n          <table class=\"content-table\">\n            <tr><th>Model</th><th>Strength</th><th>Complexity Driver</th></tr>\n            <tr><td>Offline</td><td>Immediate fulfillment</td><td>In-store staffing and queue control</td></tr>\n            <tr><td>Online</td><td>Wider reach and assortment</td><td>Fulfillment and last-mile shipping</td></tr>\n            <tr><td>Omnichannel</td><td>Customer convenience and flexibility</td><td>Real-time inventory and order sync</td></tr>\n          </table>\n        ",
+      "checkpoint": {
+        "prompt": "Why is omnichannel harder to run?",
+        "answer": "It requires cross-system synchronization between orders, inventory, and fulfillment."
+      }
+    },
+    {
+      "title": "Chapter 7: Business KPIs",
+      "content": "\n          <pre class=\"flow-block\">Revenue = Units Sold x Selling Price\nAverage Basket Value = Total Sales / Number of Transactions\nConversion Rate = Purchasing Customers / Store Visitors\nInventory Accuracy = System Inventory vs Physical Inventory</pre>\n          <p>Stock-out rate is a critical KPI: high stock-outs create lost sales and dissatisfaction.</p>\n          <h3>KPI Interpretation Guide</h3>\n          <ul class=\"clean\">\n            <li>Revenue up with margin down can signal discount overuse.</li>\n            <li>Basket value up with conversion down can hide checkout friction.</li>\n            <li>High inventory accuracy but high stock-out may indicate poor replenishment timing.</li>\n            <li>Low conversion during promo windows often maps to POS or promotion rule failure.</li>\n          </ul>\n          <h3>Leading vs Lagging Indicators</h3>\n          <p>Queue length and scan latency are leading indicators. Daily sales and settlement reports are lagging indicators.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Which KPI is hit first by checkout outages?",
+        "answer": "Conversion rate and revenue."
+      }
+    },
+    {
+      "title": "Chapter 8: Real-World Scenario",
+      "content": "\n          <p>Scenario: BOGO promotion expected for 2 shampoo units, but discount not applied.</p>\n          <p>Likely failing areas: Promotion Service, POS integration, Pricing feed.</p>\n          <p>Business impact: customer complaints, manual overrides, reporting inconsistencies.</p>\n          <h3>Triage Runbook</h3>\n          <ol>\n            <li>Confirm promotion configuration: SKU scope, store scope, start/end time, channel eligibility.</li>\n            <li>Validate customer/basket conditions: quantity threshold, excluded combinations, loyalty requirements.</li>\n            <li>Inspect POS logs for rule evaluation response and fallback behavior.</li>\n            <li>Compare expected vs actual price events in transaction audit trail.</li>\n            <li>Escalate with incident template including sample receipt and transaction ID.</li>\n          </ol>\n          <h3>Recovery Options</h3>\n          <ul class=\"clean\">\n            <li>Temporary cashier override policy with reason codes.</li>\n            <li>Back-office compensation coupon for affected customers.</li>\n            <li>Post-incident replay validation for reporting consistency.</li>\n          </ul>\n        ",
+      "checkpoint": {
+        "prompt": "First triage action?",
+        "answer": "Validate promotion eligibility and validity for SKU/store/time."
+      }
+    },
+    {
+      "title": "Chapter 9: Quick Quiz",
+      "content": "\n          <ol>\n            <li>Inventory tracking system: <strong>IMS</strong></li>\n            <li>POS upstream dependency: <strong>Pricing Service</strong></li>\n            <li>Online orchestration system: <strong>OMS</strong></li>\n            <li>After authorization comes: <strong>Capture</strong></li>\n          </ol>\n          <h3>Challenge Questions</h3>\n          <ol>\n            <li>Why can sales reports look correct while settlement is still incomplete?</li>\n            <li>What distinguishes a local store incident from a region-level platform incident?</li>\n            <li>When should POS fail closed vs fail open for dependency outages?</li>\n          </ol>\n        ",
+      "checkpoint": {
+        "prompt": "If score is low, what should you revise first?",
+        "answer": "System boundaries and transaction flow responsibilities."
+      }
+    },
+    {
+      "title": "Chapter 10: Practical Assignments",
+      "content": "\n          <p>Create <strong>domain/retail-system-map.md</strong> with systems, ownership, data flows, upstream/downstream dependencies.</p>\n          <p>Create <strong>domain/store-operating-model.md</strong> with hierarchy, roles, opening/closing procedures, incident ownership matrix.</p>\n          <h3>Assignment Quality Checklist</h3>\n          <ul class=\"clean\">\n            <li>Each system must include owned data entities and non-owned consumed entities.</li>\n            <li>Each dependency must include failure symptom and fallback approach.</li>\n            <li>Each store process must include role owner, timing, and observable output.</li>\n            <li>Incident matrix must define severity, escalation path, and communication SLA.</li>\n          </ul>\n        ",
+      "checkpoint": {
+        "prompt": "What makes these assignments high value?",
+        "answer": "They convert domain theory into operational artifacts that speed up incident triage."
+      }
+    },
+    {
+      "title": "Chapter 11: Completion Criteria",
+      "content": "\n          <p>You should answer without notes:</p>\n          <ol>\n            <li>Major retail systems</li>\n            <li>Inventory movement supplier to customer</li>\n            <li>POS dependencies</li>\n            <li>OMS vs IMS</li>\n            <li>Online vs offline vs omnichannel</li>\n            <li>POS downtime business impact</li>\n            <li>Money flow from card to retailer account</li>\n          </ol>\n          <h3>Performance Threshold</h3>\n          <p>Target at least 80% accuracy on quiz and scenario walkthroughs, plus the ability to explain one failure case with root cause and mitigation.</p>\n          <h3>Readiness Signal</h3>\n          <p>If you can confidently separate responsibilities of POS, OMS, IMS, ERP, and Payments under pressure, you are ready for transaction-deep work in Module 2.</p>\n        ",
+      "checkpoint": {
+        "prompt": "Ready for Module 2 when?",
+        "answer": "When all seven criteria are answered clearly with examples."
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter Lesson</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Serif:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=4" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" id="lessonModuleWeeks"></p>
+        <h1 id="lessonModuleTitle">Lesson</h1>
+      </div>
+      <div class="lesson-actions">
+        <a href="modules.html" class="btn ghost">Modules</a>
+        <a href="index.html" class="btn ghost">Home</a>
+      </div>
+    </header>
+
+    <div class="lesson-progress"><div class="bar"><i id="lessonBar" style="width: 0%"></i></div></div>
+
+    <main class="lesson-page-layout">
+      <section class="chapter-content" id="lessonContent"></section>
+
+      <aside class="tools-panel">
+        <h2>Chapter Tools</h2>
+        <div class="tool-card">
+          <h3>Notes</h3>
+          <textarea id="chapterNotes" placeholder="Write insights, examples, and failure patterns..."></textarea>
+          <button id="saveNotesBtn" class="btn">Save Notes</button>
+        </div>
+        <div class="tool-card">
+          <h3>Checkpoint</h3>
+          <p id="checkpointPrompt"></p>
+          <button id="revealAnswerBtn" class="btn ghost">Reveal Guide Answer</button>
+          <p id="checkpointAnswer" class="answer hidden"></p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="lesson-nav-footer">
+      <button id="prevBtn" class="btn ghost">Previous</button>
+      <button id="markDoneBtn" class="btn">Mark Complete</button>
+      <button id="nextBtn" class="btn">Next</button>
+    </footer>
+
+    <script src="course-data.js?v=3"></script>
+    <script src="lesson.js?v=3"></script>
+  </body>
+</html>
