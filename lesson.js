@@ -124,6 +124,20 @@ function chapterShortTitle(chapter) {
   return (chapter.title || "").replace(/^Chapter\s+\d+:\s*/i, "").trim();
 }
 
+function isQuizChapter(chapter, root = null) {
+  const title = (chapter?.title || "").toLowerCase();
+  if (/\bquick\s*quiz\b|\bquiz\b/.test(title)) {
+    return true;
+  }
+  if (root) {
+    const quizCount = root.querySelectorAll(".quiz-q").length;
+    if (quizCount >= 2) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function safeCard(front, back) {
   const q = cleanCardText(front);
   const a = cleanCardText(back);
@@ -131,6 +145,15 @@ function safeCard(front, back) {
     return null;
   }
   if (q.length < 8 || a.length < 12) {
+    return null;
+  }
+  if (/^what is another key idea in /i.test(q)) {
+    return null;
+  }
+  if (/^what should be reviewed before moving on from /i.test(q)) {
+    return null;
+  }
+  if (/^review this chapter'?s key terms/i.test(a)) {
     return null;
   }
   return {
@@ -175,8 +198,11 @@ function cardScore(front, back) {
   if (q.startsWith("what") || q.startsWith("why") || q.startsWith("how")) {
     score += 2;
   }
-  if (/name one key point|what chapter are you studying/i.test(q)) {
+  if (/name one key point|what chapter are you studying|key takeaway from/i.test(q)) {
     score -= 6;
+  }
+  if (/review this chapter'?s key terms|before moving next/i.test(a)) {
+    score -= 8;
   }
 
   return score;
@@ -187,6 +213,10 @@ function buildChapterFlashcards(chapter) {
   const dedupe = new Set();
   const root = document.createElement("div");
   root.innerHTML = chapter.content || "";
+
+  if (isQuizChapter(chapter, root)) {
+    return [];
+  }
 
   const pushCandidate = (front, back, sourceBoost = 0) => {
     const card = safeCard(front, back);
@@ -227,17 +257,6 @@ function buildChapterFlashcards(chapter) {
 
   if (chapter.checkpoint) {
     pushCandidate(chapter.checkpoint.prompt, chapter.checkpoint.answer, 7);
-  }
-
-  const quizBlocks = [...root.querySelectorAll(".quiz-q")];
-  if (quizBlocks.length) {
-    quizBlocks.forEach((block) => {
-      const question = cleanCardText(block.querySelector("p")?.textContent || "");
-      const correctChoice = block.querySelector("li.correct") || [...block.querySelectorAll("li")].find((li) => /\(Correct\)/i.test(li.textContent || ""));
-      if (question && correctChoice) {
-        pushCandidate(question, cleanCardText(correctChoice.textContent), 6);
-      }
-    });
   }
 
   const firstParagraphs = [...root.querySelectorAll("p")]
@@ -376,7 +395,11 @@ function renderInlineFlashcards(chapter) {
 
   const cards = buildChapterFlashcards(chapter);
   if (!cards.length) {
-    host.innerHTML = "<p class=\"sidebar-meta\">No flashcards available for this chapter.</p>";
+    if (isQuizChapter(chapter)) {
+      host.innerHTML = "<p class=\"sidebar-meta\">Flashcards are intentionally disabled for quiz chapters.</p>";
+    } else {
+      host.innerHTML = "<p class=\"sidebar-meta\">No flashcards available for this chapter.</p>";
+    }
     return;
   }
 

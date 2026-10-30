@@ -9,7 +9,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 0: Purpose and Learning Outcomes?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What is the practical output expected from this module?",
+          "back": "A transaction design that maps each stage to owner service, state transition, and business impact with clear recovery behavior."
+        },
+        {
+          "front": "Why are transaction semantics foundational for retail engineering?",
+          "back": "Because ambiguity at checkout propagates into inventory drift, finance mismatch, tax errors, and customer trust issues."
+        },
+        {
+          "front": "Which three artifacts prove developer readiness in this module?",
+          "back": "A sequence diagram with failure branches, a state transition table, and a symptom-to-cause mitigation taxonomy."
+        },
+        {
+          "front": "What should be captured for each chapter as you study?",
+          "back": "Domain rule, owner service, failure symptom, and business impact."
+        }
+      ]
     },
     {
       "title": "Chapter 1: Retail Transaction Lifecycle",
@@ -17,7 +35,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 1: Retail Transaction Lifecycle?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is a retail transaction treated as a workflow instead of one API call?",
+          "back": "Each stage has separate ownership, latency risk, and failure semantics, so correctness depends on the full sequence, not one response."
+        },
+        {
+          "front": "What is the value of correlation IDs across lifecycle stages?",
+          "back": "They provide end-to-end traceability for debugging, audit reconstruction, and incident blast-radius analysis."
+        },
+        {
+          "front": "What invariant protects downstream consistency in lifecycle design?",
+          "back": "Later stages must not silently mutate outputs from earlier committed stages."
+        },
+        {
+          "front": "Why must lifecycle retries be idempotent?",
+          "back": "To prevent duplicate effects such as repeated payment, duplicate posting, or inconsistent receipt snapshots during recovery."
+        }
+      ]
     },
     {
       "title": "Chapter 2: Product Lookup and Catalog Management",
@@ -25,7 +61,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 2: Product Lookup and Catalog Management?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is product lookup a high-impact step in checkout reliability?",
+          "back": "Because pricing, promotions, tax, and receipt generation all depend on accurate SKU, UOM, status, and tax-group resolution."
+        },
+        {
+          "front": "What risk is created by duplicate barcode-to-SKU mapping?",
+          "back": "The wrong item can be sold, causing pricing, tax, and inventory integrity failures in one transaction."
+        },
+        {
+          "front": "Why should catalog publishes include version and effective-window metadata?",
+          "back": "It enables controlled rollout, rollback, and forensic verification of what product truth was active at transaction time."
+        },
+        {
+          "front": "What is a critical fallback path when scan lookup fails?",
+          "back": "Manual SKU entry with validation controls, so sales can continue without bypassing product integrity checks."
+        }
+      ]
     },
     {
       "title": "Chapter 3: Pricing Fundamentals",
@@ -33,7 +87,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 3: Pricing Fundamentals?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What makes a pricing engine operationally trustworthy?",
+          "back": "Deterministic output for identical inputs plus a complete rule-trace explaining why the final price was selected."
+        },
+        {
+          "front": "Why must override actions capture actor and reason code?",
+          "back": "Overrides change financial outcomes and require auditability to detect misuse, training gaps, or policy drift."
+        },
+        {
+          "front": "What edge case often breaks pricing consistency during checkout?",
+          "back": "Mid-transaction price book updates when basket context remains open without a clear lock policy."
+        },
+        {
+          "front": "How do you validate pricing correctness before release?",
+          "back": "Run deterministic replay tests and confirm that rule traces remain stable and reversible for override scenarios."
+        }
+      ]
     },
     {
       "title": "Chapter 4: Promotion Processing",
@@ -41,7 +113,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 4: Promotion Processing?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is promotion logic treated as policy evaluation rather than UI behavior?",
+          "back": "Promotion outcomes directly affect financial integrity and customer trust, so rule correctness is a domain-control concern."
+        },
+        {
+          "front": "What causes many promotion incidents even when rules look correct?",
+          "back": "Catalog scope mismatch, stackability conflict, or channel eligibility misalignment between rule definitions and runtime context."
+        },
+        {
+          "front": "Why must promotion decisions store rule version and eligibility inputs?",
+          "back": "It enables exact replay and dispute analysis when customers challenge discount application outcomes."
+        },
+        {
+          "front": "What is a safe behavior for non-stackable promotion conflicts?",
+          "back": "Apply deterministic priority order and persist reason trace for why one rule was selected over another."
+        }
+      ]
     },
     {
       "title": "Chapter 5: Tax Calculation",
@@ -49,7 +139,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 5: Tax Calculation?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why can identical baskets produce different tax outcomes?",
+          "back": "Tax depends on jurisdiction, product classification, customer exemptions, and effective rule context at transaction time."
+        },
+        {
+          "front": "What design choice most improves tax dispute resolution?",
+          "back": "Persist immutable tax inputs, output breakdown, and rule version so computations can be replayed exactly."
+        },
+        {
+          "front": "Why is rounding policy consistency a compliance requirement?",
+          "back": "Inconsistent rounding across services creates mismatched totals, audit adjustment growth, and customer refund friction."
+        },
+        {
+          "front": "What should happen when tax fallback behavior is triggered?",
+          "back": "The transaction should be flagged for compliance review with clear evidence of fallback path and risk scope."
+        }
+      ]
     },
     {
       "title": "Chapter 6: Tender and Payment Processing",
@@ -57,7 +165,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 6: Tender and Payment Processing?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What is the domain difference between tender and payment processing?",
+          "back": "Tender is customer method selection, while payment processing is network authorization/capture/settlement execution."
+        },
+        {
+          "front": "Why is timeout handling a high-risk payment area?",
+          "back": "A timeout may still complete upstream, so unsafe retries can create duplicate charges and chargeback exposure."
+        },
+        {
+          "front": "What is the role of idempotency keys in payment flows?",
+          "back": "They bind retries to one logical intent, preventing duplicate financial side effects across auth/capture/refund operations."
+        },
+        {
+          "front": "Which metrics reveal hidden payment instability early?",
+          "back": "Timeout distribution, retry-success quality, approval/decline drift by acquirer, and duplicate-charge prevention events."
+        }
+      ]
     },
     {
       "title": "Chapter 7: Receipt Generation",
@@ -65,7 +191,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 7: Receipt Generation?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is a receipt considered a system record, not just customer print output?",
+          "back": "It is an immutable evidence snapshot of pricing, promotion, tax, and payment decisions tied to transaction identity."
+        },
+        {
+          "front": "What must happen if printer hardware fails after commit?",
+          "back": "Transaction remains valid; reprint and digital retrieval must use stored snapshot without recomputation."
+        },
+        {
+          "front": "Why separate canonical receipt data from customer-facing format?",
+          "back": "Presentation can evolve while preserving long-term compatibility and audit integrity of transactional evidence."
+        },
+        {
+          "front": "Which fields are most valuable during receipt-related disputes?",
+          "back": "Payment auth references, tax/promo rule references, and cashier-terminal-business-date context."
+        }
+      ]
     },
     {
       "title": "Chapter 8: Returns, Refunds, Exchanges, Voids, and Cancellations",
@@ -73,7 +217,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 8: Returns, Refunds, Exchanges, Voids, and Cancellations?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is confusing return with refund dangerous in system design?",
+          "back": "Return is inventory reversal semantics, while refund is financial reversal semantics; mixing them causes accounting and stock inconsistencies."
+        },
+        {
+          "front": "What distinguishes a void from a cancellation?",
+          "back": "Both are pre-completion, but void usually corrects entered lines while cancellation abandons the basket before commit."
+        },
+        {
+          "front": "Why must reverse actions link to original transaction ID?",
+          "back": "Linkage is required for full lifecycle reconstruction across support, finance reconciliation, and fraud review workflows."
+        },
+        {
+          "front": "What control reduces refund fraud in high-value scenarios?",
+          "back": "Policy windows, reason-code analytics, and approval gating tied to tender history and transaction evidence."
+        }
+      ]
     },
     {
       "title": "Chapter 9: Transaction State Management",
@@ -81,7 +243,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 9: Transaction State Management?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is explicit state modeling essential for transaction reliability?",
+          "back": "State models define legal actions, block invalid transitions, and provide deterministic recovery behavior under failure."
+        },
+        {
+          "front": "What makes timeout recovery safe in state-managed checkout?",
+          "back": "Retrying with same idempotency context from allowed replay states and preserving transition history for audit."
+        },
+        {
+          "front": "What risk appears without API-level transition validation?",
+          "back": "Invalid state jumps can commit inconsistent payment, receipt, and inventory outcomes that are hard to reconcile."
+        },
+        {
+          "front": "Which observability signal indicates state-machine weakness?",
+          "back": "Growth in stuck-state duration and repeated transition-rejection patterns by store or channel."
+        }
+      ]
     },
     {
       "title": "Chapter 10: Master Data Fundamentals",
@@ -89,7 +269,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 10: Master Data Fundamentals?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is master data quality a transaction reliability concern?",
+          "back": "Pricing, tax, promotion, and inventory logic all consume shared reference fields, so one bad attribute can cascade across domains."
+        },
+        {
+          "front": "Which master-data fields are highest risk at checkout?",
+          "back": "Tax group, unit of measure, and status because they directly affect compliance, quantity semantics, and sellability rules."
+        },
+        {
+          "front": "Why must master-data rollout be versioned with rollback?",
+          "back": "It enables safe recovery when bad publishes propagate to POS, pricing, and tax consumers."
+        },
+        {
+          "front": "What governance practice prevents hidden master-data drift?",
+          "back": "Entity-level ownership plus approval workflow for high-impact attribute changes before publish."
+        }
+      ]
     },
     {
       "title": "Chapter 11: Common Retail Transaction Failures",
@@ -97,7 +295,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 11: Common Retail Transaction Failures?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What is the fastest way to classify a checkout incident?",
+          "back": "Map the symptom to its lifecycle stage first, then narrow root causes using stage-specific dependencies and recent changes."
+        },
+        {
+          "front": "Why does timeout plus retry frequently cause duplicate-payment incidents?",
+          "back": "Because teams retry without idempotent intent tracking, creating multiple financial operations for one customer action."
+        },
+        {
+          "front": "What should every high-impact incident produce after closure?",
+          "back": "One permanent prevention action with owner, due date, and measurable verification metric."
+        },
+        {
+          "front": "Which evidence sources matter most in transaction failure triage?",
+          "back": "Lifecycle stage logs, deploy/config timelines, and scope metrics by store/channel/transaction cohort."
+        }
+      ]
     },
     {
       "title": "Chapter 12: AI Opportunities in Transaction Processing",
@@ -105,7 +321,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Chapter 12: AI Opportunities in Transaction Processing?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What is the safest first phase for AI in transaction operations?",
+          "back": "Recommendation-only anomaly detection and incident classification, before any action-taking automation."
+        },
+        {
+          "front": "Why must AI outputs include evidence references in transaction domains?",
+          "back": "Because operators need verifiable context to approve or reject actions with financial and compliance implications."
+        },
+        {
+          "front": "What is a strong metric set for AI rollout in transaction support?",
+          "back": "Precision/recall by incident type, alert-noise reduction, MTTA/MTTR change, and acceptance rate by severity."
+        },
+        {
+          "front": "Why are human approval gates mandatory for high-risk AI recommendations?",
+          "back": "Financial-impact actions require accountable oversight to prevent unsafe autonomous behavior and rollback complexity."
+        }
+      ]
     },
     {
       "title": "Module 2 Knowledge Checklist",
@@ -113,7 +347,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Module 2 Knowledge Checklist?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What indicates readiness to move from Module 2 to integration-heavy modules?",
+          "back": "You can reason clearly about transaction correctness, failure recovery, and observability without mixing domain semantics."
+        },
+        {
+          "front": "Why is state-transition clarity a readiness criterion?",
+          "back": "Because reliable integrations depend on legal transition enforcement and deterministic handling of error paths."
+        },
+        {
+          "front": "What does a strong failure-to-lifecycle mapping demonstrate?",
+          "back": "It shows you can convert symptoms into precise troubleshooting hypotheses and first mitigation actions."
+        },
+        {
+          "front": "How does idempotency strategy quality affect real incident outcomes?",
+          "back": "It prevents duplicate side effects under retries and is central to safe timeout recovery in production."
+        }
+      ]
     },
     {
       "title": "Deliverables and Learning-App Structure",
@@ -121,7 +373,25 @@
       "checkpoint": {
         "prompt": "What is the key takeaway from Deliverables and Learning-App Structure?",
         "answer": "Review this chapter's key terms, process flow, and failure patterns before moving on."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why are deliverables in this module operational artifacts, not documentation exercises?",
+          "back": "They allow support and engineering teams to diagnose, classify, and recover transaction failures with less ambiguity during incidents."
+        },
+        {
+          "front": "What makes a lifecycle deliverable reviewable by cross-functional teams?",
+          "back": "Explicit stage ownership, output contracts, valid transitions, and failure mitigation pathways."
+        },
+        {
+          "front": "Why include confusion pairs like auth vs capture and void vs refund?",
+          "back": "These semantic distinctions prevent design and support errors that commonly cause financial reconciliation problems."
+        },
+        {
+          "front": "What is the signoff bar for these deliverables?",
+          "back": "Artifacts must be strong enough that another engineer can run tabletop incident reasoning without hidden assumptions."
+        }
+      ]
     },
     {
       "title": "Chapter 13: Quick Quiz",

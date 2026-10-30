@@ -9,7 +9,25 @@
       "checkpoint": {
         "prompt": "What is the focus of Module 1 in one line?",
         "answer": "Build clear retail domain foundations before deeper technical or AI implementation."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What capability should you have before leaving Module 1?",
+          "back": "You should be able to trace one retail transaction from supplier setup to settlement and finance posting with clear system ownership at each step."
+        },
+        {
+          "front": "Why does Module 1 emphasize operating flow before AI topics?",
+          "back": "Because AI recommendations are only useful when you understand real process sequence, ownership boundaries, and incident impact in retail operations."
+        },
+        {
+          "front": "What is the practical difference between learning process sequence and system names?",
+          "back": "System names tell you where work happens; process sequence tells you what breaks next when one stage fails."
+        },
+        {
+          "front": "Which two perspectives are required for domain readiness?",
+          "back": "Business flow understanding and operational ownership understanding."
+        }
+      ]
     },
     {
       "title": "Chapter 1: What is Retail?",
@@ -17,7 +35,25 @@
       "checkpoint": {
         "prompt": "Why is retail not just billing at POS?",
         "answer": "Because billing is one step in the full chain from sourcing to settlement and accounting."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is POS billing a poor proxy for total retail operations?",
+          "back": "Billing is only the customer-facing endpoint; sourcing, inventory, transport, pricing, payment settlement, and accounting all determine real business performance."
+        },
+        {
+          "front": "What business risk appears when retail is treated as only a checkout function?",
+          "back": "Teams ignore upstream failures like stock quality, pricing integrity, and replenishment timing until they appear as customer-facing outages."
+        },
+        {
+          "front": "Which retail risk directly harms trust even when inventory exists?",
+          "back": "Price integrity gaps, where expected promotions or shelf pricing do not match checkout totals."
+        },
+        {
+          "front": "Why can recognized sales differ from same-day cash realization?",
+          "back": "Because payment authorization, capture, and bank settlement occur on a lifecycle that can lag transaction completion."
+        }
+      ]
     },
     {
       "title": "Chapter 2: Retail Value Chain",
@@ -25,7 +61,25 @@
       "checkpoint": {
         "prompt": "What comes after POS checkout in money movement?",
         "answer": "Processor and banking settlement flow, then finance posting."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "What is the key operational distinction between a completed sale and settled cash?",
+          "back": "A sale confirms transaction intent; settlement confirms funds movement and reconciliation into finance systems."
+        },
+        {
+          "front": "Why is distribution-center performance relevant to checkout outcomes?",
+          "back": "Poor DC routing and replenishment increase shelf stock-outs, which suppress conversion and revenue before the customer reaches POS."
+        },
+        {
+          "front": "Which value-chain stage usually reveals inventory truth mismatch first?",
+          "back": "Store and warehouse execution stages, where on-hand, reserved, and damaged states diverge from expected availability."
+        },
+        {
+          "front": "What is the fastest way to debug a retail value-chain incident?",
+          "back": "Trace product state flow and money state flow separately, then find where they stopped matching."
+        }
+      ]
     },
     {
       "title": "Chapter 3: Retail Organization Hierarchy",
@@ -33,7 +87,25 @@
       "checkpoint": {
         "prompt": "Why does hierarchy matter for incidents?",
         "answer": "It determines blast radius, owner routing, and escalation urgency."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "How does hierarchy help incident triage speed?",
+          "back": "It maps the issue location to accountable owners and escalation scope, reducing ambiguity in response routing."
+        },
+        {
+          "front": "What is the difference between terminal-level and chain-level incidents?",
+          "back": "Terminal incidents are localized service disruptions; chain-level incidents create systemic customer and revenue impact across regions."
+        },
+        {
+          "front": "Why should district and regional layers be explicit in operations design?",
+          "back": "They coordinate multi-store execution consistency, prioritize shared incidents, and manage escalation capacity."
+        },
+        {
+          "front": "What happens if ownership is defined only at store level?",
+          "back": "Cross-store issues get fragmented, causing delayed detection, inconsistent mitigation, and poor enterprise visibility."
+        }
+      ]
     },
     {
       "title": "Chapter 4: Retail Systems Landscape",
@@ -41,7 +113,25 @@
       "checkpoint": {
         "prompt": "OMS vs IMS in one line?",
         "answer": "OMS manages order lifecycle; IMS manages inventory state."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why do OMS and IMS failures create different business symptoms?",
+          "back": "OMS failures break order orchestration and fulfillment promises; IMS failures corrupt stock truth and replenishment decisions."
+        },
+        {
+          "front": "What integration boundary is most critical between POS and ERP?",
+          "back": "Accurate transactional handoff for financial posting, tax reporting, and reconciliation completeness."
+        },
+        {
+          "front": "Why can a healthy CRM still coexist with poor customer experience?",
+          "back": "Because customer profiles are useless if order, inventory, and pricing systems fail operationally at purchase time."
+        },
+        {
+          "front": "What is the practical value of a system landscape map during outages?",
+          "back": "It quickly identifies dependency paths and narrows likely fault domains for faster containment."
+        }
+      ]
     },
     {
       "title": "Chapter 5: POS Dependencies",
@@ -49,7 +139,25 @@
       "checkpoint": {
         "prompt": "Price service down, POS up. What happens?",
         "answer": "Checkout may continue with wrong/stale prices, causing overrides and revenue leakage."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is controlled degradation more valuable than hard shutdown in POS dependencies?",
+          "back": "It preserves transaction continuity while limiting risk through predefined fallback rules and later reconciliation controls."
+        },
+        {
+          "front": "What is the hidden cost of manual cashier overrides during dependency failures?",
+          "back": "Override volume increases inconsistency, slows lanes, and creates reconciliation debt that impacts reporting and finance accuracy."
+        },
+        {
+          "front": "Which downstream function is most sensitive to missing POS uploads?",
+          "back": "Inventory and finance reconciliation, because transaction truth no longer matches on-hand and posted sales records."
+        },
+        {
+          "front": "What capability makes replay-based recovery safe?",
+          "back": "Idempotency keys and deterministic processing logic that prevent duplicate financial or inventory effects."
+        }
+      ]
     },
     {
       "title": "Chapter 6: Online vs Offline vs Omnichannel",
@@ -57,7 +165,25 @@
       "checkpoint": {
         "prompt": "Why is omnichannel harder to run?",
         "answer": "It requires cross-system synchronization between orders, inventory, and fulfillment."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why does omnichannel increase operational complexity non-linearly?",
+          "back": "Because each channel adds fulfillment and inventory interaction paths that must remain consistent in real time across shared systems."
+        },
+        {
+          "front": "What is the core risk in BOPIS when sync quality is weak?",
+          "back": "Customers place valid orders against inventory that cannot be fulfilled at pickup, damaging trust and service reliability."
+        },
+        {
+          "front": "Why is ship-from-store operationally harder than warehouse fulfillment?",
+          "back": "Store labor and shelf inventory were optimized for walk-in sales, not continuous parcel picking and dispatch workflows."
+        },
+        {
+          "front": "What must stay synchronized for omnichannel returns to be reliable?",
+          "back": "Order status, tender record, inventory disposition, and refund policy evaluation across online and store systems."
+        }
+      ]
     },
     {
       "title": "Chapter 7: Business KPIs",
@@ -65,7 +191,25 @@
       "checkpoint": {
         "prompt": "Which KPI is hit first by checkout outages?",
         "answer": "Conversion rate and revenue."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why are queue length and scan latency considered leading indicators?",
+          "back": "They signal service degradation before daily revenue and settlement reports reveal the full business impact."
+        },
+        {
+          "front": "How can revenue rise while margin falls in retail KPI analysis?",
+          "back": "Excessive discounting or promotion misconfiguration can inflate top-line sales while reducing profitability per basket."
+        },
+        {
+          "front": "What does high inventory accuracy with high stock-out usually indicate?",
+          "back": "The count is correct, but replenishment timing or allocation logic is failing demand peaks."
+        },
+        {
+          "front": "Which KPI pair best exposes checkout reliability issues quickly?",
+          "back": "Conversion rate and average transaction processing time, supported by queue and override metrics."
+        }
+      ]
     },
     {
       "title": "Chapter 8: Real-World Scenario",
@@ -73,7 +217,25 @@
       "checkpoint": {
         "prompt": "First triage action?",
         "answer": "Validate promotion eligibility and validity for SKU/store/time."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why is promotion eligibility validation always the first triage step?",
+          "back": "Because many incidents are rule-configuration mismatches, and validating scope/time conditions isolates policy vs system faults quickly."
+        },
+        {
+          "front": "What artifact gives the strongest evidence in promo incident debugging?",
+          "back": "A transaction-level audit trail that shows basket context, rule evaluation result, and final price decision path."
+        },
+        {
+          "front": "When should temporary manual override policy be used in promo failures?",
+          "back": "When customer harm is active and safe automated correction is unavailable, with reason codes for later reconciliation."
+        },
+        {
+          "front": "What prevents reporting distortion after a promotion outage?",
+          "back": "Post-incident replay or compensation processing with controlled reconciliation logic and impact tagging."
+        }
+      ]
     },
     {
       "title": "Chapter 9: Quick Quiz",
@@ -89,7 +251,25 @@
       "checkpoint": {
         "prompt": "What makes these assignments high value?",
         "answer": "They convert domain theory into operational artifacts that speed up incident triage."
-      }
+      },
+      "flashcards": [
+        {
+          "front": "Why do assignment artifacts improve incident response speed?",
+          "back": "They predefine ownership, dependencies, and fallback actions so teams can execute without rebuilding context during outages."
+        },
+        {
+          "front": "What is the strongest quality signal in a retail system map deliverable?",
+          "back": "Each dependency includes owned data, consumed data, failure symptom, and concrete fallback path."
+        },
+        {
+          "front": "Why must an incident ownership matrix include communication SLA?",
+          "back": "Because delayed or inconsistent updates amplify customer impact and coordination failures even when technical fixes are in progress."
+        },
+        {
+          "front": "How do these assignments prepare learners for AI operations later?",
+          "back": "They build the operational clarity needed to evaluate AI recommendations against real system constraints and business risk."
+        }
+      ]
     }
   ]
 }
